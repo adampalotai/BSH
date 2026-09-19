@@ -38,4 +38,6 @@ Am Ende jeder beantworteten Aufgabe steht ein Quellenblock. Format siehe `bsh-pr
 
 ## Gaisberger-spezifisch
 
-Die Angabe verweist mehrfach auf Kapitel des VirtualBox-Handbuchs, etwa Kap. 6.2ff für die Netzwerkmodi und Kap. 4.3 für Shared Folders. Wo die Angabe ein Kapitel nennt, ist dieses Kapitel die erwartete Quelle und wird auch so zitiert.
+Die Angabe verweist mehrfach auf Kapitel des VirtualBox-Handbuchs: Kap. 6.2ff für die Netzwerkmodi, Kap. 4.3 und 4.3.1 für Shared Folders, Kap. 1.9 für Snapshots, Kap. 1.14 für Export und Import.
+
+Diese Nummern stammen aus einer älteren Handbuchfassung. Vor dem Zitieren ist zu prüfen, wo der Sachverhalt im aktuellen Handbuch tatsächlich steht. Zitiert wird die aktuelle Fundstelle mit Link; die von der Angabe genannte Nummer wird zusätzlich erwähnt, damit der Bezug zur Angabe erkennbar bleibt. Nie eine Kapitelnummer aus der Angabe übernehmen, ohne sie im Handbuch nachgeschlagen zu haben.

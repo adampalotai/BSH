@@ -19,3 +19,9 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Interne Arbeitsunterlagen (Journal, Vorausplanung)
+intern/
+
+# Angabendokumente der Schule, nicht zur Weiterverbreitung
+angabe/

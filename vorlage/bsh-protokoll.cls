@@ -86,6 +86,10 @@
 % Inline-Befehl: \cmd{ipconfig /all}
 \newcommand{\cmd}[1]{\texttt{\small #1}}
 
+% KI-Kennzeichnung, von der Angabe je Antwort verlangt
+\newcommand{\kiquelle}[1]{Text erarbeitet mit Claude #1 (Anthropic)}
+\newcommand{\kiquellekurz}[1]{Claude #1}
+
 % ── Aufgabenblock: rahmt die Angabenfrage wie in der Vorlage ──────────────
 \newtcolorbox{aufgabe}[1][]{
   breakable,
@@ -99,6 +103,7 @@
   coltitle=black,
   colbacktitle=fuellgrau,
   titlerule=0pt,
+  parbox=false,
 }
 
 % ── Messblock: Aufbau, Durchführung, Beobachtung, Deutung ─────────────────
@@ -139,6 +144,7 @@
     \end{flushright}
     \vfill
     \begin{flushleft}
+      \IfFileExists{logo.png}{\includegraphics[width=5cm]{logo.png}\\[1cm]}{}
       {\small\color{rahmengrau}Abgabe: \today}
     \end{flushleft}
   \end{titlepage}

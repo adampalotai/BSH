@@ -1,0 +1,80 @@
+\chapter{Erweiterung: Einführung Client-Server}
+\label{kap:erweiterung}
+
+Dieses Kapitel bearbeitet die gesonderte Angabe \enquote{Einführung Client-Server~[V]}, die den Protokollteil zum Client-Server-Prinzip vertieft.
+
+\section{VM-Einstellungen}
+
+\begin{aufgabe}[Detaileinstellungen einer VM]
+Demonstriere und erkläre die detaillierten Einstellungen einer VM: Allgemein, System, Anzeige, Massenspeicher, Audio, Netzwerk, Serielle Schnittstellen, USB, Gemeinsame Ordner.
+\end{aufgabe}
+
+% TODO MESSUNG: alle neun Einstellungskategorien, Screenshot je Kategorie, Erlaeuterung der Wirkung
+
+\section{Fehlersuche im Client-Server-Netz}
+
+\begin{aufgabe}[Request und Response]
+Die dem Internet zugrunde liegende Protokollfamilie TCP/IP verwendet hauptsächlich das Client-Server-Prinzip. Ein eigener Rechner namens Server arbeitet nur für die anderen Rechner namens Client. Wenn ein Client von irgendeinem Server Daten benötigt, fordert er diese über das Computernetzwerk an. Der Server antwortet ihm anschließend mit der Datenübertragung. Nun kann der Client die Daten weiterverarbeiten. Ein großer Vorteil ist die zentrale Datenhaltung der Server. Sie sind gesammelt und daher einfacher zu sichern.
+
+Erörtere folgende Begriffe: Request, Response.
+\end{aufgabe}
+
+% TODO Antwort
+
+\begin{aufgabe}[Fehlerursachen]
+Welche Fehlerursachen könnten im Client-Server-Netz auftreten? Finde 5 Fehlermöglichkeiten.
+\end{aufgabe}
+
+% TODO Antwort, fuenf Ursachen entlang der Schichten geordnet
+
+\begin{aufgabe}[Fragen an den Anwender]
+Welche Fragen könntest du einem Anwender stellen, der die Fehlermeldung \enquote{Verbindung zu Server nicht möglich} am Monitor hat, um den Fehler einzugrenzen? Finde 5 Fragen.
+\end{aufgabe}
+
+% TODO Antwort
+
+\section{Proxy-Server}
+
+\begin{aufgabe}[Aufgabe eines Proxy-Servers]
+Eine WWW-Verbindung ist nicht möglich, da eine Firewall die Direkt-Verbindung abweist. Ein Proxy-Server kann hier Abhilfe schaffen.
+
+Welche Aufgabe hat ein Proxy-Server im Zusammenspiel mit einem Browser und einem Webserver? Erstelle eine Skizze über die Funktionsweise.
+\end{aufgabe}
+
+% TODO Antwort und Skizze
+
+\begin{aufgabe}[Offener Proxy]
+Was ist ein offener Proxy?
+\end{aufgabe}
+
+% TODO Antwort
+
+\begin{aufgabe}[Verbindung über einen Proxy, dokumentiert mit Wireshark]
+Da wir keinen Labor-Proxy haben, suche einen offenen Proxy auf Port~80 aus und verbinde dich über ihn mit dem Internet. Dokumentiere dein Handeln mit der Netzwerkanalysesoftware Wireshark (Achtung: vorher pingen).
+\end{aufgabe}
+
+% TODO MESSUNG: Proxy-Verbindung, Wireshark-Mitschnitt, Vergleich direkte und indirekte Anfrage
+% ABKLAEREN: Die Angabe verweist auf proxies.by; ob diese Quelle noch existiert und
+% ob ein offener Proxy verwendet werden soll, ist mit Prof. Gaisberger zu klaeren.
+
+\section{E-Mail-Nachrichtenübertragung}
+
+\begin{aufgabe}[POP3 im Terminal]
+Die Befehle, die unser Thunderbird-Client an den Server absetzt, können wir selbst auch in einem Terminalprogramm eingeben.
+
+Hole vom gnt-Labor-Konto mittels telnet-Programm eine Nachricht ab.
+\end{aufgabe}
+
+% TODO MESSUNG: POP3-Dialog im Terminal, Befehlsfolge und Serverantworten woertlich
+
+\begin{aufgabe}[SMTP im Terminal]
+Probiere denselben Vorgang mit dem SMTP-Dienst zum Versenden einer E-Mail. Aber ACHTUNG: Ein auth-login ist notwendig. Benutzername und Passwort sind base64-kodiert zum Server zu senden.
+\end{aufgabe}
+
+% TODO MESSUNG: SMTP-Dialog mit AUTH LOGIN, base64-Kodierung nachvollziehen
+
+\begin{aufgabe}[SMTP-After-POP, SMTP-AUTH und SMTPS]
+Was bedeuten SMTP-After-POP, SMTP-AUTH und SMTPS?
+\end{aufgabe}
+
+% TODO Antwort

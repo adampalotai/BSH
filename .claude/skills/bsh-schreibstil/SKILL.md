@@ -38,6 +38,8 @@ Keine Behauptung ohne Beleg. Siehe `bsh-research`.
 
 Keine Länge um der Länge willen. Die Angabe warnt ausdrücklich vor zu viel Text, der vom Wesentlichen ablenkt.
 
+Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeichnet, soll aber nicht danach klingen. Kein Gedankenstrich als Häufungsfigur ("Virtualisierung ist effizient — sie spart Hardware, Energie und Platz"), Kommas oder ein neuer Satz leisten das genauso. Keine dreiteilige Aufzählung als Stilreflex, nur wo tatsächlich drei Dinge aufzuzählen sind. Kein "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen". Ein Absatz beginnt mit dem Gedanken, nicht mit einer Ankündigung des Gedankens.
+
 ## Prüfungstauglichkeit
 
 Was in der praktischen Prüfung gebraucht wird, muss auffindbar sein. Konkrete Werte, Befehle und Schrittfolgen gehören in Listings und Tabellen, nicht in den Fließtext vergraben.
