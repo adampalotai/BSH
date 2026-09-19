@@ -1,0 +1,21 @@
+# LaTeX-Hilfsdateien
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.run.xml
+
+# Ausgabe-PDFs bleiben versioniert (Abgabestand nachvollziehbar)
+!protokolle/**/protokoll.pdf
+
+# Betriebssystem
+Thumbs.db
+desktop.ini
+.DS_Store

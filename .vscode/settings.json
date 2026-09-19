@@ -1,0 +1,33 @@
+{
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk",
+      "tools": ["latexmk"]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=%DIR%",
+        "%DOC%"
+      ],
+      "env": {
+        "TEXINPUTS": "${workspaceFolder}/vorlage;"
+      }
+    }
+  ],
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.message.error.show": true,
+  "[latex]": {
+    "editor.wordWrap": "on",
+    "editor.rulers": []
+  }
+}
