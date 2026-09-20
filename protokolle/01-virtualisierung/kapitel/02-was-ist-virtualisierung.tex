@@ -5,45 +5,290 @@
 Stell dir vor, du könntest mehrere Computer gleichzeitig auf einem einzigen Rechner laufen lassen. Genau das ermöglicht Virtualisierung! Erkläre, was man unter Virtualisierung versteht und welche coolen Möglichkeiten das bietet.
 \end{aufgabe}
 
-% TODO Antwort
+Virtualisierung bezeichnet die Nachbildung eines vollständigen Rechners durch Software. Ein Programm stellt einem Betriebssystem Prozessor, Arbeitsspeicher, Festplatte und Netzwerkkarte bereit, die es physisch nicht gibt; das Betriebssystem behandelt diese nachgebildeten Geräte wie echte Hardware und bemerkt den Unterschied im Regelfall nicht.
+
+Die Begriffe dazu legt das VirtualBox-Handbuch fest. Der physische Rechner, auf dem alles läuft, heißt Wirtsystem (host); das darauf installierte Betriebssystem ist das Wirtsbetriebssystem. Die nachgebildete Umgebung ist die virtuelle Maschine (VM), das darin installierte Betriebssystem der Gast (guest). Die Software, die diese Umgebung erzeugt und die Zugriffe des Gastes auf die echte Hardware vermittelt, ist der Hypervisor.
+
+Der Gast läuft dabei nicht neben dem Wirtsbetriebssystem, sondern innerhalb eines Prozesses des Wirtsbetriebssystems. Entscheidend ist demnach nicht, welche Bestandteile beteiligt sind, sondern in welcher Reihenfolge sie übereinanderliegen; Abbildung~\ref{abb:schichten} zeigt diese Anordnung.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=7mm]
+  \node[schicht, minimum width=10cm] (hw) {Physische Hardware\\\footnotesize Prozessor, Arbeitsspeicher, Festplatte, Netzwerkkarte};
+  \node[schicht, minimum width=10cm, above=of hw] (wirt) {Wirtsbetriebssystem\\\footnotesize Windows, macOS, Linux, Oracle Solaris};
+  \node[schichthervor, minimum width=10cm, above=of wirt] (hyp) {Hypervisor (VirtualBox)\\\footnotesize teilt Betriebsmittel zu und vermittelt Zugriffe};
+  \node[gast, minimum width=4.8cm, above=of hyp, xshift=-2.6cm] (g1) {Gast 1\\\footnotesize Windows Server 2019};
+  \node[gast, minimum width=4.8cm, above=of hyp, xshift=2.6cm] (g2) {Gast 2\\\footnotesize Linux Mint};
+
+  \draw[fluss] (g1) -- (g1|-hyp.north);
+  \draw[fluss] (g2) -- (g2|-hyp.north);
+  \draw[fluss] (hyp) -- (hyp|-wirt.north);
+  \draw[fluss] (wirt) -- (wirt|-hw.north);
+
+  % durchkreuzter Weg: die fehlende Verbindung ist die Aussage der Zeichnung
+  \draw[draw=rahmengrau, line width=0.4pt, dashed] (g1.east) -- (g2.west);
+  \node[draw=none, fill=white, inner sep=1pt, font=\footnotesize, text=rahmengrau]
+    at ($(g1.east)!0.5!(g2.west)$) {$\times$};
+\end{tikzpicture}
+\caption[Schichten der Virtualisierung mit VirtualBox]{Jeder Zugriff eines Gastes auf die Hardware führt durch den Hypervisor; zwischen den Gästen besteht kein Weg. Die Anordnung übereinander ist der Grund für die Isolation und lässt sich in Fließtext nur umständlich wiedergeben.}
+\label{abb:schichten}
+\end{figure}
+
+Aus dieser Anordnung folgt die Eigenschaft, auf der alles Weitere aufbaut: Der Gast kann auf nichts zugreifen, was der Hypervisor ihm nicht zuteilt. Diese Abschottung nennt man Isolation. Ein Absturz des Gastes betrifft das Wirtsystem nicht, und Schadsoftware im Gast erreicht die Dateien des Wirtsystems nur über Wege, die ausdrücklich eingerichtet wurden, etwa gemeinsame Ordner.
+
+Weil der Hypervisor hier als Anwendung auf einem Wirtsbetriebssystem läuft, zählt VirtualBox zu den Typ-2-Hypervisoren. Bei einem Typ-1-Hypervisor entfällt die mittlere Schicht, er läuft unmittelbar auf der Hardware; dadurch arbeitet er schneller, verlangt aber den Rechner für sich allein.
+
+Praktisch ergeben sich daraus vier Möglichkeiten. Mehrere Betriebssysteme laufen gleichzeitig auf einer Maschine, ohne dass für jedes neu gestartet werden muss. Eine VM liegt als Datei auf der Festplatte und lässt sich kopieren, sichern und auf einen anderen Rechner übertragen; das Handbuch nennt dafür die Appliance, eine virtuelle Maschine, die bereits mit Anwendungen bestückt und für einen bestimmten Zweck eingerichtet ist, etwa als Mailserver. Der Zustand einer VM lässt sich als Speicherabbild (snapshot) festhalten und später wiederherstellen, womit ein zerstörter Versuchsaufbau in Sekunden zurückgesetzt ist statt in einer Neuinstallation zu enden. Und weil ein einzelner Rechner seine Rechenleistung selten ausschöpft, lassen sich mehrere schwach ausgelastete Server auf einem leistungsfähigen Wirtsystem zusammenlegen, was Oracle ausdrücklich als Grund für geringere Hardware- und Stromkosten nennt.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung und Abschn. \enquote{Oracle VirtualBox Components}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Was macht VirtualBox für den Einsatz im Unterricht besonders?]
 VirtualBox ist ein Tool, das Virtualisierung richtig einfach macht. Auch im Unterricht verwenden wir diese Software. Aber warum benutzen wir und viele Leute VirtualBox und nicht ein anderes Programm? Was kann VirtualBox gut, und wo gibt es vielleicht bessere Alternativen?
 \end{aufgabe}
 
-% TODO Antwort
+Für den Unterricht sprechen drei Eigenschaften, die bei den Alternativen nicht zusammenfallen.
+
+Die Lizenz erlaubt die Weitergabe an alle Schüler. Das VirtualBox Platform Package steht unter der GNU General Public License Version 3; jeder darf es ohne Kosten und ohne Registrierung installieren, auch zu Hause. Das getrennt lizenzierte Extension Pack fällt nicht darunter, sondern unter die Personal Use and Educational License (PUEL). Es rüstet den Server für das VirtualBox Remote Desktop Protocol (VRDP), die Durchreichung einer Webkamera des Wirtsystems, ein Boot-ROM von Intel für den Netzwerkstart, die Verschlüsselung der Plattenabbilder und die Anbindung an die Oracle Cloud Infrastructure nach. Die PUEL gestattet die unentgeltliche Nutzung zu persönlichen Zwecken sowie durch Lehrende und Lernende als Teil des Unterrichts, nicht aber den gewerblichen Einsatz. Für die Schule ist es damit zulässig, im Betrieb eines Unternehmens dagegen lizenzpflichtig.
+
+Verbreitet, aber überholt ist die Angabe, das Extension Pack werde für die Durchreichung von USB-Geräten der Standards 2.0 und 3.0 gebraucht. Das galt bis Version 6; mit Version 7.0 sind die zugehörigen USB-Controller laut Änderungsverzeichnis in das quelloffene Grundpaket übergegangen. Die Angabe findet sich weiterhin in Anleitungen und Foren und ist beim Nachschlagen zu prüfen.
+
+VirtualBox läuft auf allen Wirtsbetriebssystemen, die im Labor und privat vorkommen: Windows, macOS, Linux und Oracle Solaris. Eine virtuelle Maschine, die in der Schule unter Windows entsteht, lässt sich zu Hause unter Linux weiterverwenden, weil dieselbe Software dort dieselben Dateiformate liest.
+
+Die Bedienoberfläche führt schrittweise durch das Anlegen einer VM. Wird dabei ein Abbild angegeben, erkennt VirtualBox das darin enthaltene Betriebssystem und füllt die zugehörigen Felder selbst vor; wer alle Einstellungen auf einmal sehen will, wechselt in den Expertenmodus. Der Unterricht kann damit beim Betriebssystem beginnen statt beim Hypervisor.
+
+Alternativen sind in bestimmten Punkten überlegen. VMware Workstation ist seit November 2024 kostenlos nutzbar, ausdrücklich auch für den gewerblichen Einsatz; der Lizenzvorsprung von VirtualBox ist damit kleiner geworden, weil dessen Extension Pack im Betrieb sehr wohl lizenzpflichtig bleibt. Hyper-V bezeichnet Microsoft als Typ-1-Hypervisor, der unmittelbar auf der Hardware läuft und dadurch eine Leistung nahe der des echten Rechners erreicht; enthalten ist es in Windows 11 in den Ausgaben Pro, Enterprise und Education, die Ausgabe Home führt Microsoft nicht an. Dafür verlangt Hyper-V Windows als Wirtsystem und beeinträchtigt den gleichzeitigen Betrieb von VirtualBox erheblich. Unter Linux schließlich steckt der Kernbestandteil der Kernel-based Virtual Machine (KVM) seit Version 2.6.20 im Kernel selbst; die Zwischenschicht, die VirtualBox als Anwendung auf dem Wirtsbetriebssystem bildet, entfällt dort. Vorausgesetzt werden dieselben Virtualisierungserweiterungen wie bei VirtualBox, Intel VT oder AMD-V.
+
+Die Wahl im Unterricht folgt daher nicht der höchsten Leistung, sondern der größten Verfügbarkeit bei gleichem Funktionsumfang für die gestellten Aufgaben.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Components} (Lizenz, Wirtsbetriebssysteme, Inhalt des Extension Pack). \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+  \item Oracle VirtualBox: \emph{Changelog for VirtualBox 7.0}, Abschnitt \enquote{Devices}: \enquote{The EHCI and XHCI USB controller devices are now part of the open source base package}. \url{https://www.virtualbox.org/wiki/Changelog-7.0}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 4 \enquote{Creating a New Virtual Machine} (schrittweises Anlegen, Erkennung des Gastbetriebssystems aus dem Abbild, Expertenmodus). \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
+  \item Oracle: \emph{Oracle VirtualBox Extension Pack Personal Use and Educational License}, Fassung 12 vom 22.\,07.\,2024. \url{https://www.virtualbox.org/wiki/VirtualBox_PUEL}
+  \item Broadcom: \enquote{VMware Fusion and Workstation are Now Free for All Users}. VMware Cloud Foundation Blog, 11.\,11.\,2024. \url{https://blogs.vmware.com/cloud-foundation/2024/11/11/vmware-fusion-and-workstation-are-now-free-for-all-users/}
+  \item Microsoft: \enquote{Hyper-V virtualization in Windows Server and Windows}: \enquote{As a type-1 hypervisor, Hyper-V runs directly on computing hardware, delivering near-native performance} sowie \enquote{For Windows 11, Hyper-V is included in the Pro, Enterprise, and Education editions}. \url{https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview}
+  \item KVM-Projekt: \enquote{The kernel component of KVM is included in mainline Linux, as of 2.6.20.} \url{https://linux-kvm.org/page/Main_Page}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Known Limitations}, Abschnitt zu Hyper-V auf dem Windows-Wirtsystem. \url{https://www.virtualbox.org/manual/topics/KnownIssues.html}
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Kann jeder Computer das?]
 Nicht jeder Computer kann einfach so mehrere Betriebssysteme auf einmal laufen lassen. Finde heraus, welche Voraussetzungen dein Computer erfüllen muss, damit VirtualBox reibungslos funktioniert.
 \end{aufgabe}
 
-% TODO Antwort
+Die Voraussetzungen zerfallen in zwei Gruppen: die harten Bedingungen, ohne die VirtualBox nicht startet, und die weichen, die über die nutzbare Geschwindigkeit entscheiden.
+
+Hart vorgegeben ist der Prozessor. Das Handbuch verlangt für Intel-Wirtsysteme ausdrücklich die Befehlssatzerweiterung SSE2 (Streaming SIMD Extensions 2). Unterstützt werden 64-Bit-Prozessoren der x86-Architektur; Wirtsysteme mit ARM-Prozessor laufen nur versuchsweise und können ausschließlich ARM-Gäste betreiben. Das Wirtsbetriebssystem muss eines der unterstützten sein, also Windows 10 oder 11, Windows Server 2022 oder 2025, macOS, eine der genannten Linux-Distributionen oder Oracle Solaris 11.4.
+
+Praktisch entscheidend ist die Hardware-Virtualisierungserweiterung des Prozessors. Intel führt sie als Intel Virtualization Technology (VT-x), AMD unter dem Namen AMD-V. Sie erlaubt es, Gastbefehle unmittelbar auf dem echten Prozessor auszuführen, statt sie in Software nachzubilden. Ohne sie lassen sich keine 64-Bit-Gäste betreiben und kein Gast mit mehreren virtuellen Prozessorkernen. Auf vielen Geräten muss sie laut Handbuch erst in der Firmware des Rechners freigegeben werden, also in dem Einrichtungsprogramm, das beim Start über eine Funktionstaste erreichbar ist und je nach Gerät BIOS oder UEFI heißt. Unter Windows kommt eine zweite Hürde hinzu: Laufen VirtualBox und Hyper-V auf demselben Wirtsystem, leidet laut Handbuch die Leistung. Abhilfe schafft nur, die Windows-Funktionen Hyper-V, Plattform für virtuelle Computer und Windows-Hypervisor-Plattform abzuschalten und das Wirtsystem neu zu starten. Das Handbuch weist eigens darauf hin, dass neuere Windows-Fassungen Hyper-V auch dann verwenden, wenn die Gerätesicherheitsfunktionen Kernisolierung oder Speicherintegrität eingeschaltet sind, selbst wenn Hyper-V zuvor abgeschaltet wurde.
+
+Weich, aber für den tatsächlichen Betrieb ausschlaggebend, sind Arbeitsspeicher und Plattenplatz. Eine feste Zahl gibt das Handbuch dafür nicht vor, weil der Bedarf vom Gast abhängt; als groben Anhalt nennt es ein bis zwei Gigabyte, damit ein Gastbetriebssystem überhaupt installieren und starten kann. Maßgeblich sind deshalb die Angaben des jeweiligen Gastherstellers. Tabelle~\ref{tab:voraussetzungen} stellt diese Mindestangaben den Werten gegenüber, die für den gleichzeitigen Betrieb beider Laborgäste anzusetzen sind.
+
+\begin{table}[H]
+\centering
+\caption{Mindestangaben der Hersteller und daraus abgeleitete Beispielzuweisung für die beiden Laborgäste}
+\label{tab:voraussetzungen}
+\begin{tabularx}{\textwidth}{@{}lXll@{}}
+\toprule
+\textbf{Gast} & \textbf{Arbeitsspeicher} & \textbf{Platte} & \textbf{Kerne} \\
+\midrule
+\multicolumn{4}{@{}l}{\itshape Mindestangabe des Herstellers} \\
+Windows Server 2019 & 2\,GB mit Desktop Experience, 1\,GB als Server Core & 32\,GB & 1 \\
+Linux Mint & 2\,GB, empfohlen 4\,GB & 20\,GB, empfohlen 100\,GB & --- \\
+\addlinespace
+\multicolumn{4}{@{}l}{\itshape Beispielzuweisung für den gleichzeitigen Betrieb} \\
+Windows Server 2019 & 4\,GB & 60\,GB dynamisch & 2 \\
+Linux Mint & 4\,GB & 60\,GB dynamisch & 2 \\
+\midrule
+Summe beider Gäste & 8\,GB & 120\,GB & 4 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Die Beispielwerte liegen bewusst über den Mindestangaben, weil ein Gast, der genau auf seinem Minimum läuft, jede zusätzliche Last durch Auslagern auffängt. Bei Windows Server 2019 kommt eine Besonderheit hinzu, die Microsoft ausdrücklich vermerkt: Eine virtuelle Maschine mit den nominellen Mindestwerten, also einem Kern und 512 Megabyte, bricht die Installation ab; für den Installationsvorgang sind mindestens 800 Megabyte zuzuweisen. Die dokumentierte Untergrenze und der tatsächlich nötige Wert fallen hier also auseinander.
+
+Sollen beide Gäste gleichzeitig laufen, muss das Wirtsystem die Summe beider Zuweisungen aufbringen und daneben noch genug für das eigene Betriebssystem behalten. Aus der Beispielzuweisung folgt damit ein Wirtsystem mit mindestens sechzehn Gigabyte Arbeitsspeicher und acht Prozessorsträngen: Acht Gigabyte gehen an die Gäste, der Rest verbleibt dem Wirtsbetriebssystem, und die vier virtuellen Kerne bleiben innerhalb der Hälfte, die das Handbuch als Obergrenze empfiehlt. Abbildung~\ref{abb:speicher} zeigt diese Aufteilung.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \draw[{Stealth[length=2mm]}-{Stealth[length=2mm]}, draw=akzent, line width=0.5pt]
+    (0,0.95) -- (12,0.95)
+    node[midway, above, font=\footnotesize]
+    {16\,GB Arbeitsspeicher des Wirtsystems, physisch vorhanden und nicht vermehrbar};
+
+  \node[schicht, minimum width=6cm, minimum height=11mm, anchor=west] (wirt) at (0,0)
+    {Wirtsbetriebssystem\\\footnotesize 8\,GB};
+  \node[gast, minimum width=3cm, minimum height=11mm, anchor=west] (g1) at (6,0)
+    {Gast 1\\\footnotesize 4\,GB};
+  \node[gast, minimum width=3cm, minimum height=11mm, anchor=west] (g2) at (9,0)
+    {Gast 2\\\footnotesize 4\,GB};
+
+  \draw[draw=rahmengrau, line width=0.4pt] (6,-0.68) -- (6,-0.85) -- (12,-0.85) -- (12,-0.68);
+  \node[beschriftung, anchor=north] at (9,-0.88)
+    {während des Betriebs dem Wirtsbetriebssystem entzogen};
+\end{tikzpicture}
+\caption[Aufteilung des Arbeitsspeichers zwischen Wirtsystem und zwei Gästen]{Die Gesamtbreite liegt fest; was ein Gast bekommt, fehlt dem Wirtsbetriebssystem. Die Werte stammen aus der Beispielzuweisung in Tabelle~\ref{tab:voraussetzungen}.
+Dass Betriebsmittel aufgeteilt und nicht vermehrt werden, ist die tragende Aussage des Kapitels und als Verhältnis von Flächen unmittelbar zu sehen, während Fließtext sie nur behaupten kann.}
+\label{abb:speicher}
+\end{figure}
+
+Beim Plattenplatz ist zu beachten, dass eine dynamisch wachsende Festplattendatei zwar klein beginnt, bis zur eingestellten Obergrenze aber weiterwächst; der Platz muss also auf Dauer vorhanden sein, nicht nur beim Anlegen der VM.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 2 \enquote{Installing VirtualBox}, Abschnitte \enquote{Intel Host CPU Requirements}, \enquote{Choosing an Installation Package} und \enquote{Arm Host Limitations}: \enquote{Virtual machines must use an Arm-based guest operating system.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 16 \enquote{Reference}, Abschn. \enquote{Windows on Arm Hosts}: \enquote{This feature is experimental.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/reference.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Technical Background}, Abschnitt \enquote{Hardware Virtualization}: \enquote{Oracle VirtualBox's 64-bit guest and multiprocessing (SMP) support both require hardware virtualization to be enabled.} sowie \enquote{On many systems, the hardware virtualization features first need to be enabled in the BIOS before Oracle VirtualBox can use them.} \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
+  \item Intel: \enquote{Intel Virtualization Technology (VT-x)}, Schreibweise des Herstellers für die Erweiterung. \url{https://www.intel.com/content/www/us/en/support/articles/000005486/processors.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Known Limitations}, Abschnitt zu Hyper-V auf dem Windows-Wirtsystem. \url{https://www.virtualbox.org/manual/topics/KnownIssues.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 4 \enquote{Creating a New Virtual Machine}: \enquote{A guest OS may require at least 1 or 2 GB of memory to install and boot up.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
+  \item Microsoft: \enquote{Hardware Requirements for Windows Server}, Registerkarten RAM und Storage, Angaben für Windows Server 2019. \url{https://learn.microsoft.com/en-us/windows-server/get-started/hardware-requirements}
+  \item Linux Mint: \enquote{Frequently Asked Questions}, Abschnitt zu den Systemvoraussetzungen. \url{https://linuxmint.com/faq.php}
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Vor- und Nachteile der Virtualisierung mit VirtualBox]
 VirtualBox klingt fast zu schön, um wahr zu sein! Aber wie bei allem gibt es auch hier zwei Seiten. Welche Vorteile hat VirtualBox, und wo könnte es für dich oder in einem Unternehmen Probleme geben?
 \end{aufgabe}
 
-% TODO Antwort
+Die Vorteile folgen sämtlich aus zwei Eigenschaften: Eine VM ist eine Datei, und sie ist isoliert.
+
+Weil eine VM eine Datei ist, lässt sie sich kopieren, sichern und weitergeben. Ein eingerichtetes System wird einmal aufgesetzt und danach beliebig oft geklont, statt für jeden Arbeitsplatz neu installiert zu werden. Der Zustand lässt sich als Speicherabbild festhalten; laut Handbuch kann VirtualBox den Zustand einer VM jederzeit sichern und später auf genau diesen Punkt zurückkehren, auch im laufenden Betrieb. Für Versuche bedeutet das, dass ein misslungener Eingriff keine Neuinstallation nach sich zieht.
+
+Weil die VM isoliert ist, bleibt ein Schaden im Gast auf den Gast beschränkt. Verdächtige Software lässt sich gefahrlos ausführen, solange weder gemeinsame Ordner noch ein Netzwerkmodus eingerichtet sind, der den Gast mit dem Wirtsystem verbindet. Dazu kommt, dass mehrere Betriebssysteme gleichzeitig laufen, ohne den Rechner neu zu starten, und dass alte Software auf einem alten Gastbetriebssystem weiterbetrieben werden kann, wenn die Hardware dafür längst fehlt.
+
+Die Nachteile wiegen je nach Umgebung verschieden schwer.
+
+Technisch gibt der Gast stets Leistung ab, weil jeder Hardwarezugriff durch den Hypervisor läuft. Bei Prozessor und Arbeitsspeicher fällt das mit eingeschalteter Hardware-Virtualisierungserweiterung wenig ins Gewicht, weil die Gastbefehle unmittelbar auf dem Prozessor ausgeführt werden. Größer ist der Abstand dort, wo der Hypervisor das Gerät vollständig nachbilden muss, etwa bei Platte und Grafik. Die Betriebsmittel werden außerdem nicht vermehrt, sondern aufgeteilt: Der Arbeitsspeicher, den eine VM erhält, fehlt dem Wirtsystem, und zwei gleichzeitig laufende Gäste teilen sich die Rechenleistung, die zuvor einem zur Verfügung stand.
+
+Der Hypervisor ist ein zusätzlicher Angriffspunkt. Gelingt ein Ausbruch aus der VM, ist nicht nur ein Gast betroffen, sondern das Wirtsystem und damit alle weiteren Gäste auf ihm. Die Isolation ist eine Zusicherung der Software, keine physische Trennung.
+
+Im Unternehmen kommt die Lizenzfrage hinzu. Das Extension Pack steht unter der PUEL und ist dort nur für private und schulische Nutzung unentgeltlich. Wer im Betrieb den VRDP-Server, die Verschlüsselung der Plattenabbilder oder die Anbindung an die Oracle Cloud Infrastructure braucht, muss dafür eine Lizenz erwerben. Hinzu kommt, dass VirtualBox als Typ-2-Hypervisor auf einem vollständigen Wirtsbetriebssystem aufsetzt, das selbst Betriebsmittel verbraucht, gewartet und aktualisiert werden muss; im Rechenzentrum verwendet man deshalb Typ-1-Systeme.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Features}, Unterpunkt \enquote{VM Management}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Technical Background}, Abschnitt \enquote{Hardware Virtualization}. \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
+  \item Oracle: \emph{Oracle VirtualBox Extension Pack Personal Use and Educational License}, Fassung 12 vom 22.\,07.\,2024. \url{https://www.virtualbox.org/wiki/VirtualBox_PUEL}
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Wie erstelle ich meine eigene virtuelle Maschine?]
 Du wirst zum Architekten deiner eigenen virtuellen Maschine! Welche Komponenten sind in einer virtuellen Maschine notwendig und was musst du bei diesen einstellen? Gib auch Beispiele für die Werte welche du zuweisen wirst. Begründe warum die Werte nicht beliebig klein und nicht beliebig groß sein dürfen.
 \end{aufgabe}
 
-% TODO Antwort
+Eine virtuelle Maschine besteht aus denselben Bestandteilen wie ein physischer Rechner. Fünf davon müssen beim Anlegen festgelegt werden.
+
+\paragraph{Gastbetriebssystemtyp} Anzugeben sind Art, Ausgabe und Version des Gastes, etwa Linux, Oracle Linux, Oracle Linux 8.x (64-Bit). Diese Angabe ist keine Beschriftung, sondern steuert die Voreinstellungen der nachgebildeten Hardware: Je nach Auswahl schaltet VirtualBox jene Einstellungen ein oder aus, die das Gastbetriebssystem benötigt, was das Handbuch besonders für 64-Bit-Gäste hervorhebt. Auch der voreingestellte Speichercontroller richtet sich nach dem gewählten Typ; je nach Gast verwendet VirtualBox für neue Maschinen Serial ATA (SATA) als Voreinstellung. Wird die VM aus einem Abbild angelegt, erkennt VirtualBox das Betriebssystem in der Regel selbst und füllt die Felder vor.
+
+\paragraph{Arbeitsspeicher} Der zugewiesene Arbeitsspeicher wird dem Wirtsbetriebssystem beim Start der VM entzogen und muss zu diesem Zeitpunkt tatsächlich frei sein. Nach unten begrenzt ihn der Bedarf des Gastbetriebssystems; das Handbuch nennt als groben Anhalt ein bis zwei Gigabyte, damit ein Gast überhaupt installieren und starten kann. Wird er zu knapp bemessen, startet der Gast nicht oder lagert dauernd auf die Festplatte aus, was ihn unbrauchbar langsam macht. Nach oben begrenzt ihn der Arbeitsspeicher des Wirtsystems, und zwar nicht dessen Gesamtgröße, sondern der Teil, der nach Abzug des Wirtsbetriebssystems übrig bleibt. Das Handbuch rechnet das an einem Beispiel vor: Bei vier Gigabyte im Wirtsystem und 2048 Megabyte für die VM bleiben dem Wirtsystem zwei Gigabyte für alles Übrige. Wird zu viel zugewiesen, beginnt das Wirtsystem auszulagern, und die Gesamtleistung bricht stärker ein, als der Gast gewinnt.
+
+\paragraph{Prozessorkerne} VirtualBox kann einer VM bis zu 32 virtuelle Kerne zuweisen. Mehr Kerne, als das Wirtsystem physisch besitzt, sind ausdrücklich nicht zu vergeben, wobei das Handbuch echte Kerne meint und Hyperthreads nicht mitzählt; die virtuellen Kerne würden sich sonst um dieselben physischen streiten, was die Verwaltung aufwendiger macht, ohne Rechenleistung zu gewinnen. Für das Anlegen einer VM rät das Handbuch noch enger, höchstens die Hälfte aller Prozessorstränge (threads) des Wirtsystems zu vergeben. Daneben lässt sich über die Ausführungsbegrenzung (processing cap) festlegen, welchen Anteil eines physischen Kerns ein virtueller höchstens beanspruchen darf; die Voreinstellung von 100\,\% bedeutet keine Begrenzung.
+
+\paragraph{Virtuelle Festplatte} Sie ist eine Datei auf dem Wirtsystem. VirtualBox verwendet standardmäßig das eigene Format Virtual Disk Image (VDI) und unterstützt daneben VMDK aus der VMware-Welt sowie das Format Virtual Hard Disk (VHD) von Microsoft; die beiden letzteren sind zu wählen, wenn die VM später auf einem anderen Produkt laufen soll. Bei der Belegung besteht die Wahl zwischen fester Größe und dynamischer Zuweisung. Eine Datei fester Größe ist von Anfang an ungefähr so groß wie die eingestellte Kapazität; ihr Anlegen dauert entsprechend lange. Eine dynamisch zugewiesene Datei beginnt sehr klein und wächst bei jedem erstmaligen Schreibzugriff weiter, bis sie die eingestellte Obergrenze erreicht. Den oft behaupteten Geschwindigkeitsvorteil der festen Größe schränkt das Handbuch ein: Schreibzugriffe sind nur so lange langsamer, bis sich die Dateigröße eingependelt hat, danach ist der Unterschied vernachlässigbar. Abbildung~\ref{abb:platte} stellt beide Verläufe gegenüber.
+
+Die Obergrenze darf nicht zu knapp sein, weil das Gastbetriebssystem samt Aktualisierungen und Auslagerungsdatei hineinpassen muss. Zu groß angesetzt schadet sie bei dynamischer Zuweisung zunächst wenig, verleitet aber dazu, mehreren Maschinen zusammen mehr Platz zu versprechen, als das Wirtsystem besitzt. Weil jede Datei bis an ihre Obergrenze wachsen darf, ist der Engpass damit nur aufgeschoben.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+  \draw[-{Stealth[length=2mm]}, draw=rahmengrau] (0,0) -- (0,3.8);
+  \node[font=\footnotesize, anchor=south west] at (-0.1,3.85)
+    {belegter Platz auf dem Wirtsdatenträger};
+  \draw[-{Stealth[length=2mm]}, draw=rahmengrau] (0,0) -- (8.9,0);
+  \node[font=\footnotesize, anchor=north east] at (8.9,-0.1) {Betriebsdauer};
+
+  % Deckellinie und Verlauf der festen Groesse sind dieselbe Linie; genau das
+  % ist die Aussage, deshalb keine zweite gestrichelte Linie darunter
+  \draw[draw=akzent, line width=0.9pt] (0.12,0) -- (0.12,3) -- (8.5,3);
+  \node[beschriftung, anchor=west, align=left] at (8.6,3) {eingestellte\\Obergrenze};
+  \node[font=\footnotesize, text=akzent, anchor=north west] at (0.9,2.9) {feste Größe};
+
+  \draw[draw=htlgruen!60!black, line width=0.9pt]
+    (0.12,0.1) .. controls (2.2,1.7) and (4.6,2.6) .. (8.5,2.88);
+  \node[font=\footnotesize, text=htlgruen!60!black, anchor=north west] at (3.0,1.9)
+    {dynamische Zuweisung};
+\end{tikzpicture}
+\caption[Fester und dynamisch wachsender Plattenplatz im Zeitverlauf]{Beide Belegungsarten enden bei derselben Obergrenze, sie erreichen sie nur zu verschiedenen Zeitpunkten. Der Verlauf über die Zeit ist der eigentliche Unterschied und lässt sich in Fließtext nur behaupten; hier ist ablesbar, warum eine großzügige Obergrenze den Engpass verschiebt statt ihn zu vermeiden.}
+\label{abb:platte}
+\end{figure}
+
+\paragraph{Netzwerkkarte} Der Netzwerkmodus entscheidet, ob und wie der Gast erreichbar ist. Die Modi und ihre Folgen sind Gegenstand von Kapitel~\ref{kap:netzwerk}.
+
+Für die beiden Laborgäste bedeutet das je vier Gigabyte Arbeitsspeicher, zwei virtuelle Kerne und eine dynamisch wachsende Platte mit sechzig Gigabyte Obergrenze; Tabelle~\ref{tab:voraussetzungen} stellt diese Werte den Mindestangaben der Hersteller gegenüber. Die Laborrechner tragen dafür genug Vorrat: Ein mobiler Intel-Core-i5-Prozessor der vierzehnten Generation, zweiunddreißig Gigabyte DDR4-Arbeitsspeicher und mehrere hundert Gigabyte freier Plattenplatz stehen zur Verfügung, doppelt so viel Arbeitsspeicher wie die errechnete Untergrenze von sechzehn Gigabyte für den gleichzeitigen Betrieb beider Gäste. Die allgemeine Regel dahinter lautet: Jeder Wert hat eine untere Schranke aus dem Bedarf des Gastes und eine obere aus dem Vorrat des Wirtsystems, und beide Schranken sind hart. Zwischen ihnen entscheidet, wie viele VMs gleichzeitig laufen sollen.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 4 \enquote{Creating a New Virtual Machine} (Gastbetriebssystemtyp, Arbeitsspeicher, Plattengröße, Kernzahl): \enquote{Do not assign more than half of the total processor threads from the host machine.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{System Settings}, Unterabschnitt \enquote{Processor Tab} (Kernzahl, Ausführungsbegrenzung). \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)} sowie \enquote{Hard Disk Controllers}: \enquote{Serial ATA (SATA) is a more recent standard than IDE.} und \enquote{depending on the selected guest OS, Oracle VirtualBox uses SATA as the default for newly created virtual machines}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+  \item Microsoft: \enquote{Manage Virtual Hard Disks (VHD)}, Auflösung des Kürzels VHD. \url{https://learn.microsoft.com/en-us/windows-server/storage/disk-management/manage-virtual-hard-disks}
+  \item Eigene Feststellung am Laborrechner: Prozessor, Arbeitsspeicher und freier Plattenplatz.
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Wozu würdest du Virtualisierung auf einem Desktop einsetzen?]
 Nenne und beschreibe drei Anwendungsbeispiele, in denen du Virtualisierung auf einem Desktoprechner einsetzen würdest.
 \end{aufgabe}
 
-% TODO Antwort
+\paragraph{Gefahrloses Untersuchen verdächtiger Software} Eine ausführbare Datei unbekannter Herkunft wird in einer VM gestartet, deren gemeinsame Ordner abgeschaltet sind und deren Netzwerkkarte auf \enquote{nicht angeschlossen} (not attached) steht. In diesem Modus meldet VirtualBox dem Gast zwar eine Netzwerkkarte, aber keine Verbindung, so als wäre kein Kabel gesteckt. Braucht der Versuch ein Gegenstück, etwa einen nachgebildeten Server, tritt an dessen Stelle das interne Netzwerk: Es verbindet die beteiligten VMs untereinander, lässt aber weder das Wirtsystem noch das Internet zu. Nicht geeignet ist hier der Modus Host-only, obwohl der Name das nahelegt. Er verbindet die VMs laut Handbuch ausdrücklich auch mit dem Wirtsystem, \enquote{as if they were connected through a physical Ethernet switch}, und öffnet damit genau den Weg, der verschlossen bleiben soll. Richtet die Datei Schaden an, trifft er den Gast; ein zuvor angelegtes Speicherabbild stellt den Ausgangszustand in Sekunden wieder her.
+
+\paragraph{Arbeiten mit einer Werkzeugkette, die Linux verlangt} Ein Vorhaben kann ein Betriebssystem allein über seine Werkzeuge vorgeben. Ich entwerfe außerhalb des Unterrichts einen eigenen Prozessorkern nach der offenen Befehlssatzarchitektur (instruction set architecture) RISC-V, genauer nach deren Basis-Integer-Befehlssatz RV64I, der Register und Adressraum auf 64 Bit festlegt. Beschrieben wird der Kern in SystemVerilog, einer genormten Sprache für Entwurf und Prüfung von Hardware, aus der Simulations- und Syntheseprogramme die Schaltung ableiten. Angestrebt ist am Ende eine Fertigung im 130-Nanometer-Verfahren von SkyWater, dessen Entwurfsdatensatz Google und SkyWater offen veröffentlichen, derzeit ausdrücklich als Vorabstand. Die dafür eingesetzten Werkzeuge laufen unter Linux, der Arbeitsplatz selbst unter Windows. Ohne Virtualisierung blieben zwei Wege: das Wirtsbetriebssystem austauschen oder den Rechner doppelt starten (dual boot). Beide verlangen für jeden Wechsel einen Neustart und trennen die Arbeit am Entwurf von allem, was daneben geöffnet ist. Ein Linux-Gast, hier unter VMware Workstation, hebt diese Trennung auf: Die Werkzeuge laufen im Gast, Begleitmaterial und Vorlesungsvideos bleiben im Wirtsbetriebssystem erreichbar, und der Wechsel zwischen beidem kostet keinen Neustart. Hinzu kommt der Wert des Speicherabbilds. Eine eingerichtete Werkzeugkette ist aufwendig herzustellen, und eine fehlgeschlagene Aktualisierung kann sie als Ganzes unbrauchbar machen; ein Abbild des lauffähigen Zustands verkürzt diesen Schaden auf einen Rücksprung von Sekunden.
+
+\paragraph{Betrieb veralteter Software} Programme, die ein nicht mehr unterstütztes Betriebssystem voraussetzen, laufen in einer VM weiter, wenn die passende Hardware längst nicht mehr beschafft werden kann. Das betrifft in der Praxis Steuerungssoftware für Messgeräte und ältere Fachanwendungen. Eine solche VM gehört vom Netz getrennt, weil das veraltete Gastbetriebssystem keine Sicherheitsaktualisierungen mehr erhält.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Not Attached}, \enquote{Internal Networking} und \enquote{Host-Only Networking} samt Übersichtstabelle 9-1. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+  \item RISC-V International: \emph{The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture}, Abschn. 3.1 \enquote{RV64I Base Integer Instruction Set, Version 2.1}: \enquote{RV64I widens the integer registers and supported user address space to 64 bits (XLEN=64 in RISC-V base unprivileged integer register state).} \url{https://docs.riscv.org/reference/isa/v20260120/unpriv/rv64.html}
+  \item IEEE: \emph{IEEE Standard for SystemVerilog -- Unified Hardware Design, Specification, and Verification Language}, IEEE~1800-2023, veröffentlicht 2024. \url{https://standards.ieee.org/ieee/1800/7743/}
+  \item Google und SkyWater Technology: \emph{SkyWater SKY130 PDK Documentation}, Einleitung: \enquote{Google and SkyWater are currently treating the current content as an experimental preview / alpha release.} \url{https://skywater-pdk.readthedocs.io/}
+  \item Eigene Projektarbeit außerhalb des Unterrichts: Wahl des Gastbetriebssystems, Werkzeugumgebung und Einsatz von VMware Workstation als Hypervisor.
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Wozu würdest du Virtualisierung auf einem Server einsetzen?]
 Nenne und beschreibe drei Anwendungsbeispiele, in denen du Virtualisierung auf einem Server eines Unternehmens einsetzen würdest.
 \end{aufgabe}
 
-% TODO Antwort
+\paragraph{Zusammenlegen schwach ausgelasteter Server} Ein einzelner Dienst schöpft einen heutigen Server selten aus; das Handbuch nennt ausdrücklich, dass Rechner typischerweise nur einen Bruchteil ihrer Leistung nutzen und Virtualisierung deshalb Hardware- und Stromkosten senkt. Statt Dateiserver, Druckserver und Verzeichnisdienst auf drei Geräten zu betreiben, laufen sie als drei VMs auf einem. Jeder Dienst behält sein eigenes Betriebssystem, wodurch eine fehlerhafte Aktualisierung nur den betroffenen Dienst trifft. Eingespart werden Anschaffung, Stellfläche, Strom und Kühlung.
+
+\paragraph{Trennung nach Schutzbedarf} Dienste mit unterschiedlichem Risiko gehören nicht auf dasselbe Betriebssystem. Ein aus dem Internet erreichbarer Webserver läuft in einer eigenen VM, die Personalverwaltung in einer zweiten. Wird der Webserver übernommen, ist der Angreifer im Gast und nicht auf demselben System wie die Personaldaten. Diese Trennung ist billiger als zwei physische Server und feiner steuerbar, weil sich jeder VM ein eigener Netzwerkmodus zuweisen lässt.
+
+\paragraph{Prüfen von Änderungen vor dem Einspielen} Vor einer Aktualisierung des Produktivsystems wird dessen VM geklont und die Aktualisierung am Klon erprobt. Schlägt sie fehl, bleibt der Betrieb unberührt und der Klon wird verworfen. Im laufenden Betrieb erlaubt dasselbe Verfahren, vor einem Eingriff ein Speicherabbild zu setzen und bei Fehlschlag darauf zurückzukehren, statt eine Sicherung einspielen zu müssen. Der zweite Nutzen liegt in der Wiederherstellung: Weil eine VM eine Datei ist, lässt sie sich als Ganzes sichern und auf anderer Hardware wieder in Betrieb nehmen, ohne dass diese der ursprünglichen gleichen muss.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}
 
 \begin{aufgabe}[Welche Vorteile bietet die Virtualisierung in Bezug auf IT-Sicherheit und Ressourcenoptimierung?]
 \end{aufgabe}
 
-% TODO Antwort
+Für die Sicherheit ist die Isolation der tragende Vorteil. Weil ein Gast nur auf zugeteilte Betriebsmittel zugreift, bleibt ein Einbruch auf ihn beschränkt, solange keine Verbindung zum Wirtsystem eingerichtet wurde. Daraus ergeben sich drei Anwendungen: die gefahrlose Untersuchung verdächtiger Software, die Trennung von Diensten nach ihrem Schutzbedarf und der Weiterbetrieb veralteter Systeme, die man ohne Netzanbindung kapselt, statt sie ungeschützt im Netz zu belassen.
+
+Hinzu kommt die schnelle Wiederherstellung. Ein Speicherabbild vor einem Eingriff macht die Rückkehr zum Ausgangszustand zur Sache von Sekunden. Nach einem Befall ist das aussagekräftiger als eine Bereinigung, weil ein zurückgesetzter Gast beweisbar dem Zustand vor dem Vorfall entspricht, während bei einer Bereinigung ungewiss bleibt, ob alles entfernt wurde.
+
+Der Vorteil hat eine Grenze, die zum Verständnis gehört. Die Isolation ist eine Zusicherung des Hypervisors, keine physische Trennung. Eine Schwachstelle im Hypervisor kann einen Ausbruch aus der VM erlauben, und dann sind das Wirtsystem und alle weiteren Gäste betroffen. Der Hypervisor ist deshalb aktuell zu halten und selbst als schützenswerter Bestandteil zu behandeln.
+
+Bei den Betriebsmitteln liegt der Gewinn darin, dass nicht mehr jeder Dienst ein eigenes Gerät braucht. Ein Server, der einen einzelnen Dienst ausführt, bleibt die meiste Zeit weit unter seiner möglichen Auslastung; mehrere VMs auf derselben Maschine teilen sich diese Leistung und heben die Auslastung, ohne die Dienste zusammenzulegen. Das senkt Anschaffungskosten, Stellfläche, Stromverbrauch und Kühlbedarf.
+
+Die Zuteilung lässt sich dabei nachträglich ändern, ohne Hardware zu tauschen: Arbeitsspeicher und Kernzahl einer VM werden in den Einstellungen angepasst, die Ausführungsbegrenzung deckelt bei Bedarf den Zugriff einzelner VMs auf den Prozessor. Eine dynamisch wachsende Festplattendatei belegt zudem nur den tatsächlich genutzten Platz statt der eingestellten Obergrenze.
+
+Auch hier gilt die Einschränkung, dass Betriebsmittel aufgeteilt und nicht vermehrt werden. Wer mehr zuweist, als vorhanden ist, verlagert das Problem in das Auslagern des Wirtsystems und verliert mehr Leistung, als die zusätzliche VM einbringt.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{System Settings}, Unterabschnitt \enquote{Processor Tab}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+\end{itemize}
+\kiquelle[20.\,09.\,2026]{Opus 5}

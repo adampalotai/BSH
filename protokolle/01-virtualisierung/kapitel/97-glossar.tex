@@ -1,0 +1,77 @@
+\chapter{Glossar}
+\label{kap:glossar}
+
+Die Begriffe stehen hier in Kurzfassung, damit sie beim Wiederholen ohne Suche im Haupttext auffindbar sind. Die ausführliche Erklärung samt Herleitung steht jeweils an der angegebenen Stelle; wo kein Kapitel vermerkt ist, wird der Begriff nur beiläufig gebraucht.
+
+\begin{glossar}
+
+\begriff[kap:grundlagen]{AMD-V}
+Die Hardware-Virtualisierungserweiterung der AMD-Prozessoren, Gegenstück zu Intels VT-x. Erlaubt dem Hypervisor, Gastbefehle unmittelbar auf dem Prozessor auszuführen, statt sie nachzubilden.
+
+\begriff[kap:grundlagen]{Appliance}
+Eine virtuelle Maschine, die bereits mit Anwendungen bestückt und für einen bestimmten Zweck eingerichtet ist, etwa als Mailserver. Sie wird als Ganzes eingespielt, statt Betriebssystem und Anwendungen einzeln zu installieren.
+
+\begriff[kap:grundlagen]{Ausführungsbegrenzung}
+Einstellung, die festlegt, welchen Anteil eines physischen Prozessorkerns ein virtueller höchstens beanspruchen darf. Englisch \emph{processing cap}, in älteren Fassungen \emph{execution cap}. Voreinstellung 100\,\%, also keine Begrenzung.
+
+\begriff[kap:grundlagen]{Dynamische Zuweisung}
+Belegungsart einer virtuellen Festplatte, bei der die Datei klein beginnt und bis zur eingestellten Obergrenze mitwächst. Gegenstück ist die feste Größe, die den Platz sofort vollständig belegt.
+
+\begriff[kap:grundlagen]{Extension Pack}
+Getrennt lizenziertes Zusatzpaket zu VirtualBox. Rüstet den VRDP-Server, die Durchreichung einer Webkamera, ein Intel-PXE-Boot-ROM, die Verschlüsselung der Plattenabbilder und die Cloud-Anbindung nach. Steht unter der PUEL und nicht unter der freien Lizenz des Grundpakets. Die Durchreichung von USB 2.0 und 3.0 verlangt es seit Version 7.0 nicht mehr; die Controller dafür stecken im Grundpaket.
+
+\begriff[kap:grundlagen]{Gast}
+Das Betriebssystem, das innerhalb einer virtuellen Maschine läuft. Englisch \emph{guest}. Es behandelt die nachgebildete Hardware wie echte und bemerkt die Virtualisierung im Regelfall nicht.
+
+\begriff{Guest Additions}
+Treiber- und Dienstpaket, das im Gast installiert wird und die Zusammenarbeit mit dem Wirtsystem verbessert: angepasste Bildschirmauflösung, gemeinsame Zwischenablage, gemeinsame Ordner, Mauszeigerintegration.
+
+\begriff[kap:grundlagen]{Host-only}
+Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtsystem verbindet, nicht aber mit dem Internet oder dem übrigen Netz. Zum Abschotten verdächtiger Software ungeeignet, weil der Weg zum Wirtsystem offen bleibt.
+
+\begriff[kap:grundlagen]{Hypervisor}
+Die Software, die virtuelle Maschinen erzeugt und die Zugriffe der Gäste auf die echte Hardware vermittelt. Ein Typ-1-Hypervisor läuft unmittelbar auf der Hardware, ein Typ-2-Hypervisor als Anwendung innerhalb eines Wirtsbetriebssystems. VirtualBox ist ein Typ-2-Hypervisor.
+
+\begriff[kap:grundlagen]{Internes Netzwerk}
+Netzwerkmodus, der ausschließlich die virtuellen Maschinen desselben internen Netzes untereinander verbindet. Weder das Wirtsystem noch das Internet sind erreichbar.
+
+\begriff[kap:grundlagen]{Isolation}
+Die Abschottung einer virtuellen Maschine gegen das Wirtsystem und gegen andere virtuelle Maschinen. Folgt daraus, dass der Gast nur auf zugeteilte Betriebsmittel zugreifen kann. Ein Absturz des Gastes bleibt ohne Wirkung auf das Wirtsystem. Sie ist eine Zusicherung der Software, keine physische Trennung.
+
+\begriff[kap:grundlagen]{Kernisolierung}
+Sicherheitsfunktion neuerer Windows-Fassungen, zusammen mit der Speicherintegrität. Ihre Aktivierung zieht Hyper-V nach sich, auch wenn dieses zuvor abgeschaltet wurde, und beeinträchtigt dadurch die Geschwindigkeit von VirtualBox.
+
+\begriff[kap:grundlagen]{Nicht angeschlossen}
+Netzwerkmodus, in dem VirtualBox dem Gast eine Netzwerkkarte meldet, aber keine Verbindung, so als wäre kein Kabel gesteckt. Englisch \emph{not attached}.
+
+\begriff[kap:grundlagen]{Prozessorstrang}
+Englisch \emph{thread}. Ein Kern kann mehrere Stränge gleichzeitig abarbeiten. Die Unterscheidung zählt bei der Kernzuweisung: Die Obergrenze bemisst sich nach den echten Kernen, während das Handbuch für das Anlegen einer VM höchstens die Hälfte aller Stränge empfiehlt.
+
+\begriff[kap:grundlagen]{PUEL}
+Personal Use and Educational License, die Lizenz des Extension Pack. Gestattet die unentgeltliche Nutzung zu persönlichen Zwecken und im Unterricht, nicht jedoch den gewerblichen Einsatz.
+
+\begriff[kap:grundlagen]{Speicherabbild}
+Festgehaltener Zustand einer virtuellen Maschine, auf den später zurückgekehrt werden kann. Englisch \emph{snapshot}. Lässt sich auch im laufenden Betrieb anlegen; mehrere Abbilder bilden einen Baum.
+
+\begriff[kap:grundlagen]{SSE2}
+Streaming SIMD Extensions~2, eine Befehlssatzerweiterung der x86-Prozessoren. VirtualBox setzt sie auf Intel-Wirtsystemen zwingend voraus.
+
+\begriff[kap:grundlagen]{Typ-1- und Typ-2-Hypervisor}
+Ein Typ-1-Hypervisor läuft unmittelbar auf der Hardware und verlangt den Rechner für sich allein; ein Typ-2-Hypervisor läuft als Anwendung auf einem vollständigen Wirtsbetriebssystem. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.
+
+\begriff[kap:grundlagen]{VDI}
+Virtual Disk Image, das eigene Format von VirtualBox für virtuelle Festplatten. Daneben werden VMDK (VMware) und VHD (Microsoft) unterstützt, die zu wählen sind, wenn die VM auf einem anderen Produkt laufen soll.
+
+\begriff[kap:grundlagen]{Virtualisierung}
+Die Nachbildung eines vollständigen Rechners durch Software. Ein Programm stellt einem Betriebssystem Prozessor, Arbeitsspeicher, Festplatte und Netzwerkkarte bereit, die physisch nicht vorhanden sind.
+
+\begriff[kap:grundlagen]{Virtuelle Maschine (VM)}
+Die nachgebildete Umgebung selbst. Liegt als Datei auf der Festplatte des Wirtsystems und lässt sich deshalb kopieren, sichern und auf einen anderen Rechner übertragen.
+
+\begriff[kap:grundlagen]{VT-x}
+Die Hardware-Virtualisierungserweiterung der Intel-Prozessoren. Das Handbuch nennt sie zwingend für 64-Bit-Gäste und für Gäste mit mehreren virtuellen Prozessorkernen. Auf vielen Geräten ab Werk im BIOS oder UEFI abgeschaltet.
+
+\begriff[kap:grundlagen]{Wirtsystem}
+Der physische Rechner, auf dem der Hypervisor läuft. Englisch \emph{host}. Das darauf installierte Betriebssystem heißt Wirtsbetriebssystem.
+
+\end{glossar}

@@ -13,36 +13,36 @@ Versuch einen Zugriff auf eine Seite im Internet. Erstelle einen Screenshot und 
 
 % TODO MESSUNG: NAT, ipconfig Host und Gast, Ping beide Richtungen, HTTP-Zugriff
 
-\section{Die drei Netzwerkmodi}
-\label{sec:netzmodi}
-
-\begin{aufgabe}[NAT, Bridged und Host only]
+\begin{aufgabe}[Die drei Netzwerkmodi: NAT, Bridged und Host only]
 Erkläre die drei Netzwerkeinstellungen \enquote{NAT}, \enquote{Bridged} und \enquote{Host only} aus dem Handbuch Kap.~6.2ff.
 
 Beschreibe jeden Begriff kurz, und gib an, welche Verbindungen zwischen \textbf{Guest, Host und Internet} funktionieren werden. Erstelle weiters zu jeder Konfiguration eine Skizze mit Internet, Host und Guest auf der die Netzwerktopologie ersichtlich ist.
 \end{aufgabe}
 
+% Handbuchnummern der Angabe (6.2ff) stammen aus einer aelteren Fassung.
+% Aktuell: Kap. 9 "Virtual Networking", Uebersicht in Tabelle 9-1.
+% https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html
+
 \subsection{NAT}
-% TODO Erklaerung, Beleg Handbuch Kap. 6.3
+% TODO Erklaerung, Beleg Handbuch Kap. 9, Abschn. "Network Address Translation (NAT)"
 
 % TODO Tabelle: VM->Host, VM->VM, VM->Internet, Internet->VM, je Ja/Nein + Messbeleg
 % TODO Skizze
 
 \subsection{Bridged oder Netzwerkbrücke}
-% TODO Erklaerung, Beleg Handbuch Kap. 6.5
+% TODO Erklaerung, Beleg Handbuch Kap. 9, Abschn. "Bridged Networking"
 
 % TODO Tabelle vier Zellen
 % TODO Skizze
 
 \subsection{Host only Netzwerk}
-% TODO Erklaerung, Beleg Handbuch Kap. 6.7
+% TODO Erklaerung, Beleg Handbuch Kap. 9, Abschn. "Host-Only Networking"
+% Achtung: laut Tabelle 9-1 ist VM<->Host in diesem Modus moeglich, VM->Internet nicht.
 
 % TODO Tabelle vier Zellen
 % TODO Skizze
 
-\section{Bridged-Konfiguration im Labor}
-
-\begin{aufgabe}[Bridged-Konfiguration]
+\begin{aufgabe}[Bridged-Konfiguration im Labor]
 Stelle die Netzwerkverbindung der VM auf \enquote{Bridged} und verbinde dich mit dem Netzwerk.
 
 Gib der virtuellen Maschine die IP-Adresse des Rechners + 50 (z.\,B. Rechner hat 172.16.110.4, die VM erhält 172.16.110.54), Standardgateway ist 172.16.110.254, DNS ist 172.16.1.231.

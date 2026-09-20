@@ -1,5 +1,73 @@
 \chapter*{Quellenverzeichnis}
 \addcontentsline{toc}{chapter}{Quellenverzeichnis}
+\markboth{Quellenverzeichnis}{Quellenverzeichnis}
 \label{kap:quellen}
 
-% TODO
+Vollständige Liste der herangezogenen Quellen. Welche Aussage aus welcher Quelle stammt, steht im Quellenblock der jeweiligen Aufgabe; dort ist auch die Mitwirkung von KI an der Textfassung im Einzelnen gekennzeichnet. Sämtliche Netzquellen wurden zuletzt am 20.\,09.\,2026 abgerufen.
+
+\section*{Primärdokumentation}
+
+\begin{itemize}[nosep]
+  \item Oracle: \emph{Oracle VirtualBox -- User Guide for Release 7.2}. Fassung G17187-04, Februar 2026.
+  \begin{itemize}[nosep]
+    \item Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung sowie Abschn. \enquote{Oracle VirtualBox Components} und \enquote{Oracle VirtualBox Features}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{Intel Host CPU Requirements}, \enquote{Choosing an Installation Package} und \enquote{Arm Host Limitations}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
+    \item Kap. 4 \enquote{Creating a New Virtual Machine}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
+    \item Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{System Settings}, Unterabschnitt \enquote{Processor Tab}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+    \item Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{Hard Disk Controllers} und \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+    \item Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Not Attached}, \enquote{Internal Networking}, \enquote{Host-Only Networking} und Tabelle 9-1. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+    \item Kap. 16 \enquote{Reference}, Abschn. \enquote{Windows on Arm Hosts}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/reference.html}
+    \item Kap. \enquote{Technical Background}, Abschn. \enquote{Hardware Virtualization}. \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
+    \item Kap. \enquote{Known Limitations}, Abschnitt zu Hyper-V auf dem Windows-Wirtsystem. \url{https://www.virtualbox.org/manual/topics/KnownIssues.html}
+  \end{itemize}
+  Die nummerierten Kapitel sind über \cmd{docs.oracle.com} zitiert, weil nur dort die Nummer über dem Kapitel steht. Die beiden letzten Abschnitte führt das Handbuch ohne Nummer; sie erscheinen ausschließlich in der Fassung auf \cmd{virtualbox.org}.
+
+  \item Oracle VirtualBox: \emph{Changelog for VirtualBox 7.0}, Abschnitt \enquote{Devices}. Übergang der USB-Controller EHCI und xHCI in das quelloffene Grundpaket. \url{https://www.virtualbox.org/wiki/Changelog-7.0}
+  \item Google und SkyWater Technology: \emph{SkyWater SKY130 PDK Documentation}, Einleitung zum Stand des offenen Entwurfsdatensatzes. \url{https://skywater-pdk.readthedocs.io/}
+\end{itemize}
+
+\section*{Normen und Spezifikationen}
+
+\begin{itemize}[nosep]
+  \item RISC-V International: \emph{The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture}, Abschn. 3.1 \enquote{RV64I Base Integer Instruction Set, Version 2.1}. \url{https://docs.riscv.org/reference/isa/v20260120/unpriv/rv64.html}
+  \item IEEE: \emph{IEEE Standard for SystemVerilog -- Unified Hardware Design, Specification, and Verification Language}, IEEE~1800-2023, veröffentlicht 2024. \url{https://standards.ieee.org/ieee/1800/7743/}
+\end{itemize}
+
+\section*{Systemanforderungen der Gastbetriebssysteme}
+
+\begin{itemize}[nosep]
+  \item Microsoft: \enquote{Hardware Requirements for Windows Server}, Registerkarten RAM und Storage, Angaben für Windows Server 2019. \url{https://learn.microsoft.com/en-us/windows-server/get-started/hardware-requirements}
+  \item Linux Mint: \enquote{Frequently Asked Questions}, Abschnitt zu den Systemvoraussetzungen. \url{https://linuxmint.com/faq.php}
+\end{itemize}
+
+\section*{Lizenzbestimmungen}
+
+\begin{itemize}[nosep]
+  \item Oracle: \emph{Oracle VirtualBox Extension Pack Personal Use and Educational License}, Fassung 12 vom 22.\,07.\,2024. \url{https://www.virtualbox.org/wiki/VirtualBox_PUEL}
+\end{itemize}
+
+\section*{Herstellermitteilungen}
+
+\begin{itemize}[nosep]
+  \item Broadcom: \enquote{VMware Fusion and Workstation are Now Free for All Users}. VMware Cloud Foundation Blog, 11.\,11.\,2024. \url{https://blogs.vmware.com/cloud-foundation/2024/11/11/vmware-fusion-and-workstation-are-now-free-for-all-users/}
+  \item Microsoft: \enquote{Hyper-V virtualization in Windows Server and Windows}. Microsoft Learn. \url{https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview}
+  \item KVM-Projekt: \emph{Kernel-based Virtual Machine}. Projektseite. \url{https://linux-kvm.org/page/Main_Page}
+\end{itemize}
+
+\section*{Angabenunterlagen}
+
+Bereitgestellt über Moodle, HTBLA Traun, Betriebssysteme 3AHIT.
+
+\begin{itemize}[nosep]
+  \item \emph{Virtualisierung.} Angabe zum Protokoll.
+  \item \emph{Client-Server.} Angabe zur Protokollerweiterung, Fassung V170901.
+  \item \emph{Erstellen und Abgabe von Protokollen.} Formvorgaben.
+  \item \emph{Beurteilung.} Bewertungsraster.
+  \item \emph{Rolle der KI.} Vorgaben zur Kennzeichnung.
+\end{itemize}
+
+\section*{Eigene Messungen und eigene Projektarbeit}
+
+Die im Protokoll dokumentierten Versuche sind eigenständig durchgeführt und im jeweiligen Messblock mit Aufbau, Durchführung, Rohdaten und Deutung festgehalten.
+
+Das in Kapitel~\ref{kap:grundlagen} als Anwendungsbeispiel angeführte Vorhaben zum Entwurf eines eigenen Prozessorkerns nach RISC-V entsteht außerhalb des Unterrichts. Angaben zu Gastbetriebssystem, Werkzeugumgebung und eingesetztem Hypervisor stammen von dort und sind keiner fremden Quelle entnommen.
