@@ -8,6 +8,14 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage{lmodern}
 \renewcommand{\familydefault}{\sfdefault}
+% Angabentexte enthalten unteilbare Bindestrichwoerter in schmalen Boxen
+\setlength{\emergencystretch}{1em}
+
+% \paragraph darf nicht allein am Seitenfuss stehen; betrifft vor allem
+% die Quellenbloecke, deren Liste sonst auf der Folgeseite beginnt
+\RequirePackage{needspace}
+\let\bsh@origparagraph\paragraph
+\renewcommand{\paragraph}{\needspace{3\baselineskip}\bsh@origparagraph}
 \RequirePackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{xcolor}
@@ -23,7 +31,11 @@
 \RequirePackage{enumitem}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,arrows.meta,calc}
 \RequirePackage[hidelinks]{hyperref}
+% bricht lange URLs im Quellenblock statt über den Rand zu laufen
+\RequirePackage{xurl}
 
 % ── Farben ────────────────────────────────────────────────────────────────
 \definecolor{htlgruen}{RGB}{140,190,70}
@@ -73,7 +85,7 @@
   keywordstyle=\color{akzent}\bfseries,
   commentstyle=\color{rahmengrau}\itshape,
   numbers=left,
-  numberstyle=\tiny\color{rahmengrau},
+  numberstyle=\footnotesize\color{rahmengrau},
   numbersep=8pt,
   xleftmargin=16pt,
   framexleftmargin=16pt,
@@ -86,24 +98,37 @@
 % Inline-Befehl: \cmd{ipconfig /all}
 \newcommand{\cmd}[1]{\texttt{\small #1}}
 
-% KI-Kennzeichnung, von der Angabe je Antwort verlangt
-\newcommand{\kiquelle}[1]{Text erarbeitet mit Claude #1 (Anthropic)}
-\newcommand{\kiquellekurz}[1]{Claude #1}
+% KI-Kennzeichnung, von der Angabe je Antwort verlangt.
+% Steht bewusst ausserhalb der Quellenliste: die Textherkunft ist kein Beleg.
+% \kiquelle[20.\,09.\,2026]{Opus 5} -- Datum wie im Beispielformat der Angabe
+\newcommand{\kiquelle}[2][]{%
+  \par\smallskip
+  {\footnotesize\color{rahmengrau}%
+   Textfassung erarbeitet mit Claude #2 (Anthropic)%
+   \ifx\\#1\\\else, Stand #1\fi; die Sachaussagen sind
+   den oben genannten Quellen entnommen.}%
+  \par
+}
 
 % ── Aufgabenblock: rahmt die Angabenfrage wie in der Vorlage ──────────────
-\newtcolorbox{aufgabe}[1][]{
+% Der Titel wird zugleich Abschnittsueberschrift, sonst steht ein
+% zehnseitiges Kapitel ohne einen einzigen Eintrag im Inhaltsverzeichnis.
+\newtcolorbox{bsh@aufgabenbox}{
   breakable,
   colback=fuellgrau,
   colframe=rahmengrau,
   boxrule=0.4pt,
   arc=0pt,
+  before skip=\baselineskip, after skip=0.6\baselineskip,
   left=6pt,right=6pt,top=6pt,bottom=6pt,
-  fonttitle=\bfseries,
-  title={#1},
-  coltitle=black,
-  colbacktitle=fuellgrau,
-  titlerule=0pt,
   parbox=false,
+}
+\newenvironment{aufgabe}[1][]{%
+  \def\bsh@aufgabentitel{#1}%
+  \ifx\bsh@aufgabentitel\@empty\else\section{#1}\fi
+  \bsh@aufgabenbox
+}{%
+  \endbsh@aufgabenbox
 }
 
 % ── Messblock: Aufbau, Durchführung, Beobachtung, Deutung ─────────────────
@@ -121,7 +146,9 @@
 }
 
 % ── Abbildungen ───────────────────────────────────────────────────────────
-\captionsetup{font=small,labelfont=bf,labelsep=period}
+\captionsetup{font=small,labelfont=bf,labelsep=period,figurename=Abbildung,tablename=Tabelle}
+\renewcommand*{\figureformat}{\figurename~\thefigure}
+\renewcommand*{\tableformat}{\tablename~\thetable}
 \newcommand{\bild}[3]{%
   \begin{figure}[H]
     \centering
@@ -151,8 +178,49 @@
 }
 
 % ── Verzeichnisse ─────────────────────────────────────────────────────────
+% zweistellige Abschnittsnummern wie 10.10 sprengen die Voreinstellung
+\DeclareTOCStyleEntry[numwidth=3.2em]{tocline}{section}
+
 \newcommand{\verzeichnisse}{%
   \tableofcontents
   \listoffigures
   \cleardoublepage
+}
+
+% ── Zeichnungen ───────────────────────────────────────────────────────────
+% Gemeinsame Formen für alle Schemata, damit Strichstärke und Farbe über
+% sechs Protokolle hinweg gleich bleiben.
+\tikzset{
+  schicht/.style={
+    draw=rahmengrau, line width=0.4pt, fill=fuellgrau,
+    minimum height=8mm, align=center, font=\small,
+    inner xsep=6pt,
+  },
+  schichthervor/.style={schicht, fill=akzent!12, draw=akzent},
+  gast/.style={schicht, fill=htlgruen!20, draw=htlgruen!70!black},
+  fluss/.style={-{Stealth[length=2mm]}, draw=akzent, line width=0.5pt},
+  beschriftung/.style={font=\footnotesize\itshape, text=rahmengrau},
+}
+
+% ── Glossar ───────────────────────────────────────────────────────────────
+% Begriff, Kurzdefinition, Rückverweis auf die Stelle der Einführung.
+% Die Langfassung bleibt im Fließtext; hier steht nur, was zum Wiedererkennen
+% reicht.
+\newenvironment{glossar}{%
+  \begin{description}[
+    style=nextline,
+    leftmargin=0.8cm,
+    labelindent=0pt,
+    labelsep=0.3cm,
+    font=\normalfont\bfseries,
+    itemsep=0.45\baselineskip,
+    parsep=0pt,
+  ]
+}{%
+  \end{description}
+}
+
+% \begriff{Snapshot} oder \begriff[kap:grundlagen]{Snapshot}
+\newcommand{\begriff}[2][]{%
+  \item[#2\ifx\\#1\\\else\quad{\normalfont\footnotesize\color{rahmengrau}(Kap.~\ref{#1})}\fi]%
 }
