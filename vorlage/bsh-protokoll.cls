@@ -113,6 +113,8 @@
 % ── Aufgabenblock: rahmt die Angabenfrage wie in der Vorlage ──────────────
 % Der Titel wird zugleich Abschnittsueberschrift, sonst steht ein
 % zehnseitiges Kapitel ohne einen einzigen Eintrag im Inhaltsverzeichnis.
+\RequirePackage{environ}
+\RequirePackage{xstring}
 \newtcolorbox{bsh@aufgabenbox}{
   breakable,
   colback=fuellgrau,
@@ -123,12 +125,19 @@
   left=6pt,right=6pt,top=6pt,bottom=6pt,
   parbox=false,
 }
-\newenvironment{aufgabe}[1][]{%
+% Manche Angaben stellen die Frage schon im Titel und liefern keinen
+% eigenen Beschreibungstext (z.B. Aufg. 2.8); dann bleibt die Box leer
+% und wird deshalb ausgelassen, statt einen leeren Rahmen zu zeigen.
+% \expandafter noetig: \IfBlankTF{\BODY} sieht sonst nur das Makro \BODY
+% selbst (immer "nicht leer"), nicht dessen Inhalt.
+\NewEnviron{aufgabe}[1][]{%
   \def\bsh@aufgabentitel{#1}%
   \ifx\bsh@aufgabentitel\@empty\else\section{#1}\fi
-  \bsh@aufgabenbox
-}{%
-  \endbsh@aufgabenbox
+  \expandafter\IfBlankTF\expandafter{\BODY}{}{%
+    \begin{bsh@aufgabenbox}
+    \BODY
+    \end{bsh@aufgabenbox}%
+  }%
 }
 
 % ── Messblock: Aufbau, Durchführung, Beobachtung, Deutung ─────────────────
