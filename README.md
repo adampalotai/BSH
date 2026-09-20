@@ -1,6 +1,6 @@
 # BSH-Laborprotokolle
 
-Laborprotokolle für den Unterrichtsgegenstand Betriebssysteme, HTBLA Traun, Klasse 3AHIT, Schuljahr 2026/2027. Verfasser: Adam Ferenc Palotai. Betreuung: Prof. Gaisberger.
+Laborprotokolle für den Unterrichtsgegenstand Betriebssysteme, HTBLA Traun, Klasse 3AHIT, Schuljahr 2026/2027.
 
 Sechs Protokolle sind zu erarbeiten, zu jedem gehören eine Theorieprüfung und eine praktische Leistungsfeststellung. Dieses Repository enthält den Quelltext der Protokolle, die zugehörigen Angaben und die abgegebenen PDF-Stände.
 

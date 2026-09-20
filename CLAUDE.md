@@ -16,7 +16,7 @@ Daraus folgt die Anforderung an den Text: inhaltlich richtig, formal einwandfrei
 
 Claude schreibt die Texte, Adam verantwortet und versteht sie.
 
-Modellwahl: Opus 5 für Konzeption, Kapitelaufbau, Argumentationsführung und Fließtext, Effort hoch. Sonnet 5 für Mechanisches (LaTeX-Fehler, Screenshot-Einbindung, Verzeichnisdurchsicht, Rechtschreibung), Effort mittel.
+Modellwahl gilt für Protokollinhalt: Opus 5 für Konzeption, Kapitelaufbau, Argumentationsführung und Fließtext, Effort hoch. Sonnet 5 für Mechanisches (LaTeX-Fehler, Screenshot-Einbindung, Verzeichnisdurchsicht, Rechtschreibung), Effort mittel. Für Projektpflege außerhalb der Protokolle (CLAUDE.md, Skills, Memory, `intern/ARBEITSSTAND.md`) ist die Modellwahl frei.
 
 Die Angabe `Rolle der KI.pdf` verlangt die Kennzeichnung bei jeder einzelnen Antwort, ausdrücklich auch bei umgeschriebenem Text. Umgesetzt über `\kiquelle{}` im Quellenblock. Diese Kennzeichnung ersetzt den Sachbeleg nicht.
 
@@ -31,3 +31,13 @@ VirtualBox-spezifische Versuche gehören ins Labor. Allgemeine Netzwerk- und Pro
 ## Skills
 
 `bsh-research` Quellenpolitik und Belegpflicht. `bsh-protokoll` Formvorgaben und LaTeX-Konventionen. `bsh-messung` Versuchsdokumentation. `bsh-schreibstil` Stil der Protokolltexte. `bsh-committing` Commit-Konvention.
+
+Vor jeder Aufgabe, auf die einer dieser Trigger zutrifft, den Skill laden, nicht nur seine Regel aus dem Gedächtnis anwenden. Bei mehreren zutreffenden Skills alle laden.
+
+## Sprache
+
+Antworten im Chat auf Deutsch, auch wenn die Anfrage auf Englisch kommt. Ausnahme: der Benutzer wechselt selbst die Sprache oder bittet ausdrücklich um eine andere.
+
+## Kein Bloat
+
+Arbeitsstand und Memory halten fest, was noch gebraucht wird: BSH-Sachwissen, Projektstand, Rechercheergebnisse. Nicht: wer wann was gesagt hat, sobald die Information daraus gezogen ist. Eine erledigte Frage verschwindet, ihre Antwort bleibt, wenn sie inhaltlich noch zählt. Bei jeder Aktualisierung von `intern/ARBEITSSTAND.md` oder der Memory prüfen, was gestrichen werden kann, nicht nur, was hinzukommt.
