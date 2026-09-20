@@ -1,6 +1,6 @@
 ---
 name: bsh-messung
-description: Wie ein praktischer Versuch im Protokoll dokumentiert wird — Aufbau, Durchführung, Rohdaten, Beobachtung, Deutung, und die strikte Trennung zwischen Gemessenem und Erwartetem. TRIGGER bei jedem Kapitel mit Screenshots, Messwerten, Konsolenausgaben oder Konfigurationsschritten, und bevor irgendein Versuchsergebnis ins Protokoll geschrieben wird. SKIP bei rein theoretischen Aufgaben ohne praktischen Teil.
+description: Wie ein praktischer Versuch im Protokoll dokumentiert wird - Aufbau, Durchführung, Rohdaten, Beobachtung, Deutung, und die strikte Trennung zwischen Gemessenem und Erwartetem. TRIGGER bei jedem Kapitel mit Screenshots, Messwerten, Konsolenausgaben oder Konfigurationsschritten, und bevor irgendein Versuchsergebnis ins Protokoll geschrieben wird. SKIP bei rein theoretischen Aufgaben ohne praktischen Teil.
 user-invocable: true
 ---
 

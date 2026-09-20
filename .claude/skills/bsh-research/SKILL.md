@@ -1,6 +1,6 @@
 ---
 name: bsh-research
-description: Quellenpolitik für die BSH-Protokolle — welche Quellen zählen, in welcher Reihenfolge ihnen zu trauen ist, und wie ein Beleg im Protokoll aussieht. TRIGGER bevor irgendeine Fachaussage in eine Protokolldatei geschrieben wird, bei jeder Portnummer, Versionsangabe, Grenzwertangabe oder Herstellerbehauptung, und wenn der Benutzer um Recherche bittet. SKIP nur, wenn die Aussage bereits im Protokoll belegt ist und lediglich umformuliert wird.
+description: Quellenpolitik für die BSH-Protokolle - welche Quellen zählen, in welcher Reihenfolge ihnen zu trauen ist, und wie ein Beleg im Protokoll aussieht. TRIGGER bevor irgendeine Fachaussage in eine Protokolldatei geschrieben wird, bei jeder Portnummer, Versionsangabe, Grenzwertangabe oder Herstellerbehauptung, und wenn der Benutzer um Recherche bittet. SKIP nur, wenn die Aussage bereits im Protokoll belegt ist und lediglich umformuliert wird.
 user-invocable: true
 ---
 

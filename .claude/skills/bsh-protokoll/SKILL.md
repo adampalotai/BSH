@@ -1,6 +1,6 @@
 ---
 name: bsh-protokoll
-description: Form- und Aufbauregeln der BSH-Protokolle sowie die LaTeX-Konventionen dieses Projekts — Deckblatt, Verzeichnisse, Aufgabenblöcke, Screenshots, Quellenblöcke, Abgabeformat. TRIGGER bei jeder Bearbeitung einer Datei unter protokolle/, beim Anlegen eines neuen Protokolls, und vor jeder Abgabe. SKIP nur außerhalb des Protokollverzeichnisses.
+description: Form- und Aufbauregeln der BSH-Protokolle sowie die LaTeX-Konventionen dieses Projekts - Deckblatt, Verzeichnisse, Aufgabenblöcke, Screenshots, Quellenblöcke, Abgabeformat. TRIGGER bei jeder Bearbeitung einer Datei unter protokolle/, beim Anlegen eines neuen Protokolls, und vor jeder Abgabe. SKIP nur außerhalb des Protokollverzeichnisses.
 user-invocable: true
 ---
 
@@ -30,7 +30,7 @@ Umsetzung: `\kiquelle{Opus 5}` beziehungsweise `\kiquelle{Sonnet 5}` als Eintrag
 
 Diese Pflicht steht neben der Belegpflicht aus `bsh-research`, sie ersetzt sie nicht. Eine Antwort trägt beides: die Primärquelle für die Sachaussage und die KI-Kennzeichnung für die Textherkunft.
 
-Die Kennzeichnung ist eine Tatsachenangabe, kein Stilelement. Sie steht im Quellenblock, nüchtern, ohne wechselnde Formulierungen von Absatz zu Absatz zu erzwingen — es genügt, dass sie über das Dokument hinweg nicht wortidentisch aussieht wie eine automatisch eingefügte Vorlage. Wichtiger als Abwechslung in dieser einen Zeile ist, dass der übrige Text der Aufgabe nicht nach KI-Textmuster klingt: keine Gedankenstriche als Häufungsfigur, keine dreiteiligen Aufzählungssätze als Reflex, keine Floskeln wie "es ist wichtig zu beachten". Siehe `bsh-schreibstil`.
+Die Kennzeichnung ist eine Tatsachenangabe, kein Stilelement. Sie steht im Quellenblock, nüchtern, ohne wechselnde Formulierungen von Absatz zu Absatz zu erzwingen - es genügt, dass sie über das Dokument hinweg nicht wortidentisch aussieht wie eine automatisch eingefügte Vorlage. Wichtiger als Abwechslung in dieser einen Zeile ist, dass der übrige Text der Aufgabe nicht nach KI-Textmuster klingt: keine Gedankenstriche als Häufungsfigur, keine dreiteiligen Aufzählungssätze als Reflex, keine Floskeln wie "es ist wichtig zu beachten". Siehe `bsh-schreibstil`.
 
 ## Formkriterien der Beurteilung
 

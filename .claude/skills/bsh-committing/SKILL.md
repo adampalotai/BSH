@@ -1,6 +1,6 @@
 ---
 name: bsh-committing
-description: Commit-Konvention für das BSH-Protokollprojekt — deutsch, Abschnittsbezug im Betreff, Aufzählung im Rumpf, keine Co-Author-Zeilen, nie pushen. TRIGGER wenn Adam committen sagt, um eine Commit-Nachricht bittet, oder ein Arbeitsabschnitt fertig ist und festgehalten werden soll. SKIP für push, branch, rebase und das Lesen der Historie.
+description: Commit-Konvention für das BSH-Protokollprojekt - deutsch, Abschnittsbezug im Betreff, Aufzählung im Rumpf, keine Co-Author-Zeilen, nie pushen. TRIGGER wenn Adam committen sagt, um eine Commit-Nachricht bittet, oder ein Arbeitsabschnitt fertig ist und festgehalten werden soll. SKIP für push, branch, rebase und das Lesen der Historie.
 user-invocable: true
 ---
 
@@ -10,17 +10,7 @@ Arbeit fertig, dann committen. Nie unaufgefordert.
 
 ## Regeln
 
-Deutsch, weil das Projekt deutsch ist.
-
-Betreffzeile kurz, mit Protokollnummer und Abschnitt. Sie benennt die Änderung, nicht die Datei.
-
-Rumpf als Aufzählung, ein Punkt je inhaltliche Änderung.
-
-Keine Co-Author-Zeilen, kein `Generated with Claude Code`.
-
-Nie pushen. Adam pusht.
-
-Vor jedem Commit `git status` prüfen und sehen, was tatsächlich eingeht. Keine Hilfsdateien der Kompilation, keine Zwischenstände aus dem Scratchpad.
+Deutsch, weil das Projekt deutsch ist. Betreffzeile kurz, mit Protokollnummer und Abschnitt. Sie benennt die Änderung, nicht die Datei. Rumpf als Aufzählung, ein Punkt je inhaltliche Änderung. Keine Co-Author-Zeilen, kein `Generated with Claude Code`. Nie pushen, der Benutzer pusht. Vor jedem Commit `git status` prüfen und sehen, was tatsächlich eingeht. Keine Hilfsdateien der Kompilation, keine Zwischenstände aus dem Scratchpad.
 
 ## Format
 

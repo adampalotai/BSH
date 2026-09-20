@@ -1,6 +1,6 @@
 ---
 name: bsh-schreibstil
-description: Schreibstil der Protokolltexte — wissenschaftlich und gehoben, aber auf Adams Verständnisniveau, weil er die Protokolle als Prüfungsunterlage braucht. TRIGGER vor jedem Fließtext, der in eine Protokolldatei geschrieben wird. SKIP für Antworten im Chat, dort gilt die globale CLAUDE.md.
+description: Schreibstil der Protokolltexte - wissenschaftlich und gehoben, aber auf Adams Verständnisniveau, weil er die Protokolle als Prüfungsunterlage braucht. TRIGGER vor jedem Fließtext, der in eine Protokolldatei geschrieben wird. SKIP für Antworten im Chat, dort gilt die globale CLAUDE.md.
 user-invocable: true
 ---
 
@@ -38,7 +38,7 @@ Keine Behauptung ohne Beleg. Siehe `bsh-research`.
 
 Keine Länge um der Länge willen. Die Angabe warnt ausdrücklich vor zu viel Text, der vom Wesentlichen ablenkt.
 
-Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeichnet, soll aber nicht danach klingen. Kein Gedankenstrich als Häufungsfigur ("Virtualisierung ist effizient — sie spart Hardware, Energie und Platz"), Kommas oder ein neuer Satz leisten das genauso. Keine dreiteilige Aufzählung als Stilreflex, nur wo tatsächlich drei Dinge aufzuzählen sind. Kein "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen". Ein Absatz beginnt mit dem Gedanken, nicht mit einer Ankündigung des Gedankens.
+Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeichnet, soll aber nicht danach klingen. Kein Gedankenstrich als Häufungsfigur ("Virtualisierung ist effizient - sie spart Hardware, Energie und Platz"), Kommas oder ein neuer Satz leisten das genauso. Keine dreiteilige Aufzählung als Stilreflex, nur wo tatsächlich drei Dinge aufzuzählen sind. Kein "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen". Ein Absatz beginnt mit dem Gedanken, nicht mit einer Ankündigung des Gedankens.
 
 ## Prüfungstauglichkeit
 
