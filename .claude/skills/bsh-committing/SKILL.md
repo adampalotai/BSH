@@ -17,9 +17,9 @@ Deutsch, weil das Projekt deutsch ist. Betreffzeile kurz, mit Protokollnummer un
 ```
 P1 Netzwerkkonfiguration: NAT-Kapitel ausgearbeitet
 
-- Theorieteil zu Adressumsetzung mit Handbuchbeleg Kap. 6.3
+- Theorieteil zu Adressumsetzung mit Handbuchbeleg Kap. 9
 - Versuchsdokumentation Ping Gast zu Host, vier Screenshots
-- Deutung der Erreichbarkeit unter 10.0.2.2 ergaenzt
+- Deutung der Erreichbarkeit unter 10.0.2.2 ergänzt
 ```
 
 Eine einzeilige Änderung darf den Rumpf auslassen. Eine Änderung über mehrere Kapitel braucht ihn.

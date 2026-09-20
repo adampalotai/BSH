@@ -6,7 +6,7 @@ user-invocable: true
 
 # Schreibstil im Protokoll
 
-Achtung: Dieser Skill gilt für den Protokolltext, nicht für Chatantworten. Im Chat gilt weiterhin `~/.claude/CLAUDE.md` mit kurzen, knappen Antworten. Im Protokoll gilt das Gegenteil: ausformuliert, zusammenhängend, erklärend.
+Für Protokolltext, nicht für Chatantworten: dort gilt `~/.claude/CLAUDE.md` und damit das Gegenteil dieser Regeln.
 
 ## Der Zielkonflikt
 
@@ -42,6 +42,8 @@ Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeich
 
 ## Prüfungstauglichkeit
 
-Was in der praktischen Prüfung gebraucht wird, muss auffindbar sein. Konkrete Werte, Befehle und Schrittfolgen gehören in Listings und Tabellen, nicht in den Fließtext vergraben.
+Konkrete Werte, Befehle und Schrittfolgen gehören in Listings und Tabellen, wo sie beim Durchblättern auffindbar sind, nicht in den Fließtext vergraben.
 
-Nach jedem größeren Kapitel darf ein kurzer Absatz stehen, der das Prüfungsrelevante bündelt. Die Angabe verlangt ausdrücklich, prüfungsrelevante Aspekte klar hervorzuheben.
+Die Angabe verlangt, prüfungsrelevante Aspekte klar hervorzuheben. Eingelöst wird das im Satzbau: Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er für sich allein eine Prüfungsfrage beantwortet. Eine Erklärung, die über drei Kapitel verteilt ist, besteht diesen Test nicht, auch wenn sie vollständig ist.
+
+Ein Kapitel darf mit einem bündelnden Absatz schließen, wo mehrere Fäden zusammenlaufen. Nach jedem Kapitel wird daraus eine Floskel.

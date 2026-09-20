@@ -6,9 +6,9 @@ user-invocable: true
 
 # Messung und Versuchsdokumentation
 
-Hier entsteht der Unterschied zwischen einem erfüllten und einem überraschenden Protokoll. Die Angabe fragt oft nur nach einer Tabelle mit Ja und Nein. Wer stattdessen misst, belegt und deutet, beantwortet dieselbe Frage auf einem anderen Niveau.
+Die Angabe fragt oft nur nach einer Tabelle mit Ja und Nein. Wer stattdessen misst, belegt und deutet, beantwortet dieselbe Frage auf einem anderen Niveau. Das Niveau des Protokolls entsteht hier und nicht in der Sprache.
 
-## Eiserne Regel
+## Grundregel
 
 Nie ein Ergebnis schreiben, das nicht gelaufen ist. Kein erfundener Ping, keine ausgedachte Ausgabe, keine plausible Zahl. Wenn ein Versuch nicht durchgeführt wurde, steht das da, und der Abschnitt bleibt als `% TODO MESSUNG: <was zu messen ist, wo, womit>` offen, bis Adam die Daten liefert.
 
@@ -38,9 +38,9 @@ Bei Snapshots lässt sich der Speicherplatzverbrauch vor und nach dem Snapshot v
 
 Bei Guest Additions lässt sich dieselbe Operation mit und ohne Additions durchführen, etwa Bildschirmauflösung, Mauszeiger, Zwischenablage.
 
-## Typische Fallen, die zu erklären sind statt zu verschweigen
+## Typische Fallen
 
-Der Ping vom Host zum Gast scheitert im Bridged-Modus häufig an der Firewall des Gastsystems, nicht an der Netzwerkkonfiguration. Windows blockt eingehendes ICMP standardmäßig. Wer das erkennt, benennt und mit einer Regeländerung belegt, zeigt Verständnis; wer es als Fehlschlag meldet, verschenkt Punkte.
+Der Ping vom Host zum Gast scheitert im Bridged-Modus häufig an der Firewall des Gastsystems, nicht an der Netzwerkkonfiguration; Windows blockt eingehendes ICMP standardmäßig. Das gehört erkannt, benannt und mit einer Regeländerung belegt, statt als Fehlschlag gemeldet.
 
 Im NAT-Modus ist der Host vom Gast aus unter der Gateway-Adresse des NAT-Netzes erreichbar, typischerweise 10.0.2.2, nicht unter seiner LAN-Adresse. Das ist der häufigste Grund für einen scheinbar fehlschlagenden Ping.
 
