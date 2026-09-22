@@ -100,7 +100,7 @@
 
 % KI-Kennzeichnung, von der Angabe je Antwort verlangt.
 % Steht bewusst ausserhalb der Quellenliste: die Textherkunft ist kein Beleg.
-% \kiquelle[20.\,09.\,2026]{Opus 5} -- Datum wie im Beispielformat der Angabe
+% \kiquelle[20.\,09.\,2026]{Opus 5.5} -- Datum wie im Beispielformat der Angabe
 \newcommand{\kiquelle}[2][]{%
   \par\smallskip
   {\footnotesize\color{rahmengrau}%

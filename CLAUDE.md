@@ -14,7 +14,7 @@ Die Theorieprüfung findet ohne Unterlagen statt, das Protokoll ist dort Lernmat
 
 Claude schreibt die Texte, Adam verantwortet und versteht sie. "Quelle: Claude" als Beleg für eine Fachaussage kommt nie ins Protokoll; die Kennzeichnungspflicht regelt `bsh-protokoll`, die Belege regelt `bsh-research`.
 
-Modellwahl für Protokollinhalt: Opus 5 für Konzeption, Kapitelaufbau, Argumentationsführung und Fließtext, Effort hoch. Sonnet 5 für Mechanisches wie LaTeX-Fehler, Screenshot-Einbindung, Verzeichnisdurchsicht und Rechtschreibung, Effort mittel. Für Projektpflege außerhalb der Protokolle ist die Modellwahl frei.
+Modellwahl für Protokollinhalt: Opus 5.5 für Konzeption, Kapitelaufbau, Argumentationsführung und Fließtext, Effort hoch. Sonnet 5 für Mechanisches wie LaTeX-Fehler, Screenshot-Einbindung, Verzeichnisdurchsicht und Rechtschreibung, Effort mittel. Für Projektpflege außerhalb der Protokolle ist die Modellwahl frei.
 
 ## Umgebung
 

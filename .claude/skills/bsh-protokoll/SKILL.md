@@ -26,9 +26,9 @@ Die Felder "GPT Weitere Fragen" entfallen ab diesem Schuljahr und werden nicht a
 
 Die Angabe verlangt bei jeder einzelnen Antwort den Hinweis, dass sie mit KI erstellt wurde, ausdrücklich auch bei umgeschriebenem Text. Keine Sammelangabe am Dokumentende.
 
-Umsetzung: `\kiquelle[20.\,09.\,2026]{Opus 5}` nach dem `\end{itemize}` des Quellenblocks. Das Datum verlangt das Beispielformat der Angabe; es benennt den Stand der Textfassung, nicht den Tag des Baus.
+Umsetzung: `\kiquelle[20.\,09.\,2026]{Opus 5.5}` nach dem `\end{itemize}` des Quellenblocks. Das Datum verlangt das Beispielformat der Angabe; es benennt den Stand der Textfassung, nicht den Tag des Baus.
 
-Claude ist keine Quelle. Die Zeile nennt die Herkunft der Textfassung, der Quellenblock die Herkunft der Information; ein `\item` mit "Claude Opus 5" behauptet das Gegenteil. Findet sich für eine Aussage kein Beleg, wird sie gestrichen oder als eigene Ableitung kenntlich gemacht, nie der KI zugeschrieben.
+Claude ist keine Quelle. Die Zeile nennt die Herkunft der Textfassung, der Quellenblock die Herkunft der Information; ein `\item` mit "Claude Opus 5.5" behauptet das Gegenteil. Findet sich für eine Aussage kein Beleg, wird sie gestrichen oder als eigene Ableitung kenntlich gemacht, nie der KI zugeschrieben.
 
 ## Formkriterien der Beurteilung
 
@@ -70,7 +70,7 @@ Nach jeder beantworteten Aufgabe folgt der Quellenblock:
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Host-Only Networking}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
   \item Eigene Messung, Abschnitt~\ref{mess:nat-ping}
 \end{itemize}
-\kiquelle[20.\,09.\,2026]{Opus 5}
+\kiquelle[20.\,09.\,2026]{Opus 5.5}
 ```
 
 ## Vor jeder Abgabe

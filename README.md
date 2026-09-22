@@ -37,6 +37,6 @@ Erzeugt `protokoll.pdf`. Mehrere Durchläufe für Inhalts- und Abbildungsverzeic
 
 Fachaussagen werden aus Primärquellen belegt, jede mit vollständigem Link. Wo die Angabe eine Tabelle mit Ja und Nein verlangt, wird gemessen statt abgeschrieben, und jeder Versuch ist so dokumentiert, dass er sich wiederholen lässt. Weicht ein Ergebnis von der Erwartung ab, wird das erklärt statt verschwiegen.
 
-Die Textentwürfe entstehen mit Claude (Opus 5 und Sonnet 5, Anthropic). Das ist bei jeder Antwort im Quellenblock gekennzeichnet, wie es die Angabe *Rolle der KI* verlangt. Die Kennzeichnung ersetzt den fachlichen Beleg nicht; für Inhalt und Verständnis bleibt der Verfasser verantwortlich.
+Die Textentwürfe entstehen mit Claude (Opus 5, Opus 5.5 und Sonnet 5, Anthropic). Das ist bei jeder Antwort im Quellenblock gekennzeichnet, wie es die Angabe *Rolle der KI* verlangt. Die Kennzeichnung ersetzt den fachlichen Beleg nicht; für Inhalt und Verständnis bleibt der Verfasser verantwortlich.
 
 Die ausführlichen Regeln liegen als Skills unter `.claude/skills/`.
