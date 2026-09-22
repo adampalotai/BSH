@@ -29,8 +29,8 @@ Treiber- und Dienstpaket, das im Gast installiert wird und die Zusammenarbeit mi
 \begriff[kap:grundlagen]{Host-only}
 Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtsystem verbindet, nicht aber mit dem Internet oder dem übrigen Netz. Zum Abschotten verdächtiger Software ungeeignet, weil der Weg zum Wirtsystem offen bleibt.
 
-\begriff[kap:grundlagen]{Hypervisor}
-Die Software, die virtuelle Maschinen erzeugt und die Zugriffe der Gäste auf die echte Hardware vermittelt. Ein Typ-1-Hypervisor läuft unmittelbar auf der Hardware, ein Typ-2-Hypervisor als Anwendung innerhalb eines Wirtsbetriebssystems. VirtualBox ist ein Typ-2-Hypervisor.
+\begriff[sec:hypervisor]{Hypervisor}
+Die Software, die virtuelle Maschinen erzeugt und die Zugriffe der Gäste auf die echte Hardware vermittelt. In der Fachliteratur auch Virtual Machine Monitor (VMM). Ein Typ-1-Hypervisor läuft unmittelbar auf der Hardware, ein Typ-2-Hypervisor als Anwendung innerhalb eines Wirtsbetriebssystems. VirtualBox ist ein Typ-2-Hypervisor.
 
 \begriff[kap:grundlagen]{Internes Netzwerk}
 Netzwerkmodus, der ausschließlich die virtuellen Maschinen desselben internen Netzes untereinander verbindet. Weder das Wirtsystem noch das Internet sind erreichbar.
@@ -56,11 +56,14 @@ Festgehaltener Zustand einer virtuellen Maschine, auf den später zurückgekehrt
 \begriff[kap:grundlagen]{SSE2}
 Streaming SIMD Extensions~2, eine Befehlssatzerweiterung der x86-Prozessoren. VirtualBox setzt sie auf Intel-Wirtsystemen zwingend voraus.
 
-\begriff[kap:grundlagen]{Typ-1- und Typ-2-Hypervisor}
-Ein Typ-1-Hypervisor läuft unmittelbar auf der Hardware und verlangt den Rechner für sich allein; ein Typ-2-Hypervisor läuft als Anwendung auf einem vollständigen Wirtsbetriebssystem. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.
+\begriff[sec:hypervisor]{Typ-1- und Typ-2-Hypervisor}
+Einteilung nach Goldberg (1973). Ein Typ-1-Hypervisor (bare-metal) läuft unmittelbar auf der Hardware und verwaltet deren Betriebsmittel selbst; ein Typ-2-Hypervisor (hosted) läuft als Anwendung auf einem Wirtsbetriebssystem, das die Verwaltung übernimmt. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.
 
 \begriff[kap:grundlagen]{VDI}
 Virtual Disk Image, das eigene Format von VirtualBox für virtuelle Festplatten. Daneben werden VMDK (VMware) und VHD (Microsoft) unterstützt, die zu wählen sind, wenn die VM auf einem anderen Produkt laufen soll.
+
+\begriff[sec:hypervisor]{Virtualisierungsanforderungen nach Popek und Goldberg}
+Drei Eigenschaften, die einen Hypervisor ausmachen: Äquivalenz, also im Wesentlichen gleiches Verhalten eines Programms wie auf dem echten Rechner; Effizienz, also unmittelbare Ausführung der meisten Gastbefehle auf dem Prozessor; Ressourcenkontrolle, also kein Zugriff des Gastes auf nicht zugeteilte Betriebsmittel.
 
 \begriff[kap:grundlagen]{Virtualisierung}
 Die Nachbildung eines vollständigen Rechners durch Software. Ein Programm stellt einem Betriebssystem Prozessor, Arbeitsspeicher, Festplatte und Netzwerkkarte bereit, die physisch nicht vorhanden sind.
