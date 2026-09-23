@@ -219,9 +219,9 @@ Die Obergrenze darf nicht zu knapp sein, weil das Gastbetriebssystem samt Aktual
 \label{abb:platte}
 \end{figure}
 
-\paragraph{Netzwerkkarte} Der Netzwerkmodus entscheidet, ob und wie der Gast erreichbar ist. Die Modi und ihre Folgen sind Gegenstand von Kapitel~\ref{kap:netzwerk}.
+\paragraph{Netzwerkkarte} Der Netzwerkmodus entscheidet, ob und wie der Gast erreichbar ist. Voreingestellt ist Network Address Translation (NAT), bei der die Netzwerkkomponente von VirtualBox als Router zwischen VM und Wirtsystem arbeitet.
 
-Für die beiden Laborgäste bedeutet das je vier Gigabyte Arbeitsspeicher, zwei virtuelle Kerne und eine dynamisch wachsende Platte mit sechzig Gigabyte Obergrenze; Tabelle~\ref{tab:voraussetzungen} stellt diese Werte den Mindestangaben der Hersteller gegenüber. Die Laborrechner tragen dafür genug Vorrat: Ein mobiler Intel-Core-i5-Prozessor der vierzehnten Generation, zweiunddreißig Gigabyte DDR4-Arbeitsspeicher und mehrere hundert Gigabyte freier Plattenplatz stehen zur Verfügung, doppelt so viel Arbeitsspeicher wie die errechnete Untergrenze von sechzehn Gigabyte für den gleichzeitigen Betrieb beider Gäste. Die allgemeine Regel dahinter lautet: Jeder Wert hat eine untere Schranke aus dem Bedarf des Gastes und eine obere aus dem Vorrat des Wirtsystems, und beide Schranken sind hart. Zwischen ihnen entscheidet, wie viele VMs gleichzeitig laufen sollen.
+Für die beiden Laborgäste bedeutet das je vier Gigabyte Arbeitsspeicher, zwei virtuelle Kerne und eine dynamisch wachsende Platte mit sechzig Gigabyte Obergrenze. Die Laborrechner tragen dafür genug Vorrat: Ein mobiler Intel-Core-i5-Prozessor der vierzehnten Generation, zweiunddreißig Gigabyte DDR4-Arbeitsspeicher und mehrere hundert Gigabyte freier Plattenplatz stehen zur Verfügung, doppelt so viel Arbeitsspeicher wie die errechnete Untergrenze von sechzehn Gigabyte für den gleichzeitigen Betrieb beider Gäste. Die allgemeine Regel dahinter lautet: Jeder Wert hat eine untere Schranke aus dem Bedarf des Gastes und eine obere aus dem Vorrat des Wirtsystems, und beide Schranken sind hart. Zwischen ihnen entscheidet, wie viele VMs gleichzeitig laufen sollen.
 
 \paragraph{Quellen}
 \begin{itemize}[nosep]
@@ -229,6 +229,7 @@ Für die beiden Laborgäste bedeutet das je vier Gigabyte Arbeitsspeicher, zwei 
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{System Settings}, Unterabschnitt \enquote{Processor Tab} (Kernzahl, Ausführungsbegrenzung). \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)} sowie \enquote{Hard Disk Controllers}: \enquote{Serial ATA (SATA) is a more recent standard than IDE.} und \enquote{depending on the selected guest OS, Oracle VirtualBox uses SATA as the default for newly created virtual machines}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
   \item Microsoft: \enquote{Manage Virtual Hard Disks (VHD)}, Auflösung des Kürzels VHD. \url{https://learn.microsoft.com/en-us/windows-server/storage/disk-management/manage-virtual-hard-disks}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Network Address Translation (NAT)}: \enquote{For this reason, it is the default networking mode in Oracle VirtualBox.} sowie \enquote{The router, in this case, is the Oracle VirtualBox networking engine}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
   \item Eigene Feststellung am Laborrechner: Prozessor, Arbeitsspeicher und freier Plattenplatz.
 \end{itemize}
 \kiquelle[20.\,09.\,2026]{Opus 5}

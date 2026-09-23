@@ -16,7 +16,7 @@ Das Protokoll muss zwei Dinge gleichzeitig sein: ein wissenschaftlich anmutender
 
 Jeder Fachbegriff wird bei Erstnennung im Fließtext definiert, nicht in einer Fußnote. Die Definition steht vor der Verwendung, nicht danach.
 
-Deutsche Fachsprache mit dem englischen Originalbegriff in Klammern bei Erstnennung: Speicherabbild (snapshot), Wirtsystem (host system). Danach durchgängig eine Variante, meist die im Werkzeug verwendete.
+Deutsche Fachsprache, und zwar die, die man an einer HTL tatsächlich spricht. Wo sich der englische Begriff eingebürgert hat oder Angabe und Werkzeug ihn verwenden, bleibt er englisch: Shared Folder, Drag and Drop, Guest Additions, Snapshot. Keine englische Übersetzung in Klammern hinter deutschen Begriffen; die Ausnahme ist ein Begriff, den man nur unter dem englischen Namen in Handbuch oder Oberfläche wiederfindet, und dann einmal. Danach durchgängig eine Variante.
 
 Abkürzungen bei Erstnennung ausgeschrieben, Kurzform in Klammern: virtuelle Maschine (VM), Network Address Translation (NAT).
 
@@ -40,10 +40,14 @@ Keine Länge um der Länge willen. Die Angabe warnt ausdrücklich vor zu viel Te
 
 Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeichnet, soll aber nicht danach klingen. Kein Gedankenstrich als Häufungsfigur ("Virtualisierung ist effizient - sie spart Hardware, Energie und Platz"), Kommas oder ein neuer Satz leisten das genauso. Keine dreiteilige Aufzählung als Stilreflex, nur wo tatsächlich drei Dinge aufzuzählen sind. Kein "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen". Ein Absatz beginnt mit dem Gedanken, nicht mit einer Ankündigung des Gedankens.
 
+Keine Quellenerzählung im Fließtext. "Laut Handbuch", "das Handbuch hält fest", "das Handbuch nennt neun Funktionen" sind Füllsätze, die Zuordnung leistet der Quellenblock. Eine Quelle wird im Text nur genannt, wo die Zuschreibung selbst die Aussage ist, etwa die Einteilung nach Goldberg oder dass Oracle VirtualBox als hosted hypervisor bezeichnet. Satzanfänge und Satzbau wechseln; ein Absatz aus lauter Sätzen nach dem Muster Subjekt, Verb, Beleg liest sich wie eine generierte Antwort, nicht wie ein Protokoll.
+
 ## Prüfungstauglichkeit
 
 Konkrete Werte, Befehle und Schrittfolgen gehören in Listings und Tabellen, wo sie beim Durchblättern auffindbar sind, nicht in den Fließtext vergraben.
 
 Die Angabe verlangt, prüfungsrelevante Aspekte klar hervorzuheben. Eingelöst wird das im Satzbau: Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er für sich allein eine Prüfungsfrage beantwortet. Eine Erklärung, die über drei Kapitel verteilt ist, besteht diesen Test nicht, auch wenn sie vollständig ist.
+
+Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel, weder vor noch zurück. Was aus dort gebraucht wird, steht knapp noch einmal da. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe bleiben erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
 
 Ein Kapitel darf mit einem bündelnden Absatz schließen, wo mehrere Fäden zusammenlaufen. Nach jedem Kapitel wird daraus eine Floskel.

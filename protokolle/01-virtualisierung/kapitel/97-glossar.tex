@@ -21,10 +21,10 @@ Belegungsart einer virtuellen Festplatte, bei der die Datei klein beginnt und bi
 Getrennt lizenziertes Zusatzpaket zu VirtualBox. Rüstet den VRDP-Server, die Durchreichung einer Webkamera, ein Intel-PXE-Boot-ROM, die Verschlüsselung der Plattenabbilder und die Cloud-Anbindung nach. Steht unter der PUEL und nicht unter der freien Lizenz des Grundpakets. Die Durchreichung von USB 2.0 und 3.0 verlangt es seit Version 7.0 nicht mehr; die Controller dafür stecken im Grundpaket.
 
 \begriff[kap:grundlagen]{Gast}
-Das Betriebssystem, das innerhalb einer virtuellen Maschine läuft. Englisch \emph{guest}. Es behandelt die nachgebildete Hardware wie echte und bemerkt die Virtualisierung im Regelfall nicht.
+Das Betriebssystem, das innerhalb einer virtuellen Maschine läuft. Englisch \emph{guest}, in der Angabe Guest-System; das Zusammenspiel mit dem Wirtsystem beschreibt Abschnitt~\ref{sec:hostgast}. Es behandelt die nachgebildete Hardware wie echte und bemerkt die Virtualisierung im Regelfall nicht.
 
-\begriff{Guest Additions}
-Treiber- und Dienstpaket, das im Gast installiert wird und die Zusammenarbeit mit dem Wirtsystem verbessert: angepasste Bildschirmauflösung, gemeinsame Zwischenablage, gemeinsame Ordner, Mauszeigerintegration.
+\begriff[sec:guestadditions]{Guest Additions}
+Paket aus Gerätetreibern und Systemprogrammen, das nach dem Gastbetriebssystem in die VM installiert wird und mit VirtualBox auf dem Wirtsystem zusammenarbeitet. Ausgeliefert als CD-Abbild \cmd{VBoxGuestAdditions.iso}. Funktionen: Mauszeigerintegration, Shared Folders, bessere Grafik, nahtlose Fenster, Datenaustausch über Gasteigenschaften, Zeitabgleich, gemeinsame Zwischenablage, Drag and Drop, automatische Anmeldung.
 
 \begriff[kap:grundlagen]{Host-only}
 Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtsystem verbindet, nicht aber mit dem Internet oder dem übrigen Netz. Zum Abschotten verdächtiger Software ungeeignet, weil der Weg zum Wirtsystem offen bleibt.
@@ -75,6 +75,6 @@ Die nachgebildete Umgebung selbst. Liegt als Datei auf der Festplatte des Wirtsy
 Die Hardware-Virtualisierungserweiterung der Intel-Prozessoren. Das Handbuch nennt sie zwingend für 64-Bit-Gäste und für Gäste mit mehreren virtuellen Prozessorkernen. Auf vielen Geräten ab Werk im BIOS oder UEFI abgeschaltet.
 
 \begriff[kap:grundlagen]{Wirtsystem}
-Der physische Rechner, auf dem der Hypervisor läuft. Englisch \emph{host}. Das darauf installierte Betriebssystem heißt Wirtsbetriebssystem.
+Der physische Rechner, auf dem der Hypervisor läuft. Englisch \emph{host}, in der Angabe Host-System. Das darauf installierte Betriebssystem heißt Wirtsbetriebssystem.
 
 \end{glossar}

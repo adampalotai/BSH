@@ -6,21 +6,21 @@
 Der Hypervisor ist so etwas wie ein Magier, der virtuelle Maschinen zum Leben erweckt. Aber es gibt zwei verschiedene Typen von Hypervisoren! Erkläre, was ein Hypervisor ist und warum VirtualBox ein \enquote{Typ-2-Magier} ist.
 \end{aufgabe}
 
-Ein Hypervisor ist die Software, die virtuelle Maschinen erzeugt und betreibt. Er stellt jedem Gast nachgebildete Hardware bereit, teilt ihm Prozessorzeit, Arbeitsspeicher und Geräte zu und behält selbst die Kontrolle über die echte Hardware. In der Fachliteratur heißt dieselbe Software auch Virtual Machine Monitor (VMM); Popek und Goldberg führen 1974 beide Bezeichnungen nebeneinander, und das VirtualBox-Handbuch nennt den VMM das Herzstück seines Hypervisors.
+Ein Hypervisor ist die Software, die virtuelle Maschinen erzeugt und betreibt. Er bildet für jeden Gast Hardware nach, teilt ihm Prozessorzeit, Arbeitsspeicher und Geräte zu und behält selbst die Kontrolle über die echte Hardware. Gleichbedeutend ist die Bezeichnung Virtual Machine Monitor (VMM), die vor allem in der Fachliteratur üblich ist. VirtualBox nennt so den Kern seines Hypervisors.
 
-Was einen Hypervisor von anderer Software unterscheidet, die einen Rechner nachbildet, fassen Popek und Goldberg in drei Eigenschaften.
+Welche Eigenschaften ein Hypervisor erfüllen muss, haben Popek und Goldberg 1974 festgelegt.
 
-\paragraph{Äquivalenz (equivalence)} Ein Programm zeigt in der VM im Wesentlichen dieselbe Wirkung wie auf dem echten Rechner. Ausgenommen sind Unterschiede, die aus der verfügbaren Menge an Betriebsmitteln und aus dem Zeitverhalten herrühren.
+\paragraph{Äquivalenz} Ein Programm verhält sich in der VM im Wesentlichen so wie auf dem echten Rechner. Abweichen dürfen nur die verfügbare Menge an Betriebsmitteln und das Zeitverhalten.
 
-\paragraph{Effizienz (efficiency)} Der weit überwiegende Teil der Gastbefehle läuft unmittelbar auf dem echten Prozessor, ohne dass der Hypervisor eingreift. Damit sind Emulatoren ausgeschlossen, die jeden Befehl in Software nachbilden.
+\paragraph{Effizienz} Der weit überwiegende Teil der Gastbefehle läuft direkt auf dem echten Prozessor, ohne dass der Hypervisor eingreift. Ein Emulator, der jeden Befehl in Software nachbildet, ist deshalb kein Hypervisor.
 
-\paragraph{Ressourcenkontrolle (resource control)} Ein Programm in der VM kann auf kein Betriebsmittel zugreifen, das ihm nicht ausdrücklich zugeteilt wurde, und der Hypervisor kann bereits zugeteilte Betriebsmittel zurückholen. Aus dieser Eigenschaft folgt die Isolation der Gäste voneinander und vom Wirtsystem.
+\paragraph{Ressourcenkontrolle} Ein Programm in der VM kommt an kein Betriebsmittel heran, das ihm nicht zugeteilt wurde, und der Hypervisor kann Zugeteiltes jederzeit zurückholen. Darauf beruht die Isolation der Gäste voneinander und vom Wirtsystem.
 
-Auf x86-Prozessoren ist die Effizienz nicht ohne Weiteres zu erreichen. Laut VirtualBox-Handbuch wurde die x86-Plattform nie für Virtualisierung entworfen, weshalb schwer zu erkennen ist, wann der Hypervisor die Kontrolle über den laufenden Gastcode übernehmen muss. VirtualBox löst das mit der Hardware-Virtualisierungserweiterung des Prozessors, VT-x bei Intel und AMD-V bei AMD.
+Auf x86-Prozessoren ist die Effizienz schwer zu erreichen, weil die Architektur nie für Virtualisierung entworfen wurde. Es lässt sich nicht ohne Weiteres erkennen, wann der Hypervisor die Kontrolle über den laufenden Gastcode übernehmen muss. Abhilfe schafft die Virtualisierungserweiterung des Prozessors, VT-x bei Intel und AMD-V bei AMD, auf die VirtualBox dafür zurückgreift.
 
-Hypervisoren werden in zwei Typen eingeteilt, je nachdem, worauf sie laufen. Die Einteilung stammt von Goldberg aus dem Jahr 1973. Ein Typ-1-Hypervisor (bare-metal hypervisor) läuft unmittelbar auf der Hardware, ohne Betriebssystem darunter. Ein Typ-2-Hypervisor (hosted hypervisor) läuft unter einem Wirtsbetriebssystem und stützt sich auf dessen Dienste. Microsoft bezeichnet Hyper-V ausdrücklich als Typ-1-Hypervisor.
+Seit Goldberg 1973 unterscheidet man zwei Typen von Hypervisoren. Ein Typ-1-Hypervisor, auch Bare-Metal-Hypervisor genannt, läuft direkt auf der Hardware, ohne Betriebssystem darunter; ein Beispiel ist Hyper-V von Microsoft. Ein Typ-2-Hypervisor läuft auf einem Wirtsbetriebssystem und nutzt dessen Dienste.
 
-Der Unterschied betrifft die Frage, wer die Betriebsmittel verwaltet. Ein Typ-1-Hypervisor muss nach Goldberg die Zuteilung von Prozessorzeit und Speicher (scheduling and resource allocation) selbst übernehmen, weil unter ihm nichts existiert, das es täte; er enthält deshalb auch Code, der mit Virtualisierung nichts zu tun hat. Beim Typ~2 verwaltet das Wirtsbetriebssystem die Betriebsmittel wie gewohnt, und der Hypervisor erzeugt auf dieser Grundlage nur noch die Umgebung für die Gäste. Abbildung~\ref{abb:hypervisortypen} stellt beide Anordnungen nebeneinander.
+Entscheidend ist, wer die Betriebsmittel verwaltet. Ein Typ-1-Hypervisor muss Prozessorzeit und Speicher selbst zuteilen, weil unter ihm nichts existiert, das es täte. Er enthält deshalb auch Code, der mit Virtualisierung nichts zu tun hat. Beim Typ~2 übernimmt das Wirtsbetriebssystem die Verwaltung, und der Hypervisor stellt nur noch die Umgebung für die Gäste bereit. Abbildung~\ref{abb:hypervisortypen} zeigt beide Anordnungen nebeneinander.
 
 \begin{figure}[H]
 \centering
@@ -29,14 +29,14 @@ Der Unterschied betrifft die Frage, wer die Betriebsmittel verwaltet. Ein Typ-1-
   \node[schichthervor, minimum width=6cm, above=of hw1] (hyp1) {Typ-1-Hypervisor\\\footnotesize teilt Betriebsmittel zu};
   \node[gast, minimum width=2.8cm, above=of hyp1, xshift=-1.6cm] (g11) {Gast 1};
   \node[gast, minimum width=2.8cm, above=of hyp1, xshift=1.6cm] (g12) {Gast 2};
-  \node[beschriftung, below=2mm of hw1] {Typ 1, bare-metal};
+  \node[beschriftung, below=2mm of hw1] {Typ 1};
 
   \node[schicht, minimum width=6cm, right=1.2cm of hw1] (hw2) {Physische Hardware};
   \node[schicht, minimum width=6cm, above=of hw2] (os2) {Wirtsbetriebssystem\\\footnotesize teilt Betriebsmittel zu};
   \node[schichthervor, minimum width=2.8cm, above=of os2, xshift=-1.6cm] (hyp2) {Typ-2-Hypervisor};
   \node[schicht, minimum width=2.8cm, above=of os2, xshift=1.6cm, minimum height=8mm] (app2) {\footnotesize weitere\\\footnotesize Anwendungen};
   \node[gast, minimum width=2.8cm, above=of hyp2] (g21) {Gäste};
-  \node[beschriftung, below=2mm of hw2] {Typ 2, hosted};
+  \node[beschriftung, below=2mm of hw2] {Typ 2};
 
   \draw[fluss] (g11) -- (g11|-hyp1.north);
   \draw[fluss] (g12) -- (g12|-hyp1.north);
@@ -50,11 +50,11 @@ Der Unterschied betrifft die Frage, wer die Betriebsmittel verwaltet. Ein Typ-1-
 \label{abb:hypervisortypen}
 \end{figure}
 
-VirtualBox ist ein Typ-2-Hypervisor, weil es ein installiertes Wirtsbetriebssystem voraussetzt und auf diesem als Anwendung läuft. Oracle bezeichnet VirtualBox im Handbuch selbst als hosted hypervisor und hält fest, dass es dadurch neben den übrigen Anwendungen des Wirtsystems laufen kann. Der Aufbau der Software zeigt dasselbe. Jede laufende VM steckt in einem Prozess namens \cmd{VirtualBoxVM}, der beim Start die VMM-Bibliothek mit dem eigentlichen Hypervisor lädt; daneben läuft der Dienstprozess \cmd{VBoxSVC}, der den Zustand aller VMs verwaltet. Daraus folgt, dass der Hypervisor ein Programm des Wirtsbetriebssystems ist, dem dieses Prozessorzeit und Arbeitsspeicher zuteilt wie jedem anderen Programm.
+VirtualBox ist ein Typ-2-Hypervisor. Es setzt ein installiertes Wirtsbetriebssystem voraus und läuft darauf als Anwendung neben anderen Programmen; Oracle selbst bezeichnet VirtualBox als hosted hypervisor. Auch der Aufbau der Software zeigt das. Jede laufende VM ist ein eigener Prozess \cmd{VirtualBoxVM}, der beim Start die VMM-Bibliothek mit dem eigentlichen Hypervisor lädt, und der Dienstprozess \cmd{VBoxSVC} verwaltet den Zustand aller VMs. Prozessorzeit und Arbeitsspeicher bekommt der Hypervisor also vom Wirtsbetriebssystem zugeteilt wie jedes andere Programm.
 
-Eine Einschränkung gehört zum vollständigen Bild. Ganz ohne Zugriff auf den Kern des Wirtsbetriebssystems kommt VirtualBox nicht aus: Unter Linux installiert es das Kernmodul \cmd{vboxdrv}, ohne das sich VMs zwar einrichten, aber nicht starten lassen. Zum Typ-1-Hypervisor wird VirtualBox dadurch nicht. Goldbergs Einteilung fragt, ob der Hypervisor auf der bloßen Hardware läuft oder unter einem Betriebssystem, und das Kernmodul wird vom Wirtsbetriebssystem geladen und läuft unter dessen Verwaltung.
+Ganz ohne Eingriff in das Wirtsbetriebssystem kommt VirtualBox allerdings nicht aus. Unter Linux braucht es das Kernmodul \cmd{vboxdrv}; fehlt es, lassen sich VMs zwar anlegen, aber nicht starten. Ein Typ-1-Hypervisor wird VirtualBox dadurch trotzdem nicht, denn das Kernmodul wird vom Wirtsbetriebssystem geladen und läuft unter dessen Verwaltung, nicht auf der bloßen Hardware.
 
-Welcher Typ zweckmäßig ist, hängt nach Goldberg von der Nutzung ab. Arbeitet ein Rechner überwiegend mit einem bevorzugten Betriebssystem und wird eine VM nur gelegentlich gebraucht, passt Typ~2, weil das gewohnte System ohne zusätzliche Schicht weiterläuft. Sollen viele fremde Betriebssysteme gleichrangig nebeneinander betrieben werden, spricht das für Typ~1. Im Labor liegt der erste Fall vor: Windows 11 Education oder Linux Mint 22.3, je nach Laborrechner, bleibt das Wirtsbetriebssystem, und die VMs laufen für die Dauer einer Übung daneben.
+Welcher Typ passt, hängt vom Einsatz ab. Wer hauptsächlich mit einem Betriebssystem arbeitet und nur gelegentlich eine VM braucht, fährt mit Typ~2 besser, weil das gewohnte System ohne zusätzliche Schicht weiterläuft. Sollen viele Betriebssysteme gleichrangig nebeneinander laufen, spricht das für Typ~1. Im Labor trifft der erste Fall zu: Windows 11 Education beziehungsweise Linux Mint 22.3 bleibt das Wirtsbetriebssystem, und die VMs laufen nur für die Dauer einer Übung.
 
 \paragraph{Quellen}
 \begin{itemize}[nosep]
@@ -68,24 +68,97 @@ Welcher Typ zweckmäßig ist, hängt nach Goldberg von der Nutzung ab. Arbeitet 
 \kiquelle[22.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was ist das Host-System und was das Guest-System?]
+\label{sec:hostgast}%
 Wenn du VirtualBox nutzt, arbeitest du sowohl mit deinem normalen Betriebssystem (Host-System) als auch mit einem \enquote{virtuellen} Betriebssystem (Guest-System). Erkläre den Unterschied zwischen dem Host- und dem Guest-System und wie sie miteinander interagieren.
 \end{aufgabe}
 
-% TODO Antwort
+Das Host-System ist der physische Rechner samt Betriebssystem, auf dem VirtualBox installiert ist. Das Guest-System ist das Betriebssystem, das in einer virtuellen Maschine läuft. Im Protokoll heißen die beiden Wirtsystem und Gast, das Betriebssystem des Wirtsystems Wirtsbetriebssystem. Im Labor ist das je nach Rechner Windows 11 Education oder Linux Mint 22.3, die Gäste sind Windows Server 2019 und Linux Mint.
+
+Der Unterschied liegt darin, wer die echte Hardware sieht. Das Wirtsbetriebssystem greift direkt auf Prozessor, Arbeitsspeicher, Festplatte und Netzwerkkarte zu. Der Gast kennt nur die Hardware, die VirtualBox ihm nachbildet, und hält sie für echt; dass er in einer VM läuft, weiß er nicht.
+
+Umgekehrt sieht das Wirtsbetriebssystem den Gast vollständig. Eine laufende VM ist für es ein gewöhnlicher Prozess namens \cmd{VirtualBoxVM}, ihre Festplatte eine Datei im eigenen Dateisystem. Der Gast dagegen weiß nichts vom Wirtsystem und kommt an dessen Dateien nur heran, wenn VirtualBox ihm dafür eigens einen Weg öffnet.
+
+Einen direkten Weg zwischen Wirt und Gast gibt es nicht, jede Interaktion läuft über VirtualBox. Manche dieser Wege funktionieren mit jedem Gast, andere erst mit zusätzlicher Software im Gast.
+
+\paragraph{Nachgebildete Geräte} Der Gast spricht die nachgebildeten Geräte mit seinen normalen Treibern an, und VirtualBox setzt jeden Zugriff in einen Vorgang auf dem Wirtsystem um. Schreibt der Gast auf seine Festplatte, landet der Zugriff in einer Abbilddatei auf dem Wirtsystem. Verschickt er im voreingestellten Netzwerkmodus Network Address Translation (NAT) Daten, nimmt VirtualBox sie entgegen und sendet sie über das Wirtsbetriebssystem weiter. Der Gast braucht dafür keine zusätzliche Software.
+
+\paragraph{Tastatur und Maus} Beide Geräte teilen sich Wirt und Gast. Solange der Gast nur eine herkömmliche PS/2-Maus erkennt und keine Guest Additions installiert sind, gehören sie entweder der VM oder dem übrigen Rechner, nie beiden zugleich. Ein Klick ins VM-Fenster übergibt sie dem Gast, die Host-Taste holt sie zurück; standardmäßig ist das die rechte Strg-Taste. Solange der Gast die Tastatur hat, landen auch Tastenkombinationen wie Alt+Tab bei ihm und nicht beim Wirt.
+
+\paragraph{Guest Additions} Shared Folders, gemeinsame Zwischenablage und Drag and Drop zwischen Wirt und Gast funktionieren nur, wenn im Gast die Guest Additions installiert sind, ein Paket aus Treibern und Systemprogrammen für den Gast. Bei einem Shared Folder zum Beispiel liegen die Dateien auf dem Wirtsystem, und der Gast greift über einen eigenen Dateisystemtreiber der Guest Additions darauf zu.
+
+\begin{table}[H]
+\centering
+\caption{Wege der Interaktion zwischen Wirt und Gast in VirtualBox}
+\label{tab:hostgast}
+\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\toprule
+\textbf{Weg} & \textbf{Umsetzung durch VirtualBox} & \textbf{Voraussetzung im Gast} \\
+\midrule
+Virtuelle Festplatte & Zugriffe gehen an eine Abbilddatei auf dem Wirtsystem & keine \\
+Netzwerk im NAT-Modus & NAT-Engine sendet über das Wirtsbetriebssystem & keine \\
+Tastatur und Maus & Eingaben gehen an die Seite, der die Geräte gehören; die Host-Taste gibt sie zurück & keine \\
+\addlinespace
+Shared Folders & Ordner des Wirtsystems im Gast eingebunden & Guest Additions \\
+Gemeinsame Zwischenablage & Text, Bilder und HTML in beide Richtungen & Guest Additions \\
+Drag and Drop & Objekte wie Dateien in beide Richtungen & Guest Additions \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Jeder dieser Wege lockert die Isolation zwischen Wirt und Gast genau so weit, wie er reicht. Die Dateien in einem Shared Folder etwa sind auch für Schadsoftware im Gast erreichbar.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung: \enquote{The host is the physical computer, such as a laptop or server, where you run VirtualBox and the virtual machines you create or import.} sowie \enquote{The guest operating system (guest OS) is the OS that is running inside a virtual machine.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, Unterabschnitt \enquote{Capturing and Releasing Keyboard and Mouse}: \enquote{since the OS in the virtual machine does not know that it is not running on a real computer, it expects to have exclusive control over your keyboard and mouse.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Introduction to Guest Additions}, \enquote{Shared Folders}, \enquote{Clipboard} und \enquote{Drag and Drop}: \enquote{Shared folders physically reside on the host and are then shared with the guest, which uses a special file system driver in the Guest Additions to talk to the host.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)}: \enquote{When a guest OS reads from or writes to a hard disk, Oracle VirtualBox redirects the request to the image file.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Network Address Translation (NAT)}: \enquote{The network frames sent out by the guest operating system are received by Oracle VirtualBox's NAT engine, which extracts the TCP/IP data and resends it using the host operating system.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Technical Background}, Abschn. \enquote{Oracle VirtualBox Executables and Components}. \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
+\end{itemize}
+\kiquelle[22.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was sind Guest Additions, und warum sind sie nützlich?]
+\label{sec:guestadditions}%
 Mit den Guest Additions bekommt deine virtuelle Maschine Superkräfte! Finde heraus, was Guest Additions sind und warum du sie installieren solltest. Nenne 6 Punkte bzw. Aufgaben, welche durch die Guest-Additions erfüllt werden.
 \end{aufgabe}
 
-% TODO Antwort
+Die Guest Additions sind ein Paket aus Gerätetreibern und Systemprogrammen, das nach dem Gastbetriebssystem in der VM installiert wird. Sie machen den Gast schneller und angenehmer zu bedienen. VirtualBox bringt sie als CD-Abbild \cmd{VBoxGuestAdditions.iso} in seinem Installationsverzeichnis mit. Bei laufender VM legt man das Abbild über \enquote{Devices} $\rightarrow$ \enquote{Insert Guest Additions CD Image} ein, startet im Gast das Installationsprogramm von der CD und startet den Gast danach neu.
+
+Ohne Guest Additions kennt der Gast nur die Standardhardware, die VirtualBox jedem Gast gleich nachbildet. Die virtuelle Grafikkarte beherrscht dann nur die Grundfunktionen, und bei Gästen, die nur eine PS/2-Maus erkennen, bleibt der Mauszeiger im VM-Fenster gefangen, bis man die Host-Taste drückt. Die Guest Additions installieren eigene Treiber, die mit VirtualBox auf dem Wirtsystem zusammenarbeiten, und bringen damit folgende Funktionen mit:
+
+\begin{description}[nosep]
+  \item[Mauszeigerintegration] Ein eigener Maustreiber im Gast bekommt die Mausbewegungen vom Wirtsystem und bewegt den Zeiger im Gast mit. Es gibt nur noch einen Mauszeiger, und die Host-Taste ist zum Freigeben der Maus nicht mehr nötig.
+  \item[Shared Folders] Ein Ordner des Wirtsystems erscheint im Gast ähnlich wie eine Netzwerkfreigabe unter Windows, auch wenn der Gast gar kein Netzwerk hat. So lassen sich Dateien zwischen Wirt und Gast austauschen.
+  \item[Bessere Grafik] Eigene Grafiktreiber ermöglichen hohe und ungewöhnliche Auflösungen und eine schnellere Darstellung. Bei Windows-, Linux- und Solaris-Gästen passt sich die Auflösung automatisch an, wenn man das VM-Fenster größer oder kleiner zieht. Auch 3D-Grafik lässt sich beschleunigen.
+  \item[Nahtlose Fenster] Die Fenster der Programme im Gast erscheinen direkt auf dem Desktop des Wirtsystems, als liefen die Programme dort.
+  \item[Datenaustausch zwischen Wirt und Gast] Über sogenannte Gasteigenschaften tauschen Wirt und Gast Daten als Zeichenketten aus, mit denen sich der Gast auch steuern und überwachen lässt. Außerdem kann das Wirtsystem Programme im Gast starten.
+  \item[Zeitabgleich] Die Uhr des Gastes kann von der des Wirtsystems abweichen, etwa wenn die VM angehalten war. Kleine Abweichungen gleichen die Guest Additions nach und nach aus, große, etwa nach stundenlangem Anhalten, korrigieren sie sofort. Der Abgleich wiederholt sich regelmäßig.
+  \item[Gemeinsame Zwischenablage] Text, Bilder und HTML lassen sich zwischen Wirt und Gast kopieren. Die Funktion ist wahlweise zuschaltbar.
+  \item[Drag and Drop] Dateien und andere Objekte lassen sich vom Wirt in den Gast ziehen und umgekehrt.
+  \item[Automatische Anmeldung] Der Gast kann ohne Eingabe am Anmeldebildschirm angemeldet werden.
+\end{description}
+
+Für die Arbeit im Labor heißt das: Ohne Guest Additions bleibt die Maus je nach Gast im Fenster gefangen, die Auflösung passt sich nicht an das Fenster an, und Text oder Dateien lassen sich nicht einfach zwischen Wirt und Gast kopieren. Deshalb gehört die Installation zu den ersten Schritten nach dem Einrichten eines Gastes.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Einleitung: \enquote{They consist of device drivers and system applications that optimize the guest operating system for better performance and usability.} sowie \enquote{The available Oracle VirtualBox Guest Additions are provided as a single CD-ROM image file called VBoxGuestAdditions.iso.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Introduction to Guest Additions} (Liste der neun Funktionen) und \enquote{Clipboard} (Text, Bilder und HTML): \enquote{While the virtual graphics card which Oracle VirtualBox emulates for any guest operating system provides all the basic features, the custom video drivers that are installed with the Guest Additions provide you with extra high and nonstandard video modes, as well as accelerated video performance.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Installing Guest Additions}, Unterabschnitte \enquote{Mount the Guest Additions ISO} und \enquote{Run the Guest Additions Installer}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, Unterabschnitt \enquote{Capturing and Releasing Keyboard and Mouse}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+\end{itemize}
+\kiquelle[22.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Warum müssen Guest-Additions überhaupt zusätzlich installiert werden?]
+\label{sec:guestadditions-warum}%
 Guest-Additions müssen im Guest-System zusätzlich installiert werden. Begründe warum das notwendig ist und diese Aufgaben nicht direkt von VirtualBox durchgeführt werden können.
 \end{aufgabe}
 
 % TODO Antwort
 
 \begin{aufgabe}[Was ist der Host-Key und wozu wird er verwendet?]
+\label{sec:hosttaste}%
 In VirtualBox gibt es eine spezielle Taste mit der du besondere Funktionen auslösen kannst. Was ist das für eine Taste? Nenne weiters mindestens 4 Funktionen wozu du diese benötigst.
 \end{aufgabe}
 
