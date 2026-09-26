@@ -18,7 +18,7 @@ Erwartung und Beobachtung werden getrennt geschrieben. Zuerst was erwartet wurde
 
 Jeder Versuch steht in einer `messung`-Umgebung und hat fünf Teile, in dieser Reihenfolge:
 
-**Aufbau.** Was ist konfiguriert, mit welchen Werten. Hostsystem, Gastsystem, VirtualBox-Version, Netzwerkmodus, IP-Adressen. Genug, dass jemand anderer den Versuch wiederholen kann.
+**Aufbau.** Was ist konfiguriert, mit welchen Werten. Hostsystem, Gastsystem, VirtualBox-Version, Netzwerkmodus, IP-Adressen. Genug, dass jemand anderer den Versuch wiederholen kann. Die Versuche laufen am Heimrechner, nicht im Labor; das steht im Aufbau.
 
 **Durchführung.** Der ausgeführte Befehl in Monospace, wörtlich. Nicht paraphrasiert.
 
@@ -44,6 +44,10 @@ Der Ping vom Host zum Gast scheitert im Bridged-Modus häufig an der Firewall de
 
 Im NAT-Modus ist der Host vom Gast aus unter der Gateway-Adresse des NAT-Netzes erreichbar, typischerweise 10.0.2.2, nicht unter seiner LAN-Adresse. Das ist der häufigste Grund für einen scheinbar fehlschlagenden Ping.
 
+Gibt die Angabe feste Adressen eines Labornetzes vor, etwa Gast gleich Host plus 50 mit festem Gateway und DNS-Server, wird die Regel auf das tatsächliche Netz übertragen. Die Übertragung steht im Aufbau, die Adressen der Angabe werden nicht übernommen.
+
+Öffentliche Adressen des Heimanschlusses, also die IPv4-Adresse des Routers nach außen und globale IPv6-Adressen, werden in Rohdaten und Screenshots geschwärzt und die Schwärzung benannt.
+
 ## Werkzeuge
 
-Für Netzwerkmessungen: `ping`, `tracert` beziehungsweise `traceroute`, `ipconfig /all` beziehungsweise `ip addr`, `nslookup`, `netstat -an`. Für Portprüfungen `Test-NetConnection` unter PowerShell. Für Durchsatz `iperf3`, falls verfügbar.
+Für Netzwerkmessungen: `ping`, `tracert` beziehungsweise `traceroute`, `ipconfig /all` beziehungsweise `ip addr`, `nslookup`, `netstat -an`. Für Portprüfungen `Test-NetConnection` unter PowerShell. Für Mitschnitte Wireshark. Für Durchsatz `iperf3`, falls verfügbar.

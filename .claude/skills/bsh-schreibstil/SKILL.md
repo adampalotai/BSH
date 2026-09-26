@@ -6,7 +6,7 @@ user-invocable: true
 
 # Schreibstil im Protokoll
 
-Für Protokolltext, nicht für Chatantworten: dort gilt `~/.claude/CLAUDE.md` und damit das Gegenteil dieser Regeln.
+Für Protokolltext, nicht für Chatantworten: dort gilt `~/.claude/CLAUDE.md`.
 
 ## Der Zielkonflikt
 
@@ -17,6 +17,8 @@ Das Protokoll muss zwei Dinge gleichzeitig sein: ein wissenschaftlich anmutender
 Jeder Fachbegriff wird bei Erstnennung im Fließtext definiert, nicht in einer Fußnote. Die Definition steht vor der Verwendung, nicht danach.
 
 Deutsche Fachsprache, und zwar die, die man an einer HTL tatsächlich spricht. Wo sich der englische Begriff eingebürgert hat oder Angabe und Werkzeug ihn verwenden, bleibt er englisch: Shared Folder, Drag and Drop, Guest Additions, Snapshot. Keine englische Übersetzung in Klammern hinter deutschen Begriffen; die Ausnahme ist ein Begriff, den man nur unter dem englischen Namen in Handbuch oder Oberfläche wiederfindet, und dann einmal. Danach durchgängig eine Variante.
+
+Festgelegt über alle Protokolle: Wirtsystem, Wirtsbetriebssystem und Gast statt Host und Guest, außer im wörtlichen Angabentext. Snapshot statt Speicherabbild, Shared Folder statt gemeinsamer Ordner. Prozessorstrang für thread. Eine neue Festlegung kommt in diese Liste, bevor der Begriff ein zweites Mal verwendet wird.
 
 Abkürzungen bei Erstnennung ausgeschrieben, Kurzform in Klammern: virtuelle Maschine (VM), Network Address Translation (NAT).
 
@@ -36,7 +38,7 @@ Keine Analogien, die nicht tragen. Die Angabe selbst nennt den Hypervisor einen 
 
 Keine Behauptung ohne Beleg. Siehe `bsh-research`.
 
-Keine Länge um der Länge willen. Die Angabe warnt ausdrücklich vor zu viel Text, der vom Wesentlichen ablenkt.
+Keine Länge um der Länge willen. Die Angabe warnt ausdrücklich vor zu viel Text, der vom Wesentlichen ablenkt. Eine Antwort ist fertig, wenn die Frage der Angabe beantwortet und begründet ist. Was darüber hinausgeht, bleibt nur, wenn es belegt ist und selbst als Prüfungsfrage taugt.
 
 Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeichnet, soll aber nicht danach klingen. Kein Gedankenstrich als Häufungsfigur ("Virtualisierung ist effizient - sie spart Hardware, Energie und Platz"), Kommas oder ein neuer Satz leisten das genauso. Keine dreiteilige Aufzählung als Stilreflex, nur wo tatsächlich drei Dinge aufzuzählen sind. Kein "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen". Ein Absatz beginnt mit dem Gedanken, nicht mit einer Ankündigung des Gedankens.
 
@@ -48,6 +50,6 @@ Konkrete Werte, Befehle und Schrittfolgen gehören in Listings und Tabellen, wo 
 
 Die Angabe verlangt, prüfungsrelevante Aspekte klar hervorzuheben. Eingelöst wird das im Satzbau: Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er für sich allein eine Prüfungsfrage beantwortet. Eine Erklärung, die über drei Kapitel verteilt ist, besteht diesen Test nicht, auch wenn sie vollständig ist.
 
-Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel, weder vor noch zurück. Was aus dort gebraucht wird, steht knapp noch einmal da. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe bleiben erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
+Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel, weder vor noch zurück. Ein Sachverhalt, den der Kernsatz braucht, steht knapp noch einmal da. Ein Fachbegriff dagegen wird nur dort definiert, wo er im Protokoll zuerst fällt; spätere Aufgaben verwenden ihn ohne neue Definition, auffindbar bleibt er über das Glossar. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe bleiben erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
 
 Ein Kapitel darf mit einem bündelnden Absatz schließen, wo mehrere Fäden zusammenlaufen. Nach jedem Kapitel wird daraus eine Floskel.

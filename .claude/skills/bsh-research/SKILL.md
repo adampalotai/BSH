@@ -10,7 +10,7 @@ Nie aus dem Gedächtnis belegen. Jeden Link vor dem Zitieren tatsächlich öffne
 
 ## Quellenrangfolge
 
-**1. Primärdokumentation des Herstellers.** Für VirtualBox das Oracle-Handbuch unter `https://www.virtualbox.org/manual/`, mit Kapitelangabe im Beleg. Für Mozilla-Produkte `support.mozilla.org` und `developer.mozilla.org`. Für FileZilla `wiki.filezilla-project.org`.
+**1. Primärdokumentation des Herstellers.** Für VirtualBox das Handbuch 7.2 über `docs.oracle.com/en/virtualization/virtualbox/7.2/user/`, weil nur dort die Kapitelnummer über dem Kapitel steht. Die unnummerierten Abschnitte „Technical Background“ und „Known Limitations“ gibt es nur unter `virtualbox.org/manual/`. Unterabschnitte tragen auf beiden Fassungen keine Nummer und werden mit Titel zitiert. Für Mozilla-Produkte `support.mozilla.org` und `developer.mozilla.org`. Für FileZilla `wiki.filezilla-project.org`.
 
 **2. Normen und RFCs.** Protokollverhalten, Portnummern und Statuscodes kommen aus dem RFC. FTP ist RFC 959, SMTP ist RFC 5321, IMAP ist RFC 9051, POP3 ist RFC 1939. Portzuweisungen aus dem IANA-Register.
 

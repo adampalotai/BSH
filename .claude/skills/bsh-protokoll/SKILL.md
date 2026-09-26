@@ -1,6 +1,6 @@
 ---
 name: bsh-protokoll
-description: Form- und Aufbauregeln der BSH-Protokolle sowie die LaTeX-Konventionen dieses Projekts - Deckblatt, Verzeichnisse, Aufgabenblöcke, Screenshots, Quellenblöcke, Abgabeformat. TRIGGER bei jeder Bearbeitung einer Datei unter protokolle/, beim Anlegen eines neuen Protokolls, und vor jeder Abgabe. SKIP nur außerhalb des Protokollverzeichnisses.
+description: Form- und Aufbauregeln der BSH-Protokolle, die LaTeX-Konventionen dieses Projekts und der Bau auf Heim- und Laborrechner - Deckblatt, Verzeichnisse, Aufgabenblöcke, Screenshots, Quellenblöcke, Abgabeformat. TRIGGER bei jeder Bearbeitung einer Datei unter protokolle/ oder vorlage/, bei jedem Bau, beim Einrichten eines Rechners, beim Anlegen eines neuen Protokolls, und vor jeder Abgabe. SKIP sonst.
 user-invocable: true
 ---
 
@@ -21,6 +21,8 @@ Inhaltsverzeichnis beim Abgabestand aktuell, dafür sorgt `latexmk` mit mehreren
 Mindestens Quellen- und Abbildungsverzeichnis.
 
 Die Felder "GPT Weitere Fragen" entfallen ab diesem Schuljahr und werden nicht angelegt.
+
+Keine Formelemente eines Fachartikels: kein Abstract, kein Related Work, keine gesammelte Bibliographie anstelle des Quellenblocks je Aufgabe. Das Niveau kommt aus belegten Messungen nach `bsh-messung`.
 
 ## KI-Kennzeichnung
 
@@ -52,9 +54,11 @@ Die Begründung, warum die Abbildung gewählt wurde, steht in ihrer Unterschrift
 
 ## LaTeX-Konventionen dieses Projekts
 
-Ein Protokoll ist ein Verzeichnis unter `protokolle/`, mit `protokoll.tex` als Hauptdatei, `kapitel/` für die Kapiteldateien und `bilder/` für Screenshots. Gebaut wird mit `latexmk -pdf protokoll.tex` aus dem Protokollverzeichnis; `.latexmkrc` setzt den Suchpfad zur Vorlage.
+Ein Protokoll ist ein Verzeichnis unter `protokolle/`, mit `protokoll.tex` als Hauptdatei, `kapitel/` für die Kapiteldateien und `bilder/` für Screenshots. Kapitel 1 bis 10 folgen der Nummerierung der Angabe.
 
-Die Dokumentklasse liegt unter `vorlage/bsh-protokoll.cls` und wird von allen sechs Protokollen geteilt. Änderungen daran wirken auf alle.
+Die Dokumentklasse liegt unter `vorlage/bsh-protokoll.cls` und wird von allen sechs Protokollen geteilt. Änderungen daran wirken auf alle. Nach jeder Änderung eine betroffene Seite mit `pdftocairo -png` rendern und ansehen; ein Bau ohne Fehler beweist keine korrekte Darstellung.
+
+LaTeX-Quelltext nie durch `python -c` oder `sed`-Substitution schleusen: `\r` und `\f` werden dort zu Steuerzeichen. Write und Edit verwenden. Absätze in einer `tcolorbox` brauchen `parbox=false`, sonst greift `parskip` in der Box nicht.
 
 Die Anhänge stehen in fester Ordnung: `kapitel/97-glossar.tex` als Anhang A, `kapitel/98-abkuerzungen.tex` als Anhang B, `kapitel/99-quellen.tex` als unnummeriertes Quellenverzeichnis. Beide Anhänge wachsen mit jedem geschriebenen Kapitel mit. Ins Abkürzungsverzeichnis kommt nur, was im Fließtext bei Erstnennung ausgeschrieben und belegt ist.
 
@@ -72,6 +76,19 @@ Nach jeder beantworteten Aufgabe folgt der Quellenblock:
 \end{itemize}
 \kiquelle[20.\,09.\,2026]{Opus 5.5}
 ```
+
+## Bauen
+
+Aus dem Protokollverzeichnis `latexmk -pdf protokoll.tex`. `.latexmkrc` setzt den Suchpfad zur Vorlage, die nötigen Durchläufe erledigt `latexmk`. LaTeX Workshop baut beim Speichern nach `.vscode/settings.json`, unter Windows wie unter Linux ohne Anpassung.
+
+**Heimrechner, Windows mit MiKTeX.** In der Tool-Shell fehlen MiKTeX und Perl im `PATH`; das Perl aus Git genügt. Fehlende Pakete lädt MiKTeX selbst nach, die Meldung zu ausstehenden Updates blockiert nicht.
+
+```
+$env:PATH += ";C:\Users\Adam\AppData\Local\Programs\MiKTeX\miktex\bin\x64;C:\Program Files\Git\usr\bin"
+latexmk -pdf -interaction=nonstopmode protokoll.tex
+```
+
+**Laborrechner, Linux Mint ohne Root.** Das Home-Verzeichnis liegt auf der lokalen Platte des jeweiligen Rechners, an jedem anderen Platz beginnt die Einrichtung von vorn, rund 15 Minuten. TeX Live als Benutzerinstallation unter `~/texlive/<Jahr>`, Schema `scheme-small` plus `latexmk`, `collection-latexextra` und `collection-fontsrecommended`; der `PATH`-Eintrag in `~/.profile` wirkt nach der nächsten Anmeldung. Fehlende Pakete mit `tlmgr install <paket>`. Editor ist VSCodium mit LaTeX Workshop. `user.name` und `user.email` repo-lokal wie in den bisherigen Commits setzen.
 
 ## Vor jeder Abgabe
 

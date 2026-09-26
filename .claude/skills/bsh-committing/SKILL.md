@@ -26,7 +26,7 @@ Eine einzeilige Änderung darf den Rumpf auslassen. Eine Änderung über mehrere
 
 ## Präfixe
 
-`P1` bis `P6` für das jeweilige Protokoll. `Vorlage` für Änderungen an der Dokumentklasse, weil diese alle Protokolle betreffen. `Setup` für Projektinfrastruktur.
+`P1` bis `P6` für das jeweilige Protokoll. `Vorlage` für Änderungen an der Dokumentklasse, weil diese alle Protokolle betreffen. `Setup` für Projektinfrastruktur, Skills, `README.md` und `intern/`.
 
 ## PDF-Stände
 
