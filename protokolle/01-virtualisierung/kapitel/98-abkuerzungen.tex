@@ -3,9 +3,15 @@
 
 Aufgelöst sind die Kürzel, die im Protokolltext tatsächlich vorkommen. Die Auflösung wiederholt die Erstnennung im Fließtext; die zugehörige Quelle steht im Quellenblock der Aufgabe, in der der Begriff eingeführt wird.
 
-Nicht aufgenommen sind Kürzel, die die herangezogenen Quellen selbst nur als Kürzel oder als Eigennamen führen und nirgends auflösen. Das betrifft AMD-V, BIOS, UEFI und VMDK; sie werden im Text deshalb als Namen gebraucht und nicht als Abkürzung erklärt.
+Nicht aufgenommen sind Kürzel, die die herangezogenen Quellen selbst nur als Kürzel oder als Eigennamen führen und nirgends auflösen. Das betrifft AMD-V, BIOS, HDD als Plattenformat von Parallels, SCSI, UEFI und VMDK; sie werden im Text deshalb als Namen gebraucht und nicht als Abkürzung erklärt.
 
 \begin{glossar}
+
+\begriff[sec:hosttaste]{ACPI}
+Advanced Configuration and Power Interface, die Schnittstelle, über die das Betriebssystem unter anderem den Einschaltknopf gemeldet bekommt. VirtualBox bildet sie im Gast nach.
+
+\begriff[sec:festplatte]{iSCSI}
+Internet SCSI, ein Standard, der das Plattenprotokoll SCSI über das Netzwerk überträgt. VirtualBox bindet darüber Speicherserver als virtuelle Festplatte an.
 
 \begriff[kap:grundlagen]{KVM}
 Kernel-based Virtual Machine, die Virtualisierungsschicht im Linux-Kern.
@@ -22,10 +28,10 @@ Serial ATA, der Anschlussstandard, den VirtualBox je nach Gastbetriebssystem als
 \begriff[kap:grundlagen]{SSE2}
 Streaming SIMD Extensions 2, eine Befehlssatzerweiterung, die VirtualBox auf Wirtsystemen mit Intel-Prozessor voraussetzt.
 
-\begriff[kap:grundlagen]{VDI}
+\begriff[sec:festplatte]{VDI}
 Virtual Disk Image, das eigene Plattenformat von VirtualBox.
 
-\begriff[kap:grundlagen]{VHD}
+\begriff[sec:festplatte]{VHD}
 Virtual Hard Disk, das Plattenformat von Microsoft, das VirtualBox ebenfalls liest und schreibt.
 
 \begriff[kap:grundlagen]{VM}
@@ -33,9 +39,6 @@ Virtuelle Maschine.
 
 \begriff[sec:hypervisor]{VMM}
 Virtual Machine Monitor, in der Fachliteratur gleichbedeutend mit Hypervisor.
-
-\begriff[kap:grundlagen]{VRDP}
-VirtualBox Remote Desktop Protocol, der Fernzugriffsdienst aus dem Extension Pack.
 
 \begriff[kap:grundlagen]{VT-x}
 Intel Virtualization Technology, die Hardware-Virtualisierungserweiterung der Intel-Prozessoren.

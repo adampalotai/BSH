@@ -6,21 +6,17 @@
 Der Hypervisor ist so etwas wie ein Magier, der virtuelle Maschinen zum Leben erweckt. Aber es gibt zwei verschiedene Typen von Hypervisoren! Erkläre, was ein Hypervisor ist und warum VirtualBox ein \enquote{Typ-2-Magier} ist.
 \end{aufgabe}
 
-Ein Hypervisor ist die Software, die virtuelle Maschinen erzeugt und betreibt. Er bildet für jeden Gast Hardware nach, teilt ihm Prozessorzeit, Arbeitsspeicher und Geräte zu und behält selbst die Kontrolle über die echte Hardware. Gleichbedeutend ist die Bezeichnung Virtual Machine Monitor (VMM), die vor allem in der Fachliteratur üblich ist. VirtualBox nennt so den Kern seines Hypervisors.
+Ein Hypervisor ist die Software, die virtuelle Maschinen erzeugt und betreibt. Er bildet für jeden Gast Hardware nach, teilt ihm Prozessorzeit, Arbeitsspeicher und Geräte zu und behält selbst die Kontrolle über die echte Hardware. In der Fachliteratur heißt er auch Virtual Machine Monitor (VMM); VirtualBox nennt so den Kern seines Hypervisors.
 
-Welche Eigenschaften ein Hypervisor erfüllen muss, haben Popek und Goldberg 1974 festgelegt.
+Popek und Goldberg haben 1974 drei Eigenschaften festgelegt, die einen Hypervisor ausmachen.
 
-\paragraph{Äquivalenz} Ein Programm verhält sich in der VM im Wesentlichen so wie auf dem echten Rechner. Abweichen dürfen nur die verfügbare Menge an Betriebsmitteln und das Zeitverhalten.
+\paragraph{Äquivalenz} Ein Programm verhält sich in der VM weitgehend so wie auf dem echten Rechner; abweichen dürfen nur die verfügbare Menge an Betriebsmitteln und das Zeitverhalten.
 
-\paragraph{Effizienz} Der weit überwiegende Teil der Gastbefehle läuft direkt auf dem echten Prozessor, ohne dass der Hypervisor eingreift. Ein Emulator, der jeden Befehl in Software nachbildet, ist deshalb kein Hypervisor.
+\paragraph{Effizienz} Der weit überwiegende Teil der Gastbefehle läuft ohne Eingriff des Hypervisors direkt auf dem echten Prozessor. Ein Emulator, der jeden Befehl in Software nachbildet, ist deshalb kein Hypervisor.
 
-\paragraph{Ressourcenkontrolle} Ein Programm in der VM kommt an kein Betriebsmittel heran, das ihm nicht zugeteilt wurde, und der Hypervisor kann Zugeteiltes jederzeit zurückholen. Darauf beruht die Isolation der Gäste voneinander und vom Wirtsystem.
+\paragraph{Ressourcenkontrolle} Ein Programm in der VM kommt an kein Betriebsmittel heran, das ihm nicht zugeteilt wurde, und der Hypervisor kann Zugeteiltes jederzeit zurückholen. Darauf beruht die Isolation.
 
-Auf x86-Prozessoren ist die Effizienz schwer zu erreichen, weil die Architektur nie für Virtualisierung entworfen wurde. Es lässt sich nicht ohne Weiteres erkennen, wann der Hypervisor die Kontrolle über den laufenden Gastcode übernehmen muss. Abhilfe schafft die Virtualisierungserweiterung des Prozessors, VT-x bei Intel und AMD-V bei AMD, auf die VirtualBox dafür zurückgreift.
-
-Seit Goldberg 1973 unterscheidet man zwei Typen von Hypervisoren. Ein Typ-1-Hypervisor, auch Bare-Metal-Hypervisor genannt, läuft direkt auf der Hardware, ohne Betriebssystem darunter; ein Beispiel ist Hyper-V von Microsoft. Ein Typ-2-Hypervisor läuft auf einem Wirtsbetriebssystem und nutzt dessen Dienste.
-
-Entscheidend ist, wer die Betriebsmittel verwaltet. Ein Typ-1-Hypervisor muss Prozessorzeit und Speicher selbst zuteilen, weil unter ihm nichts existiert, das es täte. Er enthält deshalb auch Code, der mit Virtualisierung nichts zu tun hat. Beim Typ~2 übernimmt das Wirtsbetriebssystem die Verwaltung, und der Hypervisor stellt nur noch die Umgebung für die Gäste bereit. Abbildung~\ref{abb:hypervisortypen} zeigt beide Anordnungen nebeneinander.
+Seit Goldberg 1973 unterscheidet man zwei Typen. Ein Typ-1-Hypervisor, auch Bare-Metal-Hypervisor genannt, läuft direkt auf der Hardware und muss Prozessorzeit und Speicher selbst verwalten, weil unter ihm kein Betriebssystem liegt; ein Beispiel ist Hyper-V von Microsoft. Ein Typ-2-Hypervisor läuft als Anwendung auf einem Wirtsbetriebssystem, das ihm diese Verwaltung abnimmt. Abbildung~\ref{abb:hypervisortypen} zeigt beide Anordnungen nebeneinander.
 
 \begin{figure}[H]
 \centering
@@ -50,41 +46,29 @@ Entscheidend ist, wer die Betriebsmittel verwaltet. Ein Typ-1-Hypervisor muss Pr
 \label{abb:hypervisortypen}
 \end{figure}
 
-VirtualBox ist ein Typ-2-Hypervisor. Es setzt ein installiertes Wirtsbetriebssystem voraus und läuft darauf als Anwendung neben anderen Programmen; Oracle selbst bezeichnet VirtualBox als hosted hypervisor. Auch der Aufbau der Software zeigt das. Jede laufende VM ist ein eigener Prozess \cmd{VirtualBoxVM}, der beim Start die VMM-Bibliothek mit dem eigentlichen Hypervisor lädt, und der Dienstprozess \cmd{VBoxSVC} verwaltet den Zustand aller VMs. Prozessorzeit und Arbeitsspeicher bekommt der Hypervisor also vom Wirtsbetriebssystem zugeteilt wie jedes andere Programm.
-
-Ganz ohne Eingriff in das Wirtsbetriebssystem kommt VirtualBox allerdings nicht aus. Unter Linux braucht es das Kernmodul \cmd{vboxdrv}; fehlt es, lassen sich VMs zwar anlegen, aber nicht starten. Ein Typ-1-Hypervisor wird VirtualBox dadurch trotzdem nicht, denn das Kernmodul wird vom Wirtsbetriebssystem geladen und läuft unter dessen Verwaltung, nicht auf der bloßen Hardware.
-
-Welcher Typ passt, hängt vom Einsatz ab. Wer hauptsächlich mit einem Betriebssystem arbeitet und nur gelegentlich eine VM braucht, fährt mit Typ~2 besser, weil das gewohnte System ohne zusätzliche Schicht weiterläuft. Sollen viele Betriebssysteme gleichrangig nebeneinander laufen, spricht das für Typ~1. Im Labor trifft der erste Fall zu: Windows 11 Education beziehungsweise Linux Mint 22.3 bleibt das Wirtsbetriebssystem, und die VMs laufen nur für die Dauer einer Übung.
+VirtualBox ist ein Typ-2-Hypervisor; Oracle selbst bezeichnet es als hosted hypervisor. Jede laufende VM ist ein eigener Prozess des Wirtsbetriebssystems, der den Hypervisor lädt und Prozessorzeit und Arbeitsspeicher zugeteilt bekommt wie jedes andere Programm. Das Kernmodul \cmd{vboxdrv}, das VirtualBox unter Linux braucht, ändert daran nichts: Es wird vom Wirtsbetriebssystem geladen und läuft unter dessen Verwaltung, nicht auf der bloßen Hardware.
 
 \paragraph{Quellen}
 \begin{itemize}[nosep]
   \item Popek, Gerald~J.; Goldberg, Robert~P.: \enquote{Formal Requirements for Virtualizable Third Generation Architectures}. \emph{Communications of the ACM} 17 (1974), Nr.~7, S.~412--421, hier S.~413, Abschn.~1 \enquote{Virtual Machine Concepts} und Schlagwortliste auf S.~412. DOI \nolinkurl{10.1145/361011.361073}. \url{https://www.cs.cornell.edu/courses/cs6411/2018sp/papers/popek-goldberg.pdf}
   \item Goldberg, Robert~P.: \emph{Architectural Principles for Virtual Computer Systems}. Dissertation, Harvard University, Februar 1973, Bericht ESD-TR-73-105, DTIC AD-772\,809, S.~22--24, Abschn. \enquote{Type I vs. Type II VMM}: \enquote{Type I -- The VMM runs on a bare machine. Type II -- The VMM runs on an extended host, under the host operating system.} \url{https://web.archive.org/web/20240427004054/https://apps.dtic.mil/sti/pdfs/AD0772809.pdf}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Features}, Unterpunkt \enquote{Portability}: \enquote{Oracle VirtualBox is a so-called hosted hypervisor, sometimes referred to as a type 2 hypervisor.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
-  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Technical Background}, Abschn. \enquote{Oracle VirtualBox Executables and Components} (Prozesse \cmd{VBoxSVC} und \cmd{VirtualBoxVM}, \enquote{VMM (Virtual Machine Monitor): The heart of the hypervisor.}) sowie \enquote{Hardware Virtualization}. \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Technical Background}, Abschn. \enquote{Oracle VirtualBox Executables and Components} (ein Prozess je VM, \enquote{VMM (Virtual Machine Monitor): The heart of the hypervisor.}). \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{The Oracle VirtualBox Kernel Modules}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
   \item Microsoft: \enquote{Hyper-V virtualization in Windows Server and Windows}: \enquote{As a type-1 hypervisor, Hyper-V runs directly on computing hardware}. \url{https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview}
 \end{itemize}
-\kiquelle[22.\,09.\,2026]{Opus 5.5}
+\kiquelle[26.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was ist das Host-System und was das Guest-System?]
 \label{sec:hostgast}%
 Wenn du VirtualBox nutzt, arbeitest du sowohl mit deinem normalen Betriebssystem (Host-System) als auch mit einem \enquote{virtuellen} Betriebssystem (Guest-System). Erkläre den Unterschied zwischen dem Host- und dem Guest-System und wie sie miteinander interagieren.
 \end{aufgabe}
 
-Das Host-System ist der physische Rechner samt Betriebssystem, auf dem VirtualBox installiert ist. Das Guest-System ist das Betriebssystem, das in einer virtuellen Maschine läuft. Im Protokoll heißen die beiden Wirtsystem und Gast, das Betriebssystem des Wirtsystems Wirtsbetriebssystem. Im Labor ist das je nach Rechner Windows 11 Education oder Linux Mint 22.3, die Gäste sind Windows Server 2019 und Linux Mint.
+Das Host-System, im Protokoll Wirtsystem genannt, ist der physische Rechner samt Betriebssystem, auf dem VirtualBox installiert ist. Das Guest-System, im Protokoll der Gast, ist das Betriebssystem in einer virtuellen Maschine. Im Labor ist das Wirtsbetriebssystem je nach Rechner Windows 11 Education oder Linux Mint 22.3, die Gäste sind Windows 11 und Linux Mint 22. Für die Versuche dieses Protokolls laufen dieselben Gäste auf einem eigenen Rechner unter Windows 11 Pro.
 
-Der Unterschied liegt darin, wer die echte Hardware sieht. Das Wirtsbetriebssystem greift direkt auf Prozessor, Arbeitsspeicher, Festplatte und Netzwerkkarte zu. Der Gast kennt nur die Hardware, die VirtualBox ihm nachbildet, und hält sie für echt; dass er in einer VM läuft, weiß er nicht.
+Der Unterschied liegt darin, wer was sieht. Das Wirtsbetriebssystem greift direkt auf die echte Hardware zu und sieht den Gast vollständig: Eine laufende VM ist für es ein gewöhnlicher Prozess namens \cmd{VirtualBoxVM}, ihre Festplatte eine Datei im eigenen Dateisystem. Der Gast kennt nur die Hardware, die VirtualBox ihm nachbildet, hält sie für echt und weiß nichts vom Wirtsystem.
 
-Umgekehrt sieht das Wirtsbetriebssystem den Gast vollständig. Eine laufende VM ist für es ein gewöhnlicher Prozess namens \cmd{VirtualBoxVM}, ihre Festplatte eine Datei im eigenen Dateisystem. Der Gast dagegen weiß nichts vom Wirtsystem und kommt an dessen Dateien nur heran, wenn VirtualBox ihm dafür eigens einen Weg öffnet.
-
-Einen direkten Weg zwischen Wirt und Gast gibt es nicht, jede Interaktion läuft über VirtualBox. Manche dieser Wege funktionieren mit jedem Gast, andere erst mit zusätzlicher Software im Gast.
-
-\paragraph{Nachgebildete Geräte} Der Gast spricht die nachgebildeten Geräte mit seinen normalen Treibern an, und VirtualBox setzt jeden Zugriff in einen Vorgang auf dem Wirtsystem um. Schreibt der Gast auf seine Festplatte, landet der Zugriff in einer Abbilddatei auf dem Wirtsystem. Verschickt er im voreingestellten Netzwerkmodus Network Address Translation (NAT) Daten, nimmt VirtualBox sie entgegen und sendet sie über das Wirtsbetriebssystem weiter. Der Gast braucht dafür keine zusätzliche Software.
-
-\paragraph{Tastatur und Maus} Beide Geräte teilen sich Wirt und Gast. Solange der Gast nur eine herkömmliche PS/2-Maus erkennt und keine Guest Additions installiert sind, gehören sie entweder der VM oder dem übrigen Rechner, nie beiden zugleich. Ein Klick ins VM-Fenster übergibt sie dem Gast, die Host-Taste holt sie zurück; standardmäßig ist das die rechte Strg-Taste. Solange der Gast die Tastatur hat, landen auch Tastenkombinationen wie Alt+Tab bei ihm und nicht beim Wirt.
-
-\paragraph{Guest Additions} Shared Folders, gemeinsame Zwischenablage und Drag and Drop zwischen Wirt und Gast funktionieren nur, wenn im Gast die Guest Additions installiert sind, ein Paket aus Treibern und Systemprogrammen für den Gast. Bei einem Shared Folder zum Beispiel liegen die Dateien auf dem Wirtsystem, und der Gast greift über einen eigenen Dateisystemtreiber der Guest Additions darauf zu.
+Einen direkten Weg zwischen beiden gibt es nicht, jede Interaktion läuft über VirtualBox (Tabelle~\ref{tab:hostgast}). Nachgebildete Geräte wie Festplatte und Netzwerkkarte spricht der Gast mit seinen gewöhnlichen Treibern an, und VirtualBox setzt jeden Zugriff in einen Vorgang auf dem Wirtsystem um. Shared Folders, also im Gast eingebundene Ordner des Wirtsystems, sowie die gemeinsame Zwischenablage und Drag and Drop brauchen dagegen die Guest Additions, ein Paket aus Treibern und Systemprogrammen im Gast. Solange der Gast nur eine herkömmliche PS/2-Maus erkennt und keine Guest Additions installiert sind, gehören Tastatur und Maus entweder ihm oder dem Wirtsystem; die Host-Taste, standardmäßig die rechte Strg-Taste, holt sie zurück.
 
 \begin{table}[H]
 \centering
@@ -105,41 +89,40 @@ Drag and Drop & Objekte wie Dateien in beide Richtungen & Guest Additions \\
 \end{tabularx}
 \end{table}
 
-Jeder dieser Wege lockert die Isolation zwischen Wirt und Gast genau so weit, wie er reicht. Die Dateien in einem Shared Folder etwa sind auch für Schadsoftware im Gast erreichbar.
+Jeder dieser Wege lockert die Isolation genau so weit, wie er reicht; die Dateien in einem Shared Folder etwa sind auch für Schadsoftware im Gast erreichbar.
 
 \paragraph{Quellen}
 \begin{itemize}[nosep]
-  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Einleitung: \enquote{The host is the physical computer, such as a laptop or server, where you run VirtualBox and the virtual machines you create or import.} sowie \enquote{The guest operating system (guest OS) is the OS that is running inside a virtual machine.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Components}: \enquote{The host is the physical computer, such as a laptop or server, where you run VirtualBox and the virtual machines you create or import.} sowie \enquote{The guest operating system (guest OS) is the OS that is running inside a virtual machine.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, Unterabschnitt \enquote{Capturing and Releasing Keyboard and Mouse}: \enquote{since the OS in the virtual machine does not know that it is not running on a real computer, it expects to have exclusive control over your keyboard and mouse.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Introduction to Guest Additions}, \enquote{Shared Folders}, \enquote{Clipboard} und \enquote{Drag and Drop}: \enquote{Shared folders physically reside on the host and are then shared with the guest, which uses a special file system driver in the Guest Additions to talk to the host.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)}: \enquote{When a guest OS reads from or writes to a hard disk, Oracle VirtualBox redirects the request to the image file.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Network Address Translation (NAT)}: \enquote{The network frames sent out by the guest operating system are received by Oracle VirtualBox's NAT engine, which extracts the TCP/IP data and resends it using the host operating system.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. \enquote{Technical Background}, Abschn. \enquote{Oracle VirtualBox Executables and Components}. \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
+  \item Eigene Feststellung: Wirtsbetriebssysteme der Laborrechner und des Heimrechners, Gäste aus den OVF-Deskriptoren der ausgegebenen Exportdateien.
 \end{itemize}
-\kiquelle[22.\,09.\,2026]{Opus 5.5}
+\kiquelle[26.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was sind Guest Additions, und warum sind sie nützlich?]
 \label{sec:guestadditions}%
 Mit den Guest Additions bekommt deine virtuelle Maschine Superkräfte! Finde heraus, was Guest Additions sind und warum du sie installieren solltest. Nenne 6 Punkte bzw. Aufgaben, welche durch die Guest-Additions erfüllt werden.
 \end{aufgabe}
 
-Die Guest Additions sind ein Paket aus Gerätetreibern und Systemprogrammen, das nach dem Gastbetriebssystem in der VM installiert wird. Sie machen den Gast schneller und angenehmer zu bedienen. VirtualBox bringt sie als CD-Abbild \cmd{VBoxGuestAdditions.iso} in seinem Installationsverzeichnis mit. Bei laufender VM legt man das Abbild über \enquote{Devices} $\rightarrow$ \enquote{Insert Guest Additions CD Image} ein, startet im Gast das Installationsprogramm von der CD und startet den Gast danach neu.
+Die Guest Additions sind ein Paket aus Gerätetreibern und Systemprogrammen, das nach dem Gastbetriebssystem in der VM installiert wird und den Gast schneller und bequemer bedienbar macht. Ohne sie kennt der Gast nur die Standardhardware, die VirtualBox jedem Gast gleich nachbildet: Die virtuelle Grafikkarte beherrscht nur die Grundfunktionen, und bei Gästen, die nur eine PS/2-Maus erkennen, bleibt der Mauszeiger im VM-Fenster gefangen, bis man die Host-Taste drückt.
 
-Ohne Guest Additions kennt der Gast nur die Standardhardware, die VirtualBox jedem Gast gleich nachbildet. Die virtuelle Grafikkarte beherrscht dann nur die Grundfunktionen, und bei Gästen, die nur eine PS/2-Maus erkennen, bleibt der Mauszeiger im VM-Fenster gefangen, bis man die Host-Taste drückt. Die Guest Additions installieren eigene Treiber, die mit VirtualBox auf dem Wirtsystem zusammenarbeiten, und bringen damit folgende Funktionen mit:
+VirtualBox bringt die Guest Additions als CD-Abbild \cmd{VBoxGuestAdditions.iso} mit. Bei laufender VM legt man es über \enquote{Devices} $\rightarrow$ \enquote{Insert Guest Additions CD Image} ein, startet im Gast das Installationsprogramm von der CD und startet den Gast danach neu. Danach stehen folgende Funktionen zur Verfügung:
 
 \begin{description}[nosep]
-  \item[Mauszeigerintegration] Ein eigener Maustreiber im Gast bekommt die Mausbewegungen vom Wirtsystem und bewegt den Zeiger im Gast mit. Es gibt nur noch einen Mauszeiger, und die Host-Taste ist zum Freigeben der Maus nicht mehr nötig.
-  \item[Shared Folders] Ein Ordner des Wirtsystems erscheint im Gast ähnlich wie eine Netzwerkfreigabe unter Windows, auch wenn der Gast gar kein Netzwerk hat. So lassen sich Dateien zwischen Wirt und Gast austauschen.
-  \item[Bessere Grafik] Eigene Grafiktreiber ermöglichen hohe und ungewöhnliche Auflösungen und eine schnellere Darstellung. Bei Windows-, Linux- und Solaris-Gästen passt sich die Auflösung automatisch an, wenn man das VM-Fenster größer oder kleiner zieht. Auch 3D-Grafik lässt sich beschleunigen.
-  \item[Nahtlose Fenster] Die Fenster der Programme im Gast erscheinen direkt auf dem Desktop des Wirtsystems, als liefen die Programme dort.
-  \item[Datenaustausch zwischen Wirt und Gast] Über sogenannte Gasteigenschaften tauschen Wirt und Gast Daten als Zeichenketten aus, mit denen sich der Gast auch steuern und überwachen lässt. Außerdem kann das Wirtsystem Programme im Gast starten.
-  \item[Zeitabgleich] Die Uhr des Gastes kann von der des Wirtsystems abweichen, etwa wenn die VM angehalten war. Kleine Abweichungen gleichen die Guest Additions nach und nach aus, große, etwa nach stundenlangem Anhalten, korrigieren sie sofort. Der Abgleich wiederholt sich regelmäßig.
-  \item[Gemeinsame Zwischenablage] Text, Bilder und HTML lassen sich zwischen Wirt und Gast kopieren. Die Funktion ist wahlweise zuschaltbar.
-  \item[Drag and Drop] Dateien und andere Objekte lassen sich vom Wirt in den Gast ziehen und umgekehrt.
+  \item[Mauszeigerintegration] Der Zeiger im Gast folgt der Maus des Wirtsystems; die Host-Taste ist zum Freigeben der Maus nicht mehr nötig.
+  \item[Shared Folders] Ein Ordner des Wirtsystems erscheint im Gast ähnlich einer Netzwerkfreigabe, auch wenn der Gast kein Netzwerk hat.
+  \item[Bessere Grafik] Hohe und ungewöhnliche Auflösungen, schnellere und 3D-beschleunigte Darstellung; bei Windows-, Linux- und Solaris-Gästen passt sich die Auflösung der Fenstergröße an.
+  \item[Nahtlose Fenster] Die Programmfenster des Gastes erscheinen direkt auf dem Desktop des Wirtsystems.
+  \item[Gasteigenschaften] Wirt und Gast tauschen Daten als Zeichenketten aus, über die sich der Gast überwachen und steuern lässt; das Wirtsystem kann Programme im Gast starten.
+  \item[Zeitabgleich] Die Uhr des Gastes wird regelmäßig an die des Wirtsystems angeglichen, etwa nachdem die VM angehalten war.
+  \item[Gemeinsame Zwischenablage] Text, Bilder und HTML lassen sich zwischen Wirt und Gast kopieren.
+  \item[Drag and Drop] Dateien lassen sich zwischen Wirt und Gast ziehen, in beide Richtungen.
   \item[Automatische Anmeldung] Der Gast kann ohne Eingabe am Anmeldebildschirm angemeldet werden.
 \end{description}
-
-Für die Arbeit im Labor heißt das: Ohne Guest Additions bleibt die Maus je nach Gast im Fenster gefangen, die Auflösung passt sich nicht an das Fenster an, und Text oder Dateien lassen sich nicht einfach zwischen Wirt und Gast kopieren. Deshalb gehört die Installation zu den ersten Schritten nach dem Einrichten eines Gastes.
 
 \paragraph{Quellen}
 \begin{itemize}[nosep]
@@ -148,7 +131,7 @@ Für die Arbeit im Labor heißt das: Ohne Guest Additions bleibt die Maus je nac
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Installing Guest Additions}, Unterabschnitte \enquote{Mount the Guest Additions ISO} und \enquote{Run the Guest Additions Installer}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, Unterabschnitt \enquote{Capturing and Releasing Keyboard and Mouse}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
 \end{itemize}
-\kiquelle[22.\,09.\,2026]{Opus 5.5}
+\kiquelle[26.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Warum müssen Guest-Additions überhaupt zusätzlich installiert werden?]
 \label{sec:guestadditions-warum}%
@@ -157,15 +140,11 @@ Guest-Additions müssen im Guest-System zusätzlich installiert werden. Begründ
 
 Die Guest Additions müssen in den Gast, weil jede ihrer Funktionen an Dingen ansetzt, die nur das Gastbetriebssystem kennt: an seiner Zwischenablage, seinen Fenstern, seinem Dateisystem und seiner Uhr. VirtualBox sieht den Gast dagegen nur von außen, als Folge von Prozessorbefehlen, Speicherzugriffen und Zugriffen auf nachgebildete Geräte.
 
-Was diese Zugriffe bedeuten, legt erst das Gastbetriebssystem fest. VirtualBox bekommt mit, welche Blöcke der Gast auf seine virtuelle Festplatte schreibt, aber nicht, zu welcher Datei sie gehören. Ebenso sieht es, dass der Gast Arbeitsspeicher beschreibt, nicht aber, dass dort gerade ein kopierter Text liegt. Chen und Noble haben diesen Abstand 2001 als semantische Lücke beschrieben: Ein Dienst unterhalb des Gastes arbeitet unter den Begriffen, die das Betriebssystem erst schafft, also unter Benutzern und Dateien, und müsste diese Begriffe selbst nachbauen. Um die Zwischenablage von außen auszulesen, müsste VirtualBox daher die inneren Datenstrukturen jedes unterstützten Gastbetriebssystems kennen, und zwar in jeder Version.
+Was diese Zugriffe bedeuten, legt erst das Gastbetriebssystem fest. VirtualBox sieht, welche Blöcke der Gast auf seine virtuelle Festplatte schreibt, aber nicht, zu welcher Datei sie gehören, und dass er Arbeitsspeicher beschreibt, aber nicht, dass dort ein kopierter Text liegt. Chen und Noble haben diesen Abstand 2001 als semantische Lücke beschrieben: Ein Dienst unterhalb des Gastes arbeitet unter den Begriffen, die das Betriebssystem erst schafft, also unter Benutzern und Dateien, und müsste diese Begriffe selbst nachbauen. Um die Zwischenablage von außen auszulesen, müsste VirtualBox daher die inneren Datenstrukturen jedes Gastbetriebssystems in jeder Version kennen.
 
-Von sich aus schließt der Gast die Lücke auch nicht. Er hält die nachgebildete Standardhardware für echt, spricht sie mit seinen gewöhnlichen Treibern an und hat keinen Anlass, nach VirtualBox zu suchen. Die Guest Additions setzen deshalb innen an. Ein eigener Maustreiber im Gast bekommt die Mausbewegungen vom Wirtsystem und bewegt den Zeiger im Gast mit, ein eigener Dateisystemtreiber bindet die Shared Folders ein, und über einen privaten Kanal tauschen Programme auf beiden Seiten Daten aus. Weil diese Teile im Gast laufen, nutzen sie dessen eigene Schnittstellen und müssen seine Datenstrukturen nicht von außen deuten.
+Die Guest Additions setzen deshalb innen an. Ein eigener Maustreiber im Gast bekommt die Mausbewegungen vom Wirtsystem, ein eigener Dateisystemtreiber bindet die Shared Folders ein, und über einen privaten Kanal tauschen Programme auf beiden Seiten Daten aus. Weil diese Teile im Gast laufen, nutzen sie dessen eigene Schnittstellen und müssen seine Datenstrukturen nicht von außen deuten.
 
-Der Preis dafür ist die Bindung an ein bestimmtes Gastbetriebssystem, und deshalb lassen sich die Guest Additions nicht fest in VirtualBox einbauen. Ein Windows-Treiber läuft unter Linux nicht, also liegen auf dem CD-Abbild \cmd{VBoxGuestAdditions.iso} eigene Fassungen für Windows, Linux, Oracle Solaris und OS/2. Unter Linux übersetzt die Installation die Kernmodule im Gast passend zu dessen Kern, wofür der Gast zum Bauen externer Kernmodule vorbereitet sein muss. Unter Windows sind die Treiber signiert, und solange die Zertifikate nicht vorab eingespielt sind, fragt der Gast vor jedem einzelnen Treiber nach. Was in seinen Kern geladen wird, entscheidet also das Gastbetriebssystem und nicht VirtualBox.
-
-Selbst wo VirtualBox die Arbeit abnimmt, landet die Software im Gast. Bei der unbeaufsichtigten Installation eines neuen Gastes kann VirtualBox die Guest Additions gleich nach dem Betriebssystem mitinstallieren, allerdings nicht bei jedem Gast. Manche Linux-Distributionen bringen die Guest Additions ganz oder teilweise schon mit, oft aber veraltet und mit weniger Funktionen, weshalb sich der Austausch gegen die Fassung aus VirtualBox empfiehlt.
-
-Wirt- und Gastseite gehören zusammen, deshalb bringt jede VirtualBox-Version, auch eine kleine, ihre eigenen Guest Additions mit. Ältere Guest Additions sollten nach einem Update von VirtualBox weiterlaufen, weil die Schnittstelle zwischen beiden Seiten stabil gehalten wird. Empfohlen ist trotzdem derselbe Versionsstand, und Windows- und Linux-Gäste melden sich von selbst, wenn VirtualBox auf dem Wirtsystem neuer ist als ihre Guest Additions.
+Der Preis ist die Bindung an das jeweilige Gastbetriebssystem, weshalb sich die Guest Additions nicht fest in VirtualBox einbauen lassen. Auf dem CD-Abbild liegen eigene Fassungen für Windows, Linux, Oracle Solaris und OS/2. Unter Linux übersetzt die Installation Kernmodule passend zum Kern des Gastes, der dafür zum Bauen externer Kernmodule vorbereitet sein muss; unter Windows fragt der Gast vor jedem Treiber nach, solange die Zertifikate nicht vorab eingespielt sind. Was in seinen Kern geladen wird, entscheidet also das Gastbetriebssystem. Weil jede VirtualBox-Version ihre eigenen Guest Additions mitbringt, empfiehlt es sich, sie nach einem Update von VirtualBox im Gast auf denselben Stand zu bringen.
 
 \paragraph{Quellen}
 \begin{itemize}[nosep]
@@ -173,22 +152,158 @@ Wirt- und Gastseite gehören zusammen, deshalb bringt jede VirtualBox-Version, a
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Introduction to Guest Additions}: \enquote{a special mouse driver is installed in the guest that communicates with the physical mouse driver on your host} sowie \enquote{Each version of Oracle VirtualBox, even minor releases, include their own version of the Guest Additions.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Shared Folders} (\enquote{special file system driver in the Guest Additions}) und \enquote{Guest Properties}: \enquote{Oracle VirtualBox establishes a private communication channel between the Oracle VirtualBox Guest Additions and the host}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
   \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Installing Guest Additions}, Unterabschnitte \enquote{Installing Code Signing Certificates} (\enquote{the installation will prompt you before the installation of each driver}), \enquote{Installing the Linux Guest Additions} (\enquote{Prepare your guest system for building external kernel modules.}) und \enquote{Updating the Linux Guest Additions}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
-  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 4 \enquote{Creating a New Virtual Machine}, Abschn. \enquote{Configure Unattended Installation of Guest OS}: \enquote{Unattended Guest Additions installation is available for some guests.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
 \end{itemize}
-\kiquelle[23.\,09.\,2026]{Opus 5.5}
+\kiquelle[26.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was ist der Host-Key und wozu wird er verwendet?]
 \label{sec:hosttaste}%
 In VirtualBox gibt es eine spezielle Taste mit der du besondere Funktionen auslösen kannst. Was ist das für eine Taste? Nenne weiters mindestens 4 Funktionen wozu du diese benötigst.
 \end{aufgabe}
 
-% TODO Antwort
+Die Host-Taste ist eine Taste, die VirtualBox für sich selbst reserviert, standardmäßig die rechte Strg-Taste, auf einem Mac die linke Befehlstaste. Welche Taste eingestellt ist, zeigt das VM-Fenster rechts unten in seiner Statusleiste; ändern lässt sie sich unter \enquote{File} $\rightarrow$ \enquote{Preferences}, Reiter \enquote{Input}.
+
+Gebraucht wird sie, weil der Gast Tastatur und Maus für sich allein beansprucht. Hat das VM-Fenster den Tastaturfokus, gehen alle Tastendrücke an den Gast, auch Alt+Tab; ohne eine Taste, die VirtualBox vorher abfängt, gäbe es keinen Weg zurück zum Wirtsystem. Allein gedrückt holt die Host-Taste deshalb Tastatur und Maus zurück, zusammen mit einer zweiten Taste löst sie einen Befehl aus. Für die Maus ist das Zurückholen mit Guest Additions nicht mehr nötig.
+
+Manche Tastenkombinationen fängt das Wirtsbetriebssystem ab, bevor VirtualBox sie sieht. Vorbehalten ist ihm etwa Strg+Alt+Entf; auf Linux-Wirtsystemen startet Strg+Alt+Rücktaste die grafische Oberfläche neu, und Strg+Alt+F1 bis F12 schaltet zwischen den virtuellen Terminals des Wirtsystems um. VirtualBox übersetzt diese Kombinationen deshalb: Host+Entf kommt beim Gast als Strg+Alt+Entf an, Host+Rücktaste und Host+F1 bis F12 entsprechend. Die übrigen Kombinationen steuern VirtualBox selbst; Tabelle~\ref{tab:hosttaste} führt alle, die ab Werk belegt sind.
+
+\begin{table}[H]
+\centering
+\caption{Voreingestellte Kombinationen mit der Host-Taste}
+\label{tab:hosttaste}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Kombination} & \textbf{Wirkung} \\
+\midrule
+Host+Entf & Strg+Alt+Entf an den Gast senden, etwa um ihn neu zu starten \\
+Host+Rücktaste & Strg+Alt+Rücktaste an den Gast senden, startet die grafische Oberfläche eines Linux- oder Solaris-Gastes neu \\
+Host+F1 bis F12 & Strg+Alt+F1 bis F12 an den Gast senden, wechselt im Linux-Gast das virtuelle Terminal \\
+\addlinespace
+Host+F & Vollbildmodus \\
+Host+L & Nahtloser Modus, die Fenster des Gastes erscheinen auf dem Desktop des Wirtsystems \\
+Host+C & Skalierter Modus, das Bild des Gastes wird auf die Fenstergröße gestreckt \\
+Host+Pos1 & Menü im Vollbild- und im nahtlosen Modus einblenden \\
+Host+A & Größe des Gastfensters sofort anpassen \\
+Host+G & Größe des Gastfensters automatisch anpassen \\
+Host+I & Mauszeigerintegration ein- und ausschalten \\
+\addlinespace
+Host+P & VM anhalten \\
+Host+R & Gast hart zurücksetzen \\
+Host+H & Virtuellen ACPI-Einschaltknopf drücken \\
+Host+Q & Dialog zum Schließen der VM öffnen \\
+\addlinespace
+Host+T & Snapshot anlegen \\
+Host+E & Bildschirmfoto des Gastes aufnehmen \\
+Host+S & Einstellungen der VM öffnen \\
+Host+N & Sitzungsinformationen der VM anzeigen \\
+Host+D & CD-Abbild der Guest Additions einlegen \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Leicht zu verwechseln sind die drei Wege, eine VM zu beenden oder neu zu starten. Host+H drückt den virtuellen Einschaltknopf über das Advanced Configuration and Power Interface (ACPI), die Schnittstelle, über die ein Betriebssystem unter anderem den Einschaltknopf gemeldet bekommt; der Gast fährt daraufhin geordnet herunter. Host+R setzt den Gast sofort zurück, ungespeicherte Daten gehen verloren. Host+Q fragt zuerst, ob VirtualBox den Zustand der VM speichern, den Gast über ACPI herunterfahren oder die VM sofort ausschalten soll.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, Unterabschnitt \enquote{Capturing and Releasing Keyboard and Mouse}: \enquote{To return ownership of keyboard and mouse to your host OS, Oracle VirtualBox reserves a special key on your keyboard: the Host key. By default, this is the right Ctrl key on your keyboard. On a Mac host, the default Host key is the left Command key.} Dazu Unterabschnitte \enquote{Virtual Machine Status Bar} und \enquote{Typing Special Characters}: \enquote{Host key + Del sends Ctrl+Alt+Del to reboot the guest OS.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, Unterabschnitte \enquote{Resetting a VM} (\enquote{Note that you will lose unsaved data.}) und \enquote{Closing or Saving a VM}: \enquote{This will send an ACPI shutdown signal to the virtual machine, which has the same effect as if you had pressed the power button on a real computer.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 3 \enquote{Configuring Oracle VirtualBox}, Abschn. \enquote{Set Oracle VirtualBox Preferences}: \enquote{On the Input tab, set keyboard shortcuts, both in Oracle VirtualBox Manager and in individual VMs. For example you might want to specify a different Host key.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/configuring-virtualbox.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 11 \enquote{Advanced Topics}, Abschn. \enquote{Locking Down Oracle VirtualBox Manager}, Unterabschnitt \enquote{Host Key Customization}, Tabelle 11-1 mit den voreingestellten Kombinationen. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/AdvancedTopics.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Introduction to Guest Additions}, Punkt \enquote{Mouse pointer integration}, und Abschn. \enquote{Seamless Windows}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Features}, Unterpunkt \enquote{ACPI}: \enquote{The Advanced Configuration and Power Interface (ACPI) is available in Oracle VirtualBox.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
+\end{itemize}
+\kiquelle[26.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was ist eine virtuelle Festplatte, und welche Arten gibt es?]
+\label{sec:festplatte}%
 Eine virtuelle Maschine braucht auch eine \enquote{virtuelle Festplatte}. Welche Arten von virtuellen Festplatten gibt es und was sind die Unterschiede?
 \end{aufgabe}
 
-% TODO Antwort
+Eine virtuelle Festplatte ist ein Speicher, den VirtualBox dem Gast über einen nachgebildeten Festplattencontroller als eingebaute Festplatte vorführt. Dahinter steht im Regelfall eine Abbilddatei auf dem Wirtsystem, in die VirtualBox jeden Lese- und Schreibzugriff des Gastes umleitet. Möglich sind auch ein Speicherserver im Netzwerk, angebunden über Internet SCSI (iSCSI), oder eine echte Festplatte des Wirtsystems.
+
+Abbilddateien unterscheiden sich in drei voneinander unabhängigen Merkmalen: Dateiformat, Belegung und Schreibmodus.
+
+\paragraph{Dateiformat} Es legt fest, welches Virtualisierungsprodukt die Datei lesen kann. Für neue VMs verwendet VirtualBox sein eigenes Format Virtual Disk Image (VDI). Daneben unterstützt es VMDK von VMware und Virtual Hard Disk (VHD) von Microsoft, die sich anbieten, wenn eine Platte auch mit einem anderen Produkt laufen soll. Tabelle~\ref{tab:plattenformate} stellt die vier Formate gegenüber.
+
+\begin{table}[H]
+\centering
+\caption{Formate für Abbilddateien in VirtualBox}
+\label{tab:plattenformate}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+\textbf{Format} & \textbf{Herkunft} & \textbf{Unterstützung in VirtualBox} \\
+\midrule
+VDI & VirtualBox & eigenes Format, Voreinstellung beim Anlegen einer neuen VM \\
+VMDK & VMware & vollständig; offenes Format, das auch viele andere Produkte verwenden \\
+VHD & Microsoft & vollständig; vorrangig für Hyper-V gedacht \\
+HDD & Parallels & nur Version~2; die Versionen~3 und 4 sind nicht dokumentiert und lassen sich nur mit Werkzeugen von Parallels in Version~2 umwandeln \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Belegung} Eine Abbilddatei fester Größe ist von Anfang an ungefähr so groß wie die eingestellte Kapazität, ihr Anlegen dauert entsprechend lange. Eine dynamisch zugewiesene Datei beginnt sehr klein und wächst bei jedem ersten Schreibzugriff auf einen Sektor, bis sie die Kapazität erreicht; diese Art legt der Assistent für neue VMs an. Schreiben ist nur so lange langsamer, wie die Datei noch wächst, danach ist der Unterschied vernachlässigbar. Abbildung~\ref{abb:platte} stellt beide Verläufe gegenüber.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+  \draw[-{Stealth[length=2mm]}, draw=rahmengrau] (0,0) -- (0,3.8);
+  \node[font=\footnotesize, anchor=south west] at (-0.1,3.85)
+    {belegter Platz auf dem Wirtsdatenträger};
+  \draw[-{Stealth[length=2mm]}, draw=rahmengrau] (0,0) -- (8.9,0);
+  \node[font=\footnotesize, anchor=north east] at (8.9,-0.1) {Betriebsdauer};
+
+  % Deckellinie und Verlauf der festen Groesse sind dieselbe Linie; genau das
+  % ist die Aussage, deshalb keine zweite gestrichelte Linie darunter
+  \draw[draw=akzent, line width=0.9pt] (0.12,0) -- (0.12,3) -- (8.5,3);
+  \node[beschriftung, anchor=west, align=left] at (8.6,3) {eingestellte\\Obergrenze};
+  \node[font=\footnotesize, text=akzent, anchor=north west] at (0.9,2.9) {feste Größe};
+
+  \draw[draw=htlgruen!60!black, line width=0.9pt]
+    (0.12,0.1) .. controls (2.2,1.7) and (4.6,2.6) .. (8.5,2.88);
+  \node[font=\footnotesize, text=htlgruen!60!black, anchor=north west] at (3.0,1.9)
+    {dynamische Zuweisung};
+\end{tikzpicture}
+\caption[Fester und dynamisch wachsender Plattenplatz im Zeitverlauf]{Beide Belegungsarten enden bei derselben Obergrenze und erreichen sie nur zu verschiedenen Zeitpunkten. Dieser Verlauf über die Zeit ist der eigentliche Unterschied und lässt sich in Fließtext nur behaupten.}
+\label{abb:platte}
+\end{figure}
+
+Anders als eine echte Festplatte lässt sich eine virtuelle nachträglich vergrößern, auch wenn schon Daten darauf liegen. Mit \cmd{VBoxManage modifymedium} geht das nur bei dynamisch zugewiesenen Abbildern in den Formaten VDI und VHD und nur nach oben; Listing~\ref{lst:resize} zeigt den Befehl, die Größe steht in Megabyte. Die Partition im Gast bleibt dabei gleich groß und muss dort mit einem Partitionierungswerkzeug nachgezogen werden.
+
+\begin{lstlisting}[caption={Kapazität einer VDI-Datei auf 80\,GB erweitern}, label={lst:resize}]
+VBoxManage modifymedium disk "Mint.vdi" --resize 81920
+\end{lstlisting}
+
+\paragraph{Schreibmodus} Er legt fest, wie sich eine Platte gegenüber Schreibzugriffen und Snapshots verhält; gesetzt wird er im Virtual Media Manager unter \enquote{Type} oder mit \cmd{VBoxManage modifymedium --type}. Mehrere Modi beruhen auf Differenzabbildern. Ein Differenzabbild ist eine Abbilddatei, die nur die Sektoren enthält, die sich gegenüber ihrem Elternabbild geändert haben; alle Schreibzugriffe gehen in das Differenzabbild, das Elternabbild wird nur noch gelesen. Tabelle~\ref{tab:schreibmodi} fasst die sechs Modi zusammen.
+
+\begin{table}[H]
+\centering
+\caption{Schreibmodi von Abbilddateien}
+\label{tab:schreibmodi}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Modus} & \textbf{Verhalten} \\
+\midrule
+normal & Voreinstellung. Ein Snapshot friert die Datei ein, weitere Schreibzugriffe gehen in ein Differenzabbild; beim Zurückkehren zum Snapshot wird der Plattenzustand vollständig wiederhergestellt. An mehrere VMs anhängbar, von denen aber nur eine zugleich laufen darf. \\
+write-through & Von Snapshots unberührt: Der Zustand wird beim Snapshot weder gesichert noch beim Zurückkehren wiederhergestellt. \\
+shareable & Wie write-through, aber an mehrere gleichzeitig laufende VMs anhängbar. Nur bei fester Größe möglich und nur für Software gedacht, die auf gleichzeitigen Zugriff vorbereitet ist; gewöhnliche Dateisysteme können dabei Daten verlieren. \\
+immutable & Alle Schreibzugriffe gehen in ein Differenzabbild, das VirtualBox bei jedem Einschalten der VM verwirft. Ein Neustart aus dem Gast heraus setzt nicht zurück. Existiert ein Snapshot, wird beim Einschalten auf den Stand des aktuellen Snapshots zurückgesetzt. \\
+multiattach & An mehrere gleichzeitig laufende VMs anhängbar. Jede VM schreibt in ihr eigenes Differenzabbild und sieht die Änderungen der anderen nicht; zurückgesetzt wird nichts. \\
+read-only & Nur lesbar. VirtualBox verwendet diesen Modus selbsttätig für CD- und DVD-Abbilder. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Welcher Modus passt, zeigt ein Befall mit Schadsoftware. Eine normale Platte kehrt mit dem Snapshot von vor der Infektion in den früheren Zustand zurück, eine immutable-Platte schon durch Aus- und Einschalten der VM. Eine write-through-Platte lässt sich über VirtualBox nicht zurücksetzen und muss wie ein echter Rechner bereinigt werden.
+
+\paragraph{Quellen}
+\begin{itemize}[nosep]
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Einleitung (Abbilddatei, iSCSI, Platte des Wirtsystems) und Abschn. \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)}: \enquote{Oracle VirtualBox enables you to expand an image file after creation, even if it has data already.} sowie \enquote{Irrespective of the disk capacity and format [\ldots] there are two options for creating a disk image: fixed-size or dynamically allocated.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{iSCSI Servers}: \enquote{iSCSI stands for Internet SCSI and is a standard that supports use of the SCSI protocol over Internet (TCP/IP) connections.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 8 \enquote{Virtual Storage}, Abschn. \enquote{Special Image Write Modes}: \enquote{This applies to all of the aforementioned image formats (VDI, VMDK, VHD, or HDD) and irrespective of whether an image is fixed-size or dynamically allocated.} und \enquote{Differencing Images}: \enquote{A differencing image is a special disk image that only holds the differences to another image.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 4 \enquote{Creating a New Virtual Machine}, Abschn. \enquote{Specify Virtual Hardware}: \enquote{Choose the Disk Size for a new, dynamically allocated, virtual hard disk image to be created in the VM folder.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
+  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 15 \enquote{VBoxManage Command Reference}, Abschn. \enquote{VBoxManage modifymedium}, Optionen \cmd{--resize} (\enquote{Note that you can only resize dynamically allocated disk images that use the VDI and VHD formats.}) und \cmd{--type}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/vboxmanage.html}
+  \item Microsoft: \enquote{Manage Virtual Hard Disks (VHD)}: \enquote{VHDs are designed primarily for use with Hyper-V virtual machines.} \url{https://learn.microsoft.com/en-us/windows-server/storage/disk-management/manage-virtual-hard-disks}
+\end{itemize}
+\kiquelle[26.\,09.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was ist ein Shared Folder in VirtualBox und wozu wird er verwendet?]
 \end{aufgabe}
