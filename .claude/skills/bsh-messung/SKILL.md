@@ -14,13 +14,15 @@ Nie ein Ergebnis schreiben, das nicht gelaufen ist: kein erfundener Ping, keine 
 
 Erwartung und Beobachtung stehen getrennt: erst was erwartet wurde und warum, dann was geschah. Stimmen sie überein, ist das eine Bestätigung. Weichen sie ab, wird die Abweichung ausführlich behandelt, nicht kaschiert.
 
+Ein gescheiterter oder fehlerhafter Anlauf steht im Text; gleichartige Wiederholungen dürfen zusammengefasst werden. Wegfallen darf ein Anlauf erst, wenn Adam den Versuch vollständig wiederholt hat. Aus mehreren Anläufen wird nie ein einziger zusammengesetzt.
+
 ## Aufbau eines Versuchs
 
 Jeder Versuch steht in einer `messung`-Umgebung mit fünf Teilen in dieser Reihenfolge:
 
-**Aufbau.** Konfiguration mit Werten: Wirtssystem, Gast, VirtualBox-Version, Netzwerkmodus, Adressen; genug zum Wiederholen. Dass der Versuch am Heimrechner lief, steht hier.
+**Aufbau.** Konfiguration mit Werten: Wirtssystem, Gast, VirtualBox-Version, Netzwerkmodus, Adressen; genug zum Wiederholen. Dass der Versuch am Heimrechner lief, steht hier. Werte, Zustände und Zeitpunkte kommen aus `VBoxManage showvminfo --machinereadable` und `VBox.log`, nicht aus dem Gesprächsverlauf.
 
-**Durchführung.** Der ausgeführte Befehl wörtlich in Monospace.
+**Durchführung.** Der ausgeführte Befehl wörtlich in Monospace; ein eigenes Listing nur, wenn die Rohdaten die Befehle nicht samt Prompt zeigen.
 
 **Rohdaten.** Die Ausgabe als `lstlisting`, ungekürzt oder mit gekennzeichneter Kürzung, dazu der Screenshot als Beleg.
 
@@ -42,4 +44,4 @@ Im NAT-Modus erreicht der Gast das Wirtssystem unter der Gateway-Adresse des NAT
 
 Feste Adressen eines Labornetzes aus der Angabe werden als Regel auf das tatsächliche Netz übertragen; die Übertragung steht im Aufbau.
 
-Öffentliche Adressen des Heimanschlusses, die IPv4-Adresse des Routers und globale IPv6-Adressen, werden in Rohdaten und Screenshots geschwärzt und die Schwärzung benannt.
+Öffentliche Adressen des Heimanschlusses, die IPv4-Adresse des Routers und globale IPv6-Adressen, werden in Rohdaten und Screenshots geschwärzt und die Schwärzung benannt. Über anderes Persönliche, etwa Ordnernamen eines Sticks oder die Geräteliste des Wirtssystems, entscheidet Adam; Claude weist schon beim Planen der Aufnahmen darauf hin.

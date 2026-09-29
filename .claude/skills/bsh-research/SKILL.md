@@ -28,13 +28,15 @@ Jede Zahl braucht eine Quelle: Portnummern, Versionsstände, Grenzwerte. Vor jed
 
 Eine Quelle ist ein vollständiger Link auf die Seite, kein Domainname.
 
-Unbelegte Aussagen bekommen im Quelltext `% BELEG FEHLT: <was zu belegen ist>`; vor der Abgabe darf keine übrig sein.
+Eine unbelegte Aussage wird gestrichen, als Ableitung kenntlich gemacht oder bis zum Beleg im Quelltext mit `% BELEG FEHLT: <was zu belegen ist>` markiert; vor der Abgabe darf keine Markierung übrig sein.
 
-Was die Quelle sagt, und was daraus folgt, bleiben getrennt. Ableitungen sollen vorkommen, weil die Angabe eigene Gedanken verlangt; sie sind im Fließtext erkennbar, etwa durch *daraus folgt*, und werden der Quelle nicht in den Mund gelegt.
+Was die Quelle sagt, und was daraus folgt, bleiben getrennt. Ableitungen sollen vorkommen, weil die Angabe eigene Gedanken verlangt; sie sind im Fließtext erkennbar, etwa durch *daraus folgt*, und werden der Quelle nicht in den Mund gelegt. Das gilt auch für Einschränkungen und Verallgemeinerungen, die die Quelle nicht macht: *nur*, *zusätzlich*, *immer*.
 
 ## Gegenprüfung
 
 Die Angabe verlangt, den Inhalt selbständig zu prüfen, über weitere Quellen oder ein zweites KI-Modell. Erfüllt wird das über die Quellen: Jede Fachaussage wird an der geöffneten Primärquelle nachgelesen, bevor sie stehen bleibt. Ein zweites Modell ersetzt das nicht.
+
+Ein Zitat wird am Rohtext der Seite geprüft, nicht an der Ausgabe von WebFetch, die ein kleines Modell zusammenfasst und dabei Wortlaut verändert: `curl -sL <URL> | sed 's/<[^>]*>/ /g' | tr -s ' \n' ' ' | grep -oF "<Zitat>"`. In Manpages trennt das Entfernen der Tags Satzzeichen ab; dort ohne sie suchen.
 
 ## Kapitelnummern der Angabe
 

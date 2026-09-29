@@ -4,10 +4,6 @@ Was konkret zu tun ist. Ein erledigter Punkt wird gestrichen, nicht abgehakt. De
 
 ## Heimrechner einrichten
 
-**VirtualBox installieren.** Version 7.2, passend zum zitierten Handbuch. Offen ist, ob VMware daneben bleibt oder weicht.
-
-**VMs importieren.** Den Import von Anfang an mit Screenshots mitschneiden: Er ist bereits der Versuch zur Export- und Import-Aufgabe in Kapitel 4.
-
 **Zugangsdaten der Windows-11-VM.** Die Angabe nennt nur die für Windows Server 2019 und Mint.
 
 ## Im Protokolltext nachzutragen

@@ -10,7 +10,7 @@ Das Protokoll soll Gaisberger überzeugen und ist zugleich Adams Lern- und Prüf
 
 ## Sprache und Begriffe
 
-Jeder Fachbegriff wird bei Erstnennung im Fließtext definiert, vor seiner Verwendung, nicht in einer Fußnote.
+Jeder Fachbegriff wird bei seiner ersten Nennung im Protokoll im Fließtext definiert, vor seiner Verwendung, nicht in einer Fußnote, und danach nicht erneut; wiederfinden lässt er sich über das Glossar.
 
 Deutsche Fachsprache, wie sie an einer HTL gesprochen wird. Wo Angabe oder Werkzeug den englischen Begriff verwenden, bleibt er englisch: Shared Folder, Drag and Drop, Guest Additions, Snapshot. Keine englische Übersetzung in Klammern, außer bei einem Begriff, den man nur unter dem englischen Namen in Handbuch oder Oberfläche wiederfindet, und dann einmal.
 
@@ -42,6 +42,6 @@ Werte, Befehle und Schrittfolgen stehen in Listings und Tabellen, wo sie beim Du
 
 Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er allein eine Prüfungsfrage beantwortet. So löst das Protokoll die Forderung der Angabe ein, Prüfungsrelevantes hervorzuheben.
 
-Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel. Ein Sachverhalt, den der Kernsatz braucht, steht knapp noch einmal da. Ein Fachbegriff wird nur bei seiner ersten Nennung im Protokoll definiert und ist danach über das Glossar auffindbar. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe sind erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
+Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel. Ein Sachverhalt, den der Kernsatz braucht, steht knapp noch einmal da. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe sind erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
 
 Ein bündelnder Absatz am Kapitelende nur, wo mehrere Fäden zusammenlaufen.

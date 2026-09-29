@@ -18,13 +18,13 @@ Keine Formelemente eines Fachartikels: kein Abstract, kein Related Work, keine g
 
 Die Angabe verlangt sie bei jeder einzelnen Antwort, auch bei umgeschriebenem Text; keine Sammelangabe. Umsetzung: `\kiquelle[20.\,09.\,2026]{Opus 5.5}` nach dem `\end{itemize}` des Quellenblocks. Das Datum nennt den Stand der Textfassung, nicht den Bautag.
 
-Claude ist keine Quelle. Die Zeile nennt die Herkunft der Textfassung, der Quellenblock die der Information. Eine Aussage ohne Beleg wird gestrichen oder als eigene Ableitung kenntlich gemacht, nie der KI zugeschrieben.
+Claude ist keine Quelle. Die Zeile nennt die Herkunft der Textfassung, der Quellenblock die der Information; eine unbelegte Aussage wird nie der KI zugeschrieben.
 
 ## Formkriterien der Beurteilung
 
 Einrückungen durchgängig. Höchstens drei Textgrößen im Fließtext, Überschriften ausgenommen; die Klasse hält das ein, also kein manuelles `\large`, `\small`, `\tiny`. Rahmungen und Ausrichtungen ungebrochen, Farben nur aus der Klasse: `akzent`, `htlgruen`, `rahmengrau`, `fuellgrau`.
 
-Screenshots mit `\bild{}{}{}` und Breitenangabe, nie Höhe und Breite zugleich. Auf die belegende Stelle zugeschnitten, beim Text platziert, den sie belegen. Dateiname sprechend mit Kapitelbezug: `05-nat-ipconfig-guest.png`.
+Screenshots mit `\bild[Kurzfassung]{Dateiname}{Breite}{Beschriftung}`, Breite als Anteil der Textbreite, nie Höhe und Breite zugleich; das Label ist `abb:Dateiname`. Auf die belegende Stelle zugeschnitten, beim Text platziert, den sie belegen. Dateiname sprechend mit Kapitelbezug: `05-nat-ipconfig-guest.png`.
 
 Befehle und Code in Monospace, ergänzend zum Screenshot, der sie belegt, nicht ersetzt. Inline `\cmd{ipconfig /all}`, mehrzeilig `lstlisting`, lange Dateinamen und Pfade, die umbrechen müssen, mit `\nolinkurl`.
 
@@ -32,7 +32,7 @@ Fachbegriffe bei Erstnennung mit Definition und Literaturverweis; die Beurteilun
 
 ## Abbildungen
 
-Zugelassen sind der Screenshot als Beleg einer eigenen Messung und das Schema, das eine räumliche oder zeitliche Beziehung zeigt, die Fließtext nur umständlich wiedergibt. Die Bildunterschrift begründet die Wahl, damit sie bei der mündlichen Besprechung ablesbar ist. Schemata in TikZ mit den Formen der Klasse.
+Zugelassen sind der Screenshot als Beleg einer eigenen Messung und das Schema, das eine räumliche oder zeitliche Beziehung zeigt, die Fließtext nur umständlich wiedergibt. Die Bildunterschrift begründet die Wahl, damit sie bei der mündlichen Besprechung ablesbar ist. Je Sachverhalt ein Screenshot. Schemata in TikZ mit den Formen der Klasse.
 
 ## LaTeX-Konventionen
 
@@ -47,6 +47,8 @@ Aufgaben der Angabe stehen wörtlich in einer `aufgabe`-Umgebung, samt Zugangsda
 ## Quellenblock
 
 Folgt jeder beantworteten Aufgabe. Jedes Dokument steht darin genau einmal: mehrere Kapitel des Handbuchs als Unterpunkte eines Eintrags, mehrere Abschnitte eines Kapitels in einer Zeile. Form `Urheber: Titel, Fundstelle: Zitat. URL`, selbständige Werke in `\emph`, Seiten und Aufsätze in `\enquote`, Abschnitte ohne Nummer mit Titel und ohne übergeordneten Abschnitt. Ein Zitat nur, wo der Wortlaut die Aussage trägt: Definition, Zahl, Einschränkung, Auflösung einer Abkürzung, Zuschreibung. Reihenfolge: Primärdokumentation, Normen, Fachliteratur, Herstellermitteilungen, Angabe, eigene Feststellung; das Handbuch nach Kapitelnummer, sonst alphabetisch. Die volle bibliographische Angabe steht nur im Quellenverzeichnis. `[quellen]` hält die KI-Kennzeichnung beim Listenende.
+
+Nach jeder Änderung am Aufgabentext werden Block und Verzeichnisse gegen den Text abgeglichen: Eine Quelle, ein Zitat oder ein Eintrag, der keinen Satz mehr trägt, fällt weg.
 
 ```latex
 \paragraph{Quellen}
