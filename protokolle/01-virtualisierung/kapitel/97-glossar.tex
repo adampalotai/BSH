@@ -11,11 +11,17 @@ Hardware-Virtualisierungserweiterung der AMD-Prozessoren, Gegenstück zu Intels 
 \begriff[sec:eigene-vm]{Ausführungsbegrenzung}
 Einstellung, die festlegt, welchen Anteil eines physischen Prozessorkerns ein virtueller höchstens beanspruchen darf. Englisch \emph{processing cap}. Voreinstellung 100\,\%, also keine Begrenzung.
 
+\begriff[sec:sf-einrichten]{Benutzergruppe}
+Benannte Menge von Benutzern unter Linux, festgehalten in \cmd{/etc/group}. Jede Datei hat neben dem Eigentümer eine Gruppe, der eigene Rechte zustehen. Ein Prozess erbt seine Gruppen vom Elternprozess, eine neue Mitgliedschaft wirkt deshalb erst nach einer neuen Anmeldung. Den Zugriff auf Shared Folders im Linux-Gast regelt die Gruppe \cmd{vboxsf}.
+
 \begriff[sec:festplatte]{Differenzabbild}
 Abbilddatei, die nur die Sektoren enthält, die sich gegenüber ihrem Elternabbild geändert haben. Nimmt alle Schreibzugriffe auf, das Elternabbild wird nur noch gelesen. Grundlage von Snapshots und des Schreibmodus immutable.
 
 \begriff[sec:festplatte]{Dynamische Zuweisung}
 Belegungsart einer virtuellen Festplatte, bei der die Datei klein beginnt und bis zur eingestellten Obergrenze mitwächst. Gegenstück ist die feste Größe, die den Platz sofort vollständig belegt.
+
+\begriff[sec:usb]{Einhängen}
+Verknüpfen des Dateisystems eines Datenträgers mit einem Verzeichnis im Verzeichnisbaum von Linux, dem Einhängepunkt. Das Gegenstück, das Aushängen, gelingt nur, solange keine Datei darauf geöffnet ist, und ist unter Linux die Voraussetzung für das sichere Entfernen eines USB-Sticks.
 
 \begriff[sec:virtualbox]{Extension Pack}
 Getrennt lizenziertes Zusatzpaket zu VirtualBox, das etwa den Fernzugriff auf VMs und die Verschlüsselung der Plattenabbilder nachrüstet. Steht unter der PUEL und nicht unter der freien Lizenz des Grundpakets. Für USB 2.0 und 3.0 ist es seit Version 7.0 nicht mehr nötig.
@@ -44,6 +50,9 @@ Abschottung einer virtuellen Maschine gegen das Wirtssystem und gegen andere vir
 \begriff[sec:voraussetzungen]{Kernisolierung}
 Sicherheitsfunktion neuerer Windows-Fassungen. Ihre Aktivierung zieht ebenso wie die der Speicherintegrität Hyper-V nach sich, auch wenn dieses zuvor abgeschaltet wurde, und beeinträchtigt dadurch die Geschwindigkeit von VirtualBox.
 
+\begriff[sec:sf-einrichten]{Kernmodul}
+Treiber, der in den Kern des Betriebssystems geladen wird. Die Guest Additions für Linux übersetzen ihre Kernmodule bei der Installation im Gast, passend zum laufenden Kern; dafür braucht der Gast \cmd{gcc}, \cmd{make} und die Header-Dateien dieses Kerns.
+
 \begriff[sec:desktop]{Nicht angeschlossen}
 Netzwerkmodus, in dem VirtualBox dem Gast eine Netzwerkkarte meldet, aber keine Verbindung, so als wäre kein Kabel gesteckt. Englisch \emph{not attached}.
 
@@ -70,6 +79,9 @@ Streaming SIMD Extensions~2, eine Befehlssatzerweiterung der x86-Prozessoren. Vi
 
 \begriff[sec:hypervisor]{Typ-1- und Typ-2-Hypervisor}
 Einteilung nach Goldberg (1973). Ein Typ-1-Hypervisor (bare-metal) läuft unmittelbar auf der Hardware und verwaltet deren Betriebsmittel selbst; ein Typ-2-Hypervisor (hosted) läuft als Anwendung auf einem Wirtsbetriebssystem, das die Verwaltung übernimmt. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.
+
+\begriff[sec:usb]{USB-Controller}
+Hardware, über die ein Rechner mit seinen USB-Geräten verkehrt. VirtualBox bildet OHCI für USB~1.1, EHCI für USB~2.0 und xHCI für alle Geschwindigkeiten bis USB~3.0 nach; ein USB-3-Stick mit SuperSpeed ließ sich im Versuch nur an xHCI anschließen.
 
 \begriff[sec:festplatte]{VDI}
 Virtual Disk Image, das eigene Format von VirtualBox für virtuelle Festplatten. Daneben werden VMDK (VMware) und VHD (Microsoft) unterstützt, die zu wählen sind, wenn die VM auf einem anderen Produkt laufen soll.
