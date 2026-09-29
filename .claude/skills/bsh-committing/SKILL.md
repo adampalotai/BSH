@@ -10,7 +10,7 @@ Arbeit fertig, dann committen. Nie unaufgefordert.
 
 ## Regeln
 
-Deutsch, weil das Projekt deutsch ist. Betreffzeile kurz, mit Protokollnummer und Abschnitt. Sie benennt die Änderung, nicht die Datei. Rumpf als Aufzählung, ein Punkt je inhaltliche Änderung. Keine Co-Author-Zeilen, kein `Generated with Claude Code`. Nie pushen, der Benutzer pusht. Vor jedem Commit `git status` prüfen und sehen, was tatsächlich eingeht. Keine Hilfsdateien der Kompilation, keine Zwischenstände aus dem Scratchpad.
+Deutsch. Betreffzeile kurz, mit Protokollnummer und Abschnitt. Sie benennt die Änderung, nicht die Datei. Rumpf als Aufzählung, ein Punkt je inhaltliche Änderung. Keine Co-Author-Zeilen, kein `Generated with Claude Code`. Nie pushen, der Benutzer pusht. Vor jedem Commit `git status` prüfen und sehen, was tatsächlich eingeht. Keine Hilfsdateien der Kompilation, keine Zwischenstände aus dem Scratchpad.
 
 ## Format
 

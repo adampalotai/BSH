@@ -25,7 +25,7 @@ Jede Aufgabe folgt demselben Schema; Der Ausschnitt stammt aus Protokoll 1, Aufg
 >
 > > **①** Du wirst zum Architekten deiner eigenen virtuellen Maschine! Welche Komponenten sind in einer virtuellen Maschine notwendig und was musst du bei diesen einstellen? Gib auch Beispiele für die Werte welche du zuweisen wirst. Begründe warum die Werte nicht beliebig klein und nicht beliebig groß sein dürfen.
 >
-> **②** Beim Anlegen einer VM werden fünf Bestandteile festgelegt: Gastbetriebssystemtyp, Arbeitsspeicher, Prozessorkerne, virtuelle Festplatte und Netzwerkkarte. Jeder Wert hat eine untere Schranke aus dem Bedarf des Gastes und eine obere aus dem Vorrat des Wirtsystems. *[…]*
+> **②** Beim Anlegen einer VM werden fünf Bestandteile festgelegt: Gastbetriebssystemtyp, Arbeitsspeicher, Prozessorkerne, virtuelle Festplatte und Netzwerkkarte. Jeder Wert hat eine untere Schranke aus dem Bedarf des Gastes und eine obere aus dem Vorrat des Wirtssystems. *[…]*
 >
 > **Arbeitsspeicher** Er wird dem Wirtsbetriebssystem beim Start der VM entzogen und muss dann tatsächlich frei sein. *[…]*
 >
@@ -34,7 +34,7 @@ Jede Aufgabe folgt demselben Schema; Der Ausschnitt stammt aus Protokoll 1, Aufg
 > - Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 „Virtual Networking“, Abschn. „Network Address Translation (NAT)“. `https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html`
 > - *[…]*
 >
-> <sub>**④** Textfassung erarbeitet mit Claude Opus 5 und Opus 5.5 (Anthropic), Stand 26. 09. 2026; die Sachaussagen sind den oben genannten Quellen entnommen.</sub>
+> <sub>**④** Textfassung erarbeitet mit Claude Opus 5 und Opus 5.5 (Anthropic), Stand 28. 09. 2026; die Sachaussagen sind den oben genannten Quellen entnommen.</sub>
 
 1. **Angabe im Wortlaut.** Der Aufgabentext steht ungekürzt in einer eigenen Box, damit die Vollständigkeit gegenüber der Angabe prüfbar bleibt.
 2. **Antwort.** Die Kernaussage steht am Anfang des Absatzes und beantwortet die Frage für sich allein. Fachbegriffe werden bei der ersten Nennung definiert.

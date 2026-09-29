@@ -1,32 +1,32 @@
 \chapter{Abkürzungsverzeichnis}
 \label{kap:abkuerzungen}
 
-Aufgelöst sind die Kürzel, die im Protokolltext tatsächlich vorkommen. Die Auflösung wiederholt die Erstnennung im Fließtext; die zugehörige Quelle steht im Quellenblock der Aufgabe, in der der Begriff eingeführt wird.
+Aufgelöst sind die Kürzel, die im Protokolltext bei ihrer ersten Nennung ausgeschrieben werden. Die Auflösung wiederholt diese Erstnennung; die zugehörige Quelle steht im Quellenblock der Aufgabe, in der das Kürzel eingeführt wird.
 
-Nicht aufgenommen sind Kürzel, die die herangezogenen Quellen selbst nur als Kürzel oder als Eigennamen führen und nirgends auflösen. Das betrifft AMD-V, BIOS, HDD als Plattenformat von Parallels, SCSI, UEFI und VMDK; sie werden im Text deshalb als Namen gebraucht und nicht als Abkürzung erklärt.
+Nicht aufgenommen sind Kürzel, die auch die herangezogenen Quellen nur als Namen führen und nirgends auflösen, etwa AMD-V, BIOS, SCSI, UEFI, USB und VMDK. Sie stehen im Text als Namen und nicht als Abkürzung.
 
 \begin{glossar}
 
 \begriff[sec:hosttaste]{ACPI}
-Advanced Configuration and Power Interface, die Schnittstelle, über die das Betriebssystem unter anderem den Einschaltknopf gemeldet bekommt. VirtualBox bildet sie im Gast nach.
+Advanced Configuration and Power Interface, die Schnittstelle, über die das Betriebssystem unter anderem den Einschaltknopf gemeldet bekommt.
 
 \begriff[sec:festplatte]{iSCSI}
-Internet SCSI, ein Standard, der das Plattenprotokoll SCSI über das Netzwerk überträgt. VirtualBox bindet darüber Speicherserver als virtuelle Festplatte an.
+Internet SCSI, ein Standard, der das Plattenprotokoll SCSI über das Netzwerk überträgt.
 
-\begriff[kap:grundlagen]{KVM}
+\begriff[sec:virtualbox]{KVM}
 Kernel-based Virtual Machine, die Virtualisierungsschicht im Linux-Kern.
 
-\begriff[kap:grundlagen]{NAT}
-Network Address Translation, der voreingestellte Netzwerkmodus von VirtualBox. Der Gast erreicht das Netz über eine Adressumsetzung, die VirtualBox zwischen VM und Wirtsystem einschiebt.
+\begriff[sec:eigene-vm]{NAT}
+Network Address Translation, die Adressumsetzung, die VirtualBox im voreingestellten Netzwerkmodus zwischen VM und Wirtssystem einschiebt.
 
-\begriff[kap:grundlagen]{PUEL}
+\begriff[sec:virtualbox]{PUEL}
 Personal Use and Educational License, die Lizenz des VirtualBox Extension Pack.
 
-\begriff[kap:grundlagen]{SATA}
+\begriff[sec:eigene-vm]{SATA}
 Serial ATA, der Anschlussstandard, den VirtualBox je nach Gastbetriebssystem als voreingestellten Speichercontroller verwendet.
 
-\begriff[kap:grundlagen]{SSE2}
-Streaming SIMD Extensions 2, eine Befehlssatzerweiterung, die VirtualBox auf Wirtsystemen mit Intel-Prozessor voraussetzt.
+\begriff[sec:voraussetzungen]{SSE2}
+Streaming SIMD Extensions~2, eine Befehlssatzerweiterung, die VirtualBox auf Wirtssystemen mit Intel-Prozessor voraussetzt.
 
 \begriff[sec:festplatte]{VDI}
 Virtual Disk Image, das eigene Plattenformat von VirtualBox.
@@ -34,13 +34,13 @@ Virtual Disk Image, das eigene Plattenformat von VirtualBox.
 \begriff[sec:festplatte]{VHD}
 Virtual Hard Disk, das Plattenformat von Microsoft, das VirtualBox ebenfalls liest und schreibt.
 
-\begriff[kap:grundlagen]{VM}
-Virtuelle Maschine.
+\begriff[sec:virtualisierung]{VM}
+Virtuelle Maschine, die nachgebildete Umgebung, in der der Gast läuft.
 
 \begriff[sec:hypervisor]{VMM}
 Virtual Machine Monitor, in der Fachliteratur gleichbedeutend mit Hypervisor.
 
-\begriff[kap:grundlagen]{VT-x}
+\begriff[sec:voraussetzungen]{VT-x}
 Intel Virtualization Technology, die Hardware-Virtualisierungserweiterung der Intel-Prozessoren.
 
 \end{glossar}

@@ -1,11 +1,26 @@
 \chapter{Erweiterung: Einführung Client-Server}
 \label{kap:erweiterung}
 
+% Die Verweise der Angabe enthalten %, & und _ und lassen sich im
+% Aufgabenrahmen nur als vorab definierte Makros setzen
+\urldef\angabeurlclientserver\url{http://de.wikipedia.org/wiki/Client-Server-Modell}
+\urldef\angabeurlverteilt\url{http://de.wikipedia.org/wiki/Verteilte_Systeme}
+\urldef\angabeurlproxies\url{http://www.proxies.by/cgi-bin/fp.pl/showlines?lines=100&sortor=3}
+\urldef\angabeurlpop\url{http://de.wikipedia.org/wiki/Post_Office_Protocol}
+\urldef\angabeurlsmtp\url{http://de.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol}
+\urldef\angabeurltechnet\url{http://technet.microsoft.com/en-us/library/aa995718%28v=exchg.65%29.aspx}
+
 Dieses Kapitel bearbeitet die gesonderte Angabe \enquote{Einführung Client-Server~[V]}, die den Protokollteil zum Client-Server-Prinzip vertieft.
+
+\begin{aufgabe}
+Fast alle IT-Dienste bauen heutzutage auf dem Client-Server-Prinzip auf. Früher war das Mainframe-Prinzip sehr verbreitet. In der Hoch-Zeit des PCs war das Peer-To-Peer-Prinzip sehr verbreitet. Bei manchen Internet-Diensten wird es auch heute noch eingesetzt. Ein klassischer Client-Server-Dienst ist das WWW. Ein User möchte von seinem Client Informationen von einem beliebigen Server abrufen. Er kontaktiert ihn und dieser übermittelt vorbereitete Daten, die der Client dann noch visuell aufbereitet. Man spricht auch von verteilten Computer-Systemen.
+
+Viele dieser Systeme betreibt man auf einem realen Computer. Auf kommerziellen Servern laufen hunderte virtuelle Maschinen unabhängig nebeneinander. Erst dadurch wird es möglich, dass Webhoster komplette Server um wenige Euro pro Monat zur Verfügung stellen. Die Datensicherung der VMs ist auf einer gemeinsamen Hardware sehr leicht möglich. Auch auf Einzelplatzrechnern hat Virtualisierung dank der gesteigerten Rechenleistung ihren Platz erobert. Neue PCs beinhalten CPUs mit Hardwareunterstützung für Virtualisierung. Anwendung findet diese Art der Virtualisierung vor allem beim Ausprobieren neuer Betriebssysteme oder Applikationen. Auch für kritischere Experimente (z.\,B. gröbere Änderungen am Betriebssystem oder Experimente mit Computerviren) werden wegen der leichten Wiederherstellbarkeit gerne virtuelle Maschinen verwendet. Ein neues Betätigungsfeld ist auch die Verwendung von \enquote{Legacy-Software} (Software, die auf aktuellen Betriebssystemen oder Hardware nicht mehr läuft) wie z.\,B. Microsofts XP-Mode unter Windows~7.
+\end{aufgabe}
 
 \section{VM-Einstellungen}
 
-\begin{aufgabe}[Detaileinstellungen einer VM]
+\begin{aufgabe}
 Demonstriere und erkläre die detaillierten Einstellungen einer VM: Allgemein, System, Anzeige, Massenspeicher, Audio, Netzwerk, Serielle Schnittstellen, USB, Gemeinsame Ordner.
 \end{aufgabe}
 
@@ -13,21 +28,21 @@ Demonstriere und erkläre die detaillierten Einstellungen einer VM: Allgemein, S
 
 \section{Fehlersuche im Client-Server-Netz}
 
-\begin{aufgabe}[Request und Response]
-Die dem Internet zugrunde liegende Protokollfamilie TCP/IP verwendet hauptsächlich das Client-Server-Prinzip. Ein eigener Rechner namens Server arbeitet nur für die anderen Rechner namens Client. Wenn ein Client von irgendeinem Server Daten benötigt, fordert er diese über das Computernetzwerk an. Der Server antwortet ihm anschließend mit der Datenübertragung. Nun kann der Client die Daten weiterverarbeiten. Ein großer Vorteil ist die zentrale Datenhaltung der Server. Sie sind gesammelt und daher einfacher zu sichern.
+\begin{aufgabe}
+Die dem Internet zugrunde liegende Protokollfamilie TCP/IP verwendet hauptsächlich das Client-Server-Prinzip. Ein eigener Rechner namens Server arbeitet nur für die anderen Rechner namens Client. Wenn ein Client von irgendeinem Server Daten benötigt, fordert er diese über das Computernetzwerk an. Der Server antwortet ihm anschließend mit der Datenübertragung. Nun kann der Client die Daten weiterverarbeiten. Ein großer Vorteil ist die zentrale Datenhaltung der Server. Sie sind gesammelt und daher einfacher zu sichern. (siehe \angabeurlclientserver, \angabeurlverteilt)
 
 Erörtere folgende Begriffe: Request, Response.
 \end{aufgabe}
 
 % TODO Antwort
 
-\begin{aufgabe}[Fehlerursachen]
+\begin{aufgabe}
 Welche Fehlerursachen könnten im Client-Server-Netz auftreten? Finde 5 Fehlermöglichkeiten.
 \end{aufgabe}
 
 % TODO Antwort, fuenf Ursachen entlang der Schichten geordnet
 
-\begin{aufgabe}[Fragen an den Anwender]
+\begin{aufgabe}
 Welche Fragen könntest du einem Anwender stellen, der die Fehlermeldung \enquote{Verbindung zu Server nicht möglich} am Monitor hat, um den Fehler einzugrenzen? Finde 5 Fragen.
 \end{aufgabe}
 
@@ -35,7 +50,7 @@ Welche Fragen könntest du einem Anwender stellen, der die Fehlermeldung \enquot
 
 \section{Proxy-Server}
 
-\begin{aufgabe}[Aufgabe eines Proxy-Servers]
+\begin{aufgabe}
 Eine WWW-Verbindung ist nicht möglich, da eine Firewall die Direkt-Verbindung abweist. Ein Proxy-Server kann hier Abhilfe schaffen.
 
 Welche Aufgabe hat ein Proxy-Server im Zusammenspiel mit einem Browser und einem Webserver? Erstelle eine Skizze über die Funktionsweise.
@@ -43,14 +58,14 @@ Welche Aufgabe hat ein Proxy-Server im Zusammenspiel mit einem Browser und einem
 
 % TODO Antwort und Skizze
 
-\begin{aufgabe}[Offener Proxy]
+\begin{aufgabe}
 Was ist ein offener Proxy?
 \end{aufgabe}
 
 % TODO Antwort
 
-\begin{aufgabe}[Verbindung über einen Proxy, dokumentiert mit Wireshark]
-Da wir keinen Labor-Proxy haben, suche einen offenen Proxy auf Port~80 aus und verbinde dich über ihn mit dem Internet. Dokumentiere dein Handeln mit der Netzwerkanalysesoftware Wireshark (Achtung: vorher pingen).
+\begin{aufgabe}
+Da wir keinen Labor-Proxy haben, suche einen offenen Proxy auf Port~80 aus (\angabeurlproxies) und verbinde dich über ihn mit dem Internet. Dokumentiere dein Handeln mit der Netzwerkanalysesoftware Wireshark (Achtung: vorher pingen).
 \end{aufgabe}
 
 % TODO MESSUNG: Proxy-Verbindung, Wireshark-Mitschnitt, Vergleich direkte und indirekte Anfrage
@@ -59,21 +74,21 @@ Da wir keinen Labor-Proxy haben, suche einen offenen Proxy auf Port~80 aus und v
 
 \section{E-Mail-Nachrichtenübertragung}
 
-\begin{aufgabe}[POP3 im Terminal]
+\begin{aufgabe}
 Die Befehle, die unser Thunderbird-Client an den Server absetzt, können wir selbst auch in einem Terminalprogramm eingeben.
 
-Hole vom gnt-Labor-Konto mittels telnet-Programm eine Nachricht ab.
+Hole vom gnt-Labor-Konto mittels telnet-Programm eine Nachricht ab. (siehe \angabeurlpop)
 \end{aufgabe}
 
 % TODO MESSUNG: POP3-Dialog im Terminal, Befehlsfolge und Serverantworten woertlich
 
-\begin{aufgabe}[SMTP im Terminal]
-Probiere denselben Vorgang mit dem SMTP-Dienst zum Versenden einer E-Mail. Aber ACHTUNG: Ein auth-login ist notwendig. Benutzername und Passwort sind base64-kodiert zum Server zu senden.
+\begin{aufgabe}
+Probiere denselben Vorgang mit dem SMTP-Dienst zum Versenden einer E-Mail. (siehe \angabeurlsmtp) Aber ACHTUNG: Ein auth-login ist notwendig. Benutzername und Passwort sind base64-kodiert zum Server zu senden. (siehe \angabeurltechnet)
 \end{aufgabe}
 
 % TODO MESSUNG: SMTP-Dialog mit AUTH LOGIN, base64-Kodierung nachvollziehen
 
-\begin{aufgabe}[SMTP-After-POP, SMTP-AUTH und SMTPS]
+\begin{aufgabe}
 Was bedeuten SMTP-After-POP, SMTP-AUTH und SMTPS?
 \end{aufgabe}
 

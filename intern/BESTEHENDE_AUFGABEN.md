@@ -12,7 +12,7 @@ Was konkret zu tun ist. Ein erledigter Punkt wird gestrichen, nicht abgehakt. De
 
 ## Im Protokolltext nachzutragen
 
-**Ausstattung anderer Laborrechner.** Aufgabe 2.5 stützt sich auf die Feststellung an `1221-pc09`. Ob die übrigen Laborrechner gleich ausgestattet sind, ist offen.
+**Ausstattung anderer Laborrechner.** Die Aufgaben 2.5 und 3.9 stützen sich auf die Feststellung an `1221-pc09`. Ob die übrigen Laborrechner gleich ausgestattet sind, ist offen.
 
 ## Ab Ende November 2026
 
@@ -20,6 +20,6 @@ Was konkret zu tun ist. Ein erledigter Punkt wird gestrichen, nicht abgehakt. De
 
 ## Vom Professor zu erfragen
 
-**Abgabetermine.** Noch nicht bekannt, der Stundenplan steht nicht fest.
+**Abgabetermine.** Protokoll 1 ist bekannt (siehe `ARBEITSSTAND.md`), die übrigen fünf nicht.
 
 **Proxy-Aufgabe der Erweiterung.** Ob die Verbindung über einen fremden offenen Proxy tatsächlich durchgeführt werden soll.

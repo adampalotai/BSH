@@ -1,9 +1,17 @@
 \chapter{Mit virtuellen Maschinen (VM) unter VirtualBox arbeiten können}
 \label{kap:arbeiten}
 
+\begin{aufgabe}
+Starte eine der für die Laborübungen vorbereiteten VMs, um ein Gefühl für das Arbeiten mit virtuellen Maschinen zu bekommen. Die Passwörter für die VMs lauten:
+\begin{itemize}[nosep]
+  \item Windows 2019 Server: Administrator / Passw0rt
+  \item Mint: labor / Passw0rt
+\end{itemize}
+\end{aufgabe}
+
 Die Angabe nennt für die Laborübungen zwei vorbereitete virtuelle Maschinen, Windows Server~2019 und Linux~Mint, samt Zugangsdaten. Ausgegeben hat die Schule stattdessen Windows~11 in der Version 23H2 und Linux Mint~22, jeweils als Exportdatei zum Import in VirtualBox. Die Versuche dieses Kapitels laufen mit diesen beiden Gästen auf einem eigenen Rechner unter Windows 11 Pro.
 
-\begin{aufgabe}[USB-Gerät durchreichen]
+\begin{aufgabe}[Durchreichen eines USB-Geräts]
 USB-Geräte wie Festplatten oder Sticks können ebenfalls in der VM verwendet werden. Allerdings muss das jeweilige Gerät erst auf die VM durchgeschaltet werden. Unter Linux müssen USB-Geräte nach Schreibzugriffen IMMER entfernt werden, da sonst die geschriebenen Dateien verloren gehen.
 
 Erlaube der VM den Zugriff auf deinen USB-Stick und entferne ihn danach wieder sicher. Dokumentiere mittels Screenshots und Anmerkungen.
@@ -11,7 +19,7 @@ Erlaube der VM den Zugriff auf deinen USB-Stick und entferne ihn danach wieder s
 
 % TODO MESSUNG: USB-Stick in VM durchreichen und sicher entfernen, Heimrechner, VirtualBox
 
-\begin{aufgabe}[Shared Folder einrichten]
+\begin{aufgabe}[Einrichten eines Shared Folders]
 Um Dateien leicht zwischen den VMs und dem Wirt austauschen zu können gibt es die \enquote{Shared Folders} (Kap.~4.3). Unsere VMs verwenden den Folder \enquote{vmshare} am Desktop des Rechners. Wie diese in der Windows- und Linux-VM einzubinden sind, findet man im Kap.~4.3.1.
 
 Dokumentiere mittels Screenshots und Anmerkungen die Schritte damit ein Austausch von Dateien zwischen VM und Rechner über einen Shared-Folder möglich wird.
@@ -19,7 +27,7 @@ Dokumentiere mittels Screenshots und Anmerkungen die Schritte damit ein Austausc
 
 % TODO MESSUNG: Shared Folder vmshare einbinden, Windows- und Linux-Gast, Heimrechner; die OVF-Deskriptoren enthalten keinen Shared Folder
 
-\begin{aufgabe}[Snapshots erstellen und zurücksetzen]
+\begin{aufgabe}[Snapshots vor und nach einer Installation]
 Sicherungspunkte erlauben die Rückkehr zu einem definierten Zustand der VM, falls mal ein Experiment daneben geht.
 
 Erstelle zuerst einen Snapshot und benenne ihn mit \enquote{Vor-der-Installation}. Installiere dann ein beliebiges Programm und erstelle danach wieder einen Snapshot \enquote{Nach-der-Installation}. (Kap.~1.9).
@@ -29,7 +37,7 @@ Gehe nun zum vorherigen Snapshot zurück. Dokumentiere den Snapshot-Verlauf grap
 
 % TODO MESSUNG: Snapshot-Verlauf, zusaetzlich Speicherbelegung vor und nach dem Snapshot
 
-\begin{aufgabe}[Virtuelle Maschinen exportieren und importieren]
+\begin{aufgabe}[Export und Import virtueller Maschinen]
 Die im Labor verwendeten virtuellen Linuxmaschinen können auch zu Hause verwendet werden. Dafür exportieren wir die virtuelle Maschine wie unter Kap.~1.14 beschrieben. Die exportierte Datei kann z.\,B. auf eine USB-Festplatte kopiert und zu Hause wieder in VirtualBox importiert werden.
 
 Dokumentiere mit Screenshots und Anmerkungen das Exportieren und Importieren virtueller Maschinen.

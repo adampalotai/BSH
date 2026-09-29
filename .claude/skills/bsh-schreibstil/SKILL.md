@@ -6,50 +6,42 @@ user-invocable: true
 
 # Schreibstil im Protokoll
 
-Für Protokolltext, nicht für Chatantworten: dort gilt `~/.claude/CLAUDE.md`.
+Das Protokoll soll Gaisberger überzeugen und ist zugleich Adams Lern- und Prüfungsunterlage. Wo beides kollidiert, gewinnt die Verständlichkeit: Ein Satz, den Adam in der Prüfung nicht erklären kann, nützt ihm nichts.
 
-## Der Zielkonflikt
+## Sprache und Begriffe
 
-Das Protokoll muss zwei Dinge gleichzeitig sein: ein wissenschaftlich anmutender Text, der Gaisberger positiv überrascht, und eine Unterlage, mit der Adam in der praktischen Prüfung arbeitet und aus der er lernt. Wo diese Ziele kollidieren, gewinnt die Verständlichkeit. Ein Satz, den Adam in der Prüfung nicht erklären kann, nützt ihm nichts, egal wie gut er klingt.
+Jeder Fachbegriff wird bei Erstnennung im Fließtext definiert, vor seiner Verwendung, nicht in einer Fußnote.
 
-## Was das konkret heißt
+Deutsche Fachsprache, wie sie an einer HTL gesprochen wird. Wo Angabe oder Werkzeug den englischen Begriff verwenden, bleibt er englisch: Shared Folder, Drag and Drop, Guest Additions, Snapshot. Keine englische Übersetzung in Klammern, außer bei einem Begriff, den man nur unter dem englischen Namen in Handbuch oder Oberfläche wiederfindet, und dann einmal.
 
-Jeder Fachbegriff wird bei Erstnennung im Fließtext definiert, nicht in einer Fußnote. Die Definition steht vor der Verwendung, nicht danach.
+Festgelegt über alle Protokolle: Wirtssystem, Wirtsbetriebssystem und Gast statt Host und Guest, außer im wörtlichen Angabentext. Snapshot statt Speicherabbild, Shared Folder statt gemeinsamer Ordner, Aktualisierung statt Update, Prozessorstrang für thread. Zahlen mit Einheit als Ziffer mit schmalem Abstand und Einheitenzeichen, auch im Fließtext: `8\,GB`, `100\,\%`. Eine neue Festlegung kommt in diese Liste, bevor der Begriff ein zweites Mal verwendet wird.
 
-Deutsche Fachsprache, und zwar die, die man an einer HTL tatsächlich spricht. Wo sich der englische Begriff eingebürgert hat oder Angabe und Werkzeug ihn verwenden, bleibt er englisch: Shared Folder, Drag and Drop, Guest Additions, Snapshot. Keine englische Übersetzung in Klammern hinter deutschen Begriffen; die Ausnahme ist ein Begriff, den man nur unter dem englischen Namen in Handbuch oder Oberfläche wiederfindet, und dann einmal. Danach durchgängig eine Variante.
+Abkürzungen bei Erstnennung ausgeschrieben, Kurzform in Klammern: virtuelle Maschine (VM).
 
-Festgelegt über alle Protokolle: Wirtsystem, Wirtsbetriebssystem und Gast statt Host und Guest, außer im wörtlichen Angabentext. Snapshot statt Speicherabbild, Shared Folder statt gemeinsamer Ordner. Prozessorstrang für thread. Eine neue Festlegung kommt in diese Liste, bevor der Begriff ein zweites Mal verwendet wird.
+## Satz und Absatz
 
-Abkürzungen bei Erstnennung ausgeschrieben, Kurzform in Klammern: virtuelle Maschine (VM), Network Address Translation (NAT).
+Vollständige Sätze, Absätze mit erkennbarem Gedankengang. Eine Aufzählung nur, wo tatsächlich eine Liste vorliegt, etwa die Funktionen der Guest Additions.
 
-Vollständige Sätze, Absätze mit erkennbarem Gedankengang. Keine Stichwortlisten als Ersatz für Erklärung. Eine Aufzählung nur, wo tatsächlich eine Liste vorliegt, etwa sechs Aufgaben der Guest Additions.
+Aktiv vor Passiv: "der Hypervisor weist zu", nicht "es wird konfiguriert". Kausalketten ausschreiben: nicht "NAT verhindert eingehende Verbindungen", sondern warum.
 
-Aktiv vor Passiv, wo es geht. Nicht "es wird konfiguriert", sondern "der Hypervisor weist zu".
+Satzanfänge und Satzbau wechseln. Ein Absatz beginnt mit dem Gedanken, nicht mit seiner Ankündigung.
 
-Kausalketten ausschreiben. Nicht "NAT verhindert eingehende Verbindungen", sondern warum: weil der Gast hinter einer Adressumsetzung liegt und von außen keine Route zu ihm existiert, solange keine Portweiterleitung eingerichtet ist.
+## Zu vermeiden
 
-## Was zu vermeiden ist
+Füllsätze wie "Virtualisierung ist ein wichtiges Thema in der modernen IT". Marketingsprache aus Herstellerquellen. Analogien; die Angabe nennt den Hypervisor einen Magier, das Protokoll nicht. Behauptungen ohne Beleg nach `bsh-research`.
 
-Keine Füllsätze, die nichts erklären. "Virtualisierung ist ein wichtiges Thema in der modernen IT" sagt nichts und kostet Platz und Glaubwürdigkeit.
+Erkennbare KI-Muster: der Gedankenstrich als Häufungsfigur, die dreiteilige Aufzählung als Reflex, "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen".
 
-Keine Marketingsprache aus Herstellerquellen. Oracle schreibt, dass VirtualBox leistungsstark sei; das ist keine Aussage, die ins Protokoll gehört.
+Quellenerzählung im Fließtext: "laut Handbuch", "das Handbuch hält fest". Die Zuordnung leistet der Quellenblock. Eine Quelle steht im Text nur, wo die Zuschreibung selbst die Aussage ist, etwa die Einteilung nach Goldberg.
 
-Keine Analogien, die nicht tragen. Die Angabe selbst nennt den Hypervisor einen Magier; im Protokolltext wird sachlich formuliert.
-
-Keine Behauptung ohne Beleg. Siehe `bsh-research`.
-
-Keine Länge um der Länge willen. Die Angabe warnt ausdrücklich vor zu viel Text, der vom Wesentlichen ablenkt. Eine Antwort ist fertig, wenn die Frage der Angabe beantwortet und begründet ist. Was darüber hinausgeht, bleibt nur, wenn es belegt ist und selbst als Prüfungsfrage taugt.
-
-Keine erkennbaren KI-Textmuster. Das Protokoll wird als KI-Mitarbeit gekennzeichnet, soll aber nicht danach klingen. Kein Gedankenstrich als Häufungsfigur ("Virtualisierung ist effizient - sie spart Hardware, Energie und Platz"), Kommas oder ein neuer Satz leisten das genauso. Keine dreiteilige Aufzählung als Stilreflex, nur wo tatsächlich drei Dinge aufzuzählen sind. Kein "es ist wichtig zu beachten", "zusammenfassend lässt sich sagen", "im Wesentlichen". Ein Absatz beginnt mit dem Gedanken, nicht mit einer Ankündigung des Gedankens.
-
-Keine Quellenerzählung im Fließtext. "Laut Handbuch", "das Handbuch hält fest", "das Handbuch nennt neun Funktionen" sind Füllsätze, die Zuordnung leistet der Quellenblock. Eine Quelle wird im Text nur genannt, wo die Zuschreibung selbst die Aussage ist, etwa die Einteilung nach Goldberg oder dass Oracle VirtualBox als hosted hypervisor bezeichnet. Satzanfänge und Satzbau wechseln; ein Absatz aus lauter Sätzen nach dem Muster Subjekt, Verb, Beleg liest sich wie eine generierte Antwort, nicht wie ein Protokoll.
+Länge um der Länge willen. Die Angabe warnt vor Text, der vom Wesentlichen ablenkt, und der Fragenpool der Theorieprüfung entsteht aus dem Protokolltext. Eine Antwort ist fertig, wenn die Frage beantwortet und begründet ist. Was darüber hinausgeht, bleibt nur, wenn es belegt ist und selbst als Prüfungsfrage taugt.
 
 ## Prüfungstauglichkeit
 
-Konkrete Werte, Befehle und Schrittfolgen gehören in Listings und Tabellen, wo sie beim Durchblättern auffindbar sind, nicht in den Fließtext vergraben.
+Werte, Befehle und Schrittfolgen stehen in Listings und Tabellen, wo sie beim Durchblättern auffindbar sind.
 
-Die Angabe verlangt, prüfungsrelevante Aspekte klar hervorzuheben. Eingelöst wird das im Satzbau: Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er für sich allein eine Prüfungsfrage beantwortet. Eine Erklärung, die über drei Kapitel verteilt ist, besteht diesen Test nicht, auch wenn sie vollständig ist.
+Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er allein eine Prüfungsfrage beantwortet. So löst das Protokoll die Forderung der Angabe ein, Prüfungsrelevantes hervorzuheben.
 
-Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel, weder vor noch zurück. Ein Sachverhalt, den der Kernsatz braucht, steht knapp noch einmal da. Ein Fachbegriff dagegen wird nur dort definiert, wo er im Protokoll zuerst fällt; spätere Aufgaben verwenden ihn ohne neue Definition, auffindbar bleibt er über das Glossar. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe bleiben erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
+Der Fließtext einer Aufgabe verweist auf keine andere Aufgabe und kein anderes Kapitel. Ein Sachverhalt, den der Kernsatz braucht, steht knapp noch einmal da. Ein Fachbegriff wird nur bei seiner ersten Nennung im Protokoll definiert und ist danach über das Glossar auffindbar. Verweise auf Tabellen und Abbildungen der eigenen Aufgabe sind erlaubt, ebenso die Rückverweise in Glossar und Abkürzungsverzeichnis.
 
-Ein Kapitel darf mit einem bündelnden Absatz schließen, wo mehrere Fäden zusammenlaufen. Nach jedem Kapitel wird daraus eine Floskel.
+Ein bündelnder Absatz am Kapitelende nur, wo mehrere Fäden zusammenlaufen.

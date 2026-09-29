@@ -6,90 +6,76 @@ user-invocable: true
 
 # Protokollform
 
-Die Form wird eigens beurteilt. Ein inhaltlich richtiges Protokoll mit gebrochener Form verliert Punkte, die nicht zurückzuholen sind.
+Die Form wird eigens beurteilt; Punkte für gebrochene Form sind nicht zurückzuholen.
 
-## Harte Vorgaben der Angabe
+## Vorgaben der Angabe
 
-Abgabeformat ist PDF.
-
-Alles aus der ursprünglichen Angabe muss enthalten sein: Deckblatt, Inhaltsverzeichnis, Beschreibung, alle Aufgaben. Keine Aufgabe wird weggelassen, auch keine, die trivial erscheint.
-
-Deckblattfelder vollständig: Klasse 3AHIT, Schuljahr 2026/2027, Adam Ferenc Palotai, HTBLA Traun, Prof. Gaisberger.
-
-Inhaltsverzeichnis beim Abgabestand aktuell, dafür sorgt `latexmk` mit mehreren Durchläufen.
-
-Mindestens Quellen- und Abbildungsverzeichnis.
-
-Die Felder "GPT Weitere Fragen" entfallen ab diesem Schuljahr und werden nicht angelegt.
+Abgabe als PDF. Alles aus der Angabe ist enthalten: Deckblatt, Inhaltsverzeichnis, Beschreibung, jede Aufgabe, auch triviale. Deckblatt: Klasse 3AHIT, Schuljahr 2026/2027, Adam Ferenc Palotai, HTBLA Traun, Prof. Gaisberger. Mindestens Quellen- und Abbildungsverzeichnis. Die Felder "GPT Weitere Fragen" entfallen ab diesem Schuljahr und werden nicht angelegt.
 
 Keine Formelemente eines Fachartikels: kein Abstract, kein Related Work, keine gesammelte Bibliographie anstelle des Quellenblocks je Aufgabe. Das Niveau kommt aus belegten Messungen nach `bsh-messung`.
 
 ## KI-Kennzeichnung
 
-Die Angabe verlangt bei jeder einzelnen Antwort den Hinweis, dass sie mit KI erstellt wurde, ausdrücklich auch bei umgeschriebenem Text. Keine Sammelangabe am Dokumentende.
+Die Angabe verlangt sie bei jeder einzelnen Antwort, auch bei umgeschriebenem Text; keine Sammelangabe. Umsetzung: `\kiquelle[20.\,09.\,2026]{Opus 5.5}` nach dem `\end{itemize}` des Quellenblocks. Das Datum nennt den Stand der Textfassung, nicht den Bautag.
 
-Umsetzung: `\kiquelle[20.\,09.\,2026]{Opus 5.5}` nach dem `\end{itemize}` des Quellenblocks. Das Datum verlangt das Beispielformat der Angabe; es benennt den Stand der Textfassung, nicht den Tag des Baus.
-
-Claude ist keine Quelle. Die Zeile nennt die Herkunft der Textfassung, der Quellenblock die Herkunft der Information; ein `\item` mit "Claude Opus 5.5" behauptet das Gegenteil. Findet sich für eine Aussage kein Beleg, wird sie gestrichen oder als eigene Ableitung kenntlich gemacht, nie der KI zugeschrieben.
+Claude ist keine Quelle. Die Zeile nennt die Herkunft der Textfassung, der Quellenblock die der Information. Eine Aussage ohne Beleg wird gestrichen oder als eigene Ableitung kenntlich gemacht, nie der KI zugeschrieben.
 
 ## Formkriterien der Beurteilung
 
-Einrückungen durchgängig und vollständig.
+Einrückungen durchgängig. Höchstens drei Textgrößen im Fließtext, Überschriften ausgenommen; die Klasse hält das ein, also kein manuelles `\large`, `\small`, `\tiny`. Rahmungen und Ausrichtungen ungebrochen, Farben nur aus der Klasse: `akzent`, `htlgruen`, `rahmengrau`, `fuellgrau`.
 
-Höchstens drei verschiedene Textgrößen im Fließtext, Überschriften ausgenommen. Die Dokumentklasse hält das ein; keine manuellen `\large`, `\small` oder `\tiny` einstreuen.
+Screenshots mit `\bild{}{}{}` und Breitenangabe, nie Höhe und Breite zugleich. Auf die belegende Stelle zugeschnitten, beim Text platziert, den sie belegen. Dateiname sprechend mit Kapitelbezug: `05-nat-ipconfig-guest.png`.
 
-Screenshots: mit `\bild{}{}{}` und Breitenangabe eingebunden, nie Höhe und Breite zugleich, damit nichts verzerrt. So klein wie möglich und auf die belegende Stelle zugeschnitten, statt das ganze Fenster zu zeigen, wenn ein Dialogfeld die Aussage trägt. Platziert bei dem Text, den sie belegen. Dateiname sprechend und mit Kapitelbezug: `05-nat-ipconfig-guest.png`, nicht `bild3.png`.
+Befehle und Code in Monospace, ergänzend zum Screenshot, der sie belegt, nicht ersetzt. Inline `\cmd{ipconfig /all}`, mehrzeilig `lstlisting`, lange Dateinamen und Pfade, die umbrechen müssen, mit `\nolinkurl`.
 
-Rahmungen und Ausrichtungen ungebrochen, Farben nur aus der Klasse: `akzent`, `htlgruen`, `rahmengrau`, `fuellgrau`.
-
-CLI-Befehle und Code-Snippets in Monospace, ergänzend zum Bildschirmabgriff. Ein Screenshot einer Konsole ersetzt den Befehl im Text nicht, er belegt ihn. Inline `\cmd{ipconfig /all}`, mehrzeilig `lstlisting`.
-
-Fachbegriffe bei Erstnennung mit Definition und Literaturverweis. Die Beurteilung nennt beides, die Definition allein genügt nicht. Der Verweis geht in den Quellenblock der Aufgabe, in der der Begriff zuerst fällt, und darf dieselbe Primärquelle sein, die die Sachaussage trägt.
+Fachbegriffe bei Erstnennung mit Definition und Literaturverweis; die Beurteilung verlangt beides. Der Verweis steht im Quellenblock der Aufgabe, in der der Begriff zuerst fällt, und darf die Primärquelle der Sachaussage sein.
 
 ## Abbildungen
 
-Zwei Sorten sind zugelassen: der Screenshot als Beleg einer eigenen Messung, und das Schema, das eine räumliche oder zeitliche Beziehung zeigt, die Fließtext nur umständlich wiedergibt. Was unter keine der beiden fällt, kommt nicht hinein.
+Zugelassen sind der Screenshot als Beleg einer eigenen Messung und das Schema, das eine räumliche oder zeitliche Beziehung zeigt, die Fließtext nur umständlich wiedergibt. Die Bildunterschrift begründet die Wahl, damit sie bei der mündlichen Besprechung ablesbar ist. Schemata in TikZ mit den Formen der Klasse.
 
-Die Begründung, warum die Abbildung gewählt wurde, steht in ihrer Unterschrift, damit sie bei der mündlichen Besprechung ablesbar ist. Schemata werden mit TikZ im Quelltext gezeichnet, nicht extern, damit Strichstärke und Farbe über alle Protokolle gleich bleiben.
+## LaTeX-Konventionen
 
-## LaTeX-Konventionen dieses Projekts
+Ein Protokoll ist ein Verzeichnis unter `protokolle/` mit `protokoll.tex`, `kapitel/` und `bilder/`. Kapitel 1 bis 10 folgen der Nummerierung der Angabe. Anhänge: `kapitel/97-glossar.tex` als Anhang A, `98-abkuerzungen.tex` als Anhang B, `99-quellen.tex` als unnummeriertes Quellenverzeichnis; alle drei wachsen mit jeder Aufgabe mit.
 
-Ein Protokoll ist ein Verzeichnis unter `protokolle/`, mit `protokoll.tex` als Hauptdatei, `kapitel/` für die Kapiteldateien und `bilder/` für Screenshots. Kapitel 1 bis 10 folgen der Nummerierung der Angabe.
+`vorlage/bsh-protokoll.cls` gilt für alle sechs Protokolle. Nach jeder Änderung eine betroffene Seite mit `pdftocairo -png` rendern und ansehen; ein fehlerfreier Bau beweist keine korrekte Darstellung. LaTeX-Quelltext nie durch `python -c` oder `sed` schleusen, `\r` und `\f` werden dort zu Steuerzeichen. In einer `tcolorbox` braucht `parskip` die Option `parbox=false`.
 
-Die Dokumentklasse liegt unter `vorlage/bsh-protokoll.cls` und wird von allen sechs Protokollen geteilt. Änderungen daran wirken auf alle. Nach jeder Änderung eine betroffene Seite mit `pdftocairo -png` rendern und ansehen; ein Bau ohne Fehler beweist keine korrekte Darstellung.
+Glossar: Begriff halbfett, Kurzdefinition ohne Artikel, Rückverweis auf die Aufgabe, die den Begriff erklärt, sonst auf die Erstnennung. Die Sprungmarke steht direkt nach `\end{aufgabe}`. Abkürzungsverzeichnis: nur was im Fließtext ausgeschrieben und belegt ist, ein Satz je Eintrag, Auflösung und Apposition.
 
-LaTeX-Quelltext nie durch `python -c` oder `sed`-Substitution schleusen: `\r` und `\f` werden dort zu Steuerzeichen. Write und Edit verwenden. Absätze in einer `tcolorbox` brauchen `parbox=false`, sonst greift `parskip` in der Box nicht.
+Aufgaben der Angabe stehen wörtlich in einer `aufgabe`-Umgebung, samt Zugangsdaten, mit der Fragestellung als optionalem Titel. Angabentext ohne eigene Frage, etwa eine Kapiteleinleitung, steht in einer `aufgabe` ohne Titel. Überschriften der Angabe werden Abschnitte; ein erfundener Titel, als Substantivgruppe, nur wo die Angabe keine Überschrift hat.
 
-Die Anhänge stehen in fester Ordnung: `kapitel/97-glossar.tex` als Anhang A, `kapitel/98-abkuerzungen.tex` als Anhang B, `kapitel/99-quellen.tex` als unnummeriertes Quellenverzeichnis. Beide Anhänge wachsen mit jedem geschriebenen Kapitel mit. Ins Abkürzungsverzeichnis kommt nur, was im Fließtext bei Erstnennung ausgeschrieben und belegt ist.
+## Quellenblock
 
-Das Glossar ist nach Kernighan und Ritchie gebaut: Begriff halbfett, Kurzdefinition darunter, Rückverweis auf das einführende Kapitel. Es ersetzt die Definition im Fließtext nicht, sondern macht sie auffindbar, wenn nicht in Kapitelreihenfolge gelernt wird.
-
-Eine Aufgabe der Angabe wird wörtlich in eine `aufgabe`-Umgebung übernommen, mit der Fragestellung als optionalem Titel. Der Wortlaut wird nicht gekürzt oder umformuliert, weil die Angabe Vollständigkeit verlangt.
-
-Nach jeder beantworteten Aufgabe folgt der Quellenblock:
+Folgt jeder beantworteten Aufgabe. Jedes Dokument steht darin genau einmal: mehrere Kapitel des Handbuchs als Unterpunkte eines Eintrags, mehrere Abschnitte eines Kapitels in einer Zeile. Form `Urheber: Titel, Fundstelle: Zitat. URL`, selbständige Werke in `\emph`, Seiten und Aufsätze in `\enquote`, Abschnitte ohne Nummer mit Titel und ohne übergeordneten Abschnitt. Ein Zitat nur, wo der Wortlaut die Aussage trägt: Definition, Zahl, Einschränkung, Auflösung einer Abkürzung, Zuschreibung. Reihenfolge: Primärdokumentation, Normen, Fachliteratur, Herstellermitteilungen, Angabe, eigene Feststellung; das Handbuch nach Kapitelnummer, sonst alphabetisch. Die volle bibliographische Angabe steht nur im Quellenverzeichnis. `[quellen]` hält die KI-Kennzeichnung beim Listenende.
 
 ```latex
 \paragraph{Quellen}
-\begin{itemize}[nosep]
-  \item Oracle VirtualBox: User Guide for Release 7.2, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Host-Only Networking}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
-  \item Eigene Messung, Abschnitt~\ref{mess:nat-ping}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
+  \begin{itemize}[nosep]
+    \item Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Snapshots}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+    \item Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Host-Only Networking}, Tabelle 9-1. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+  \end{itemize}
+  \item Eigene Messung, Abschnitt~\ref{mess:nat-ping}.
 \end{itemize}
 \kiquelle[20.\,09.\,2026]{Opus 5.5}
 ```
 
 ## Bauen
 
-Aus dem Protokollverzeichnis `latexmk -pdf protokoll.tex`. `.latexmkrc` setzt den Suchpfad zur Vorlage, die nötigen Durchläufe erledigt `latexmk`. LaTeX Workshop baut beim Speichern nach `.vscode/settings.json`, unter Windows wie unter Linux ohne Anpassung.
+Aus dem Protokollverzeichnis `latexmk -pdf protokoll.tex`; `.latexmkrc` setzt den Suchpfad zur Vorlage. LaTeX Workshop baut beim Speichern nach `.vscode/settings.json`.
 
-**Heimrechner, Windows mit MiKTeX.** In der Tool-Shell fehlen MiKTeX und Perl im `PATH`; das Perl aus Git genügt. Fehlende Pakete lädt MiKTeX selbst nach, die Meldung zu ausstehenden Updates blockiert nicht.
+**Heimrechner, Windows mit MiKTeX.** In der Tool-Shell fehlen MiKTeX und Perl im `PATH`; das Perl aus Git genügt. Fehlende Pakete lädt MiKTeX selbst nach.
 
 ```
 $env:PATH += ";C:\Users\Adam\AppData\Local\Programs\MiKTeX\miktex\bin\x64;C:\Program Files\Git\usr\bin"
 latexmk -pdf -interaction=nonstopmode protokoll.tex
 ```
 
-**Laborrechner, Linux Mint ohne Root.** Das Home-Verzeichnis liegt auf der lokalen Platte des jeweiligen Rechners, an jedem anderen Platz beginnt die Einrichtung von vorn, rund 15 Minuten. TeX Live als Benutzerinstallation unter `~/texlive/<Jahr>`, Schema `scheme-small` plus `latexmk`, `collection-latexextra` und `collection-fontsrecommended`; der `PATH`-Eintrag in `~/.profile` wirkt nach der nächsten Anmeldung. Fehlende Pakete mit `tlmgr install <paket>`. Editor ist VSCodium mit LaTeX Workshop. `user.name` und `user.email` repo-lokal wie in den bisherigen Commits setzen.
+**Laborrechner, Linux Mint ohne Root.** Das Home-Verzeichnis liegt auf der lokalen Platte, an jedem anderen Platz beginnt die Einrichtung von vorn, rund 15 Minuten. TeX Live als Benutzerinstallation unter `~/texlive/<Jahr>`, Schema `scheme-small` plus `latexmk`, `collection-latexextra` und `collection-fontsrecommended`; der `PATH`-Eintrag in `~/.profile` wirkt nach der nächsten Anmeldung. Fehlende Pakete mit `tlmgr install <paket>`. Editor VSCodium mit LaTeX Workshop. `user.name` und `user.email` repo-lokal wie in den bisherigen Commits.
 
-## Vor jeder Abgabe
+## Prüfen
 
-Prüfe in dieser Reihenfolge: keine `% TODO` übrig, keine `% BELEG FEHLT` übrig, Kompilation ohne Warnung, Inhalts- und Abbildungsverzeichnis aktuell, Deckblattfelder gefüllt, PDF öffnet und Seitenzahl plausibel.
+Nach jeder Aufgabe `sh ../../vorlage/pruefen.sh` im Protokollverzeichnis. Es meldet doppelte URLs im Block, fehlende `\kiquelle`, verbotene Begriffe und Einheiten ohne Schmalraum; jede Meldung wird angesehen.
+
+Vor der Abgabe zusätzlich, in dieser Reihenfolge: keine `% TODO` und keine `% BELEG FEHLT` übrig, Bau ohne Warnung, Inhalts- und Abbildungsverzeichnis aktuell, Deckblatt vollständig, PDF öffnet, Seitenzahl plausibel.

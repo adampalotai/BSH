@@ -97,13 +97,23 @@
 
 % Inline-Befehl: \cmd{ipconfig /all}
 \newcommand{\cmd}[1]{\texttt{\small #1}}
+% URLs und \nolinkurl in derselben Größe wie \cmd
+\renewcommand{\UrlFont}{\ttfamily\small}
+% lmtt setzt -- sonst als Halbgeviertstrich, aus --resize wird -resize
+\RequirePackage[protrusion=false,expansion=false]{microtype}
+\DisableLigatures[-]{encoding=T1,family=tt*}
+
+% Liste im Quellenblock: sperrt den Umbruch am Listenende, sonst steht die
+% KI-Kennzeichnung allein oben auf der Folgeseite
+\SetEnumitemKey{quellen}{nosep,before=\@endparpenalty\@M}
 
 % KI-Kennzeichnung, von der Angabe je Antwort verlangt.
 % Steht bewusst ausserhalb der Quellenliste: die Textherkunft ist kein Beleg.
 % \kiquelle[20.\,09.\,2026]{Opus 5.5} -- Datum wie im Beispielformat der Angabe
+% \noindent vor \color, sonst entsteht vor dem Absatz ein Umbruchpunkt
 \newcommand{\kiquelle}[2][]{%
-  \par\smallskip
-  {\footnotesize\color{rahmengrau}%
+  \par\nopagebreak\smallskip
+  \noindent{\footnotesize\color{rahmengrau}%
    Textfassung erarbeitet mit Claude #2 (Anthropic)%
    \ifx\\#1\\\else, Stand #1\fi; die Sachaussagen sind
    den oben genannten Quellen entnommen.}%
@@ -132,7 +142,12 @@
 % selbst (immer "nicht leer"), nicht dessen Inhalt.
 \NewEnviron{aufgabe}[1][]{%
   \def\bsh@aufgabentitel{#1}%
-  \ifx\bsh@aufgabentitel\@empty\else\section{#1}\fi
+  \ifx\bsh@aufgabentitel\@empty\else
+    \section{#1}%
+    % \label steht nach \end{aufgabe}, auch wenn die Box entfaellt
+    \global\let\@currentlabel\@currentlabel
+    \global\let\@currentHref\@currentHref
+  \fi
   \expandafter\IfBlankTF\expandafter{\BODY}{}{%
     \begin{bsh@aufgabenbox}
     \BODY

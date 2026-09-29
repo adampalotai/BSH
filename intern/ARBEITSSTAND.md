@@ -2,11 +2,11 @@
 
 Zustandsbeschreibung, kein Änderungsprotokoll. Was zu tun ist, steht in `BESTEHENDE_AUFGABEN.md`.
 
-Stand: 26.09.2026
+Stand: 28.09.2026
 
 ## Unterricht und Prüfung
 
-Sechs Protokolle, deckungsgleich mit dem Bewertungsraster und den angelegten Verzeichnissen. Wintersemester: Virtualisierung, Serverinstallation, Active Directory. Sommersemester: Serverhardware, Apache, Betriebssicherheit. Bearbeitungsdauer fünf bis sechs Wochen je Protokoll. Gearbeitet wird am jeweils laufenden Protokoll; ein Verzeichnis bleibt leer, bis die zugehörige Angabe vorliegt.
+Sechs Protokolle, deckungsgleich mit dem Bewertungsraster und den angelegten Verzeichnissen. Wintersemester: Virtualisierung, Serverinstallation, Active Directory. Sommersemester: Serverhardware, Apache, Betriebssicherheit. Bearbeitungsdauer fünf bis sechs Wochen je Protokoll. Abgabe Protokoll 1: Freitag, 16.10.2026, 22:00 Uhr. Gearbeitet wird am jeweils laufenden Protokoll; ein Verzeichnis bleibt leer, bis die zugehörige Angabe vorliegt.
 
 Der folgende Ablauf stammt aus dem Erfahrungswissen eines Vorjahresschülers. Er ist keine offizielle Aussage, stimmt aber mit der Beurteilungsseite überein.
 
@@ -42,10 +42,10 @@ Abgelesen aus den OVF-Deskriptoren. Die Angabe nennt in Kapitel 4 noch Windows S
 
 ## Protokoll 1, Virtualisierung
 
-Gerüst vollständig: Kapitel 1 bis 10 nach der Angabe, Glossar als Anhang A, Abkürzungsverzeichnis als Anhang B, Quellenverzeichnis. Alle Angabentexte wörtlich übernommen und gegen die Original-PDFs geprüft. Kapitel 10 deckt die Erweiterung `Client-Server-V170901-V.pdf` ab.
+Gerüst vollständig: Kapitel 1 bis 10 nach der Angabe, Glossar als Anhang A, Abkürzungsverzeichnis als Anhang B, Quellenverzeichnis. Alle Angabentexte wörtlich übernommen und gegen die Original-PDFs geprüft, samt Einführungstext, Zugangsdaten und Wikipedia-Verweisen der Erweiterung. Kapitel 10 deckt die Erweiterung `Client-Server-V170901-V.pdf` ab.
 
-Kapitel 2 ist fertig, alle acht Aufgaben. Kapitel 3 ist bis Aufgabe 3.6 geschrieben, offen sind Shared Folder, Snapshots und Snapshots im Labor.
+Kapitel 2 und 3 sind fertig, alle acht beziehungsweise neun Aufgaben.
 
-Ohne VM schreibbar sind die übrigen Theorieaufgaben von Kapitel 3, Kapitel 6 und die Theorieteile von 5, 7 bis 9 und 10. Eine laufende VM brauchen Kapitel 4, die Versuche in 5 und 10 sowie die Installationen in 7 bis 9.
+Ohne VM schreibbar sind Kapitel 6 und die Theorieteile von 5, 7 bis 9 und 10. Eine laufende VM brauchen Kapitel 4, die Versuche in 5 und 10 sowie die Installationen in 7 bis 9.
 
 Veraltet in der Angabe: Die Erweiterung trägt die Version V170901 und Formularfelder mit `201_`. Der XP-Mode-Verweis im Einführungstext bezieht sich auf Windows 7. Die Proxy-Aufgabe nennt `proxies.by` als Bezugsquelle für einen offenen Proxy, Existenz und Zumutbarkeit sind fraglich. Die Bridged-Aufgabe gibt Adressen in 172.16.110.0 vor, das Labornetz liegt inzwischen in 10.4.0.0/16.
