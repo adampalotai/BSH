@@ -24,6 +24,7 @@
 \RequirePackage{array}
 \RequirePackage{tabularx}
 \RequirePackage{listings}
+\RequirePackage{pmboxdraw}
 \RequirePackage{scrlayer-scrpage}
 \RequirePackage{caption}
 \RequirePackage{float}
@@ -90,6 +91,9 @@
   xleftmargin=16pt,
   framexleftmargin=16pt,
   captionpos=b,
+  % Baumzeichen aus lsblk und tree, Umlaute aus deutschsprachigen Ausgaben
+  literate={├}{{\textSFviii}}1 {└}{{\textSFii}}1 {─}{{\textSFx}}1
+    {ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1,
 }
 \lstset{style=bsh}
 \renewcommand{\lstlistingname}{Listing}
@@ -173,11 +177,13 @@
 \captionsetup{font=small,labelfont=bf,labelsep=period,figurename=Abbildung,tablename=Tabelle}
 \renewcommand*{\figureformat}{\figurename~\thefigure}
 \renewcommand*{\tableformat}{\tablename~\thetable}
-\newcommand{\bild}[3]{%
+% \bild[Kurzfassung]{04-mint-desktop}{0.8}{Beschriftung}, Label abb:04-mint-desktop
+\NewDocumentCommand{\bild}{o m m m}{%
   \begin{figure}[H]
     \centering
-    \includegraphics[width=#2\textwidth]{#1}
-    \caption{#3}
+    \includegraphics[width=#3\textwidth]{#2}
+    \IfNoValueTF{#1}{\caption{#4}}{\caption[#1]{#4}}%
+    \label{abb:#2}
   \end{figure}%
 }
 

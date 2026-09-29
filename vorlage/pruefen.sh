@@ -6,6 +6,9 @@ for f in kapitel/*.tex; do
   awk -v f="$f" '
     /\\begin\{aufgabe\}/ {skip=1}
     skip {if (/\\end\{aufgabe\}/) skip=0; next}
+    # Rohdaten bleiben wörtlich
+    /\\begin\{lstlisting\}/ {lst=1}
+    lst {if (/\\end\{lstlisting\}/) lst=0; next}
     /^[ ]*%/ {next}
     /\\paragraph\{Quellen\}/ {q=1; delete u; ki=0; n=NR}
     q && /\\begin\{itemize\}\[nosep\]/ && !/^ / {print f":"NR": Quellenblock ohne [quellen]"}
