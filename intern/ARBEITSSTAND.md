@@ -2,7 +2,7 @@
 
 Zustandsbeschreibung, kein Änderungsprotokoll. Was zu tun ist, steht in `BESTEHENDE_AUFGABEN.md`.
 
-Stand: 29.09.2026
+Stand: 30.09.2026
 
 ## Unterricht und Prüfung
 
@@ -22,7 +22,7 @@ Vorjahresprotokolle sind als Vorlage untersagt, ein Lehrbuch gibt es im dritten 
 
 ## Rechner und VMs
 
-**Heimrechner.** Windows 11 Pro, Intel Core i9-14900 mit dem Stromprofil des i9-14900K, 64 GB DDR5, RTX 5070 Ti, 1 TB für VMs reserviert. VMware Workstation mit einer VM aus einem anderen Projekt. VirtualBox 7.2.20 mit Extension Pack 7.2.20; Hyper-V ist aktiv, VirtualBox läuft deshalb über die Windows Hypervisor Platform statt über VT-x. MiKTeX 25.12, VS Code mit LaTeX Workshop.
+**Heimrechner.** Windows 11 Pro, Intel Core i9-14900 mit dem Stromprofil des i9-14900K, 64 GB DDR5, RTX 5070 Ti, 1 TB für VMs reserviert. VMware Workstation mit einer VM aus einem anderen Projekt. VirtualBox 7.2.20 mit Extension Pack 7.2.20; Hyper-V ist aktiv, VirtualBox läuft deshalb über die Windows Hypervisor Platform statt über VT-x. MiKTeX 25.12, VS Code mit LaTeX Workshop. `VBoxManage` liegt nicht im `PATH`, Aufruf mit vollem Pfad `C:\Program Files\Oracle\VirtualBox\VBoxManage.exe`.
 
 **VMs der Schule.** Zwei OVA-Dateien unter `C:\Users\Adam\Projekte`, außerhalb des Repositorys, exportiert im Oktober 2024 mit VirtualBox 7.1.2, am Heimrechner nach `C:\Users\Adam\VirtualBox VMs\BSH-Labor` importiert; deren `VBox.log` dienen als Zeitbeleg der Versuche. Abweichend vom Deskriptor läuft der Mint-Gast mit xHCI, weil ein USB-3-Stick an OHCI und EHCI abgewiesen wird, und der Windows-Gast mit 4 Prozessoren, weil die Firmware mit 2 beim Start stehen blieb; die importierte Windows-VM hat ein TPM 2.0. Beide Gäste haben die Guest Additions 7.2.20 und den permanenten Shared Folder `vmshare` auf `C:\Users\Adam\Desktop\vmshare`. Windows-Konto `admin`.
 
@@ -44,7 +44,7 @@ Abgelesen aus den OVF-Deskriptoren. Die Angabe nennt in Kapitel 4 noch Windows S
 
 Gerüst vollständig: Kapitel 1 bis 10 nach der Angabe, Glossar als Anhang A, Abkürzungsverzeichnis als Anhang B, Quellenverzeichnis. Alle Angabentexte wörtlich übernommen und gegen die Original-PDFs geprüft, samt Einführungstext, Zugangsdaten und Wikipedia-Verweisen der Erweiterung. Kapitel 10 deckt die Erweiterung `Client-Server-V170901-V.pdf` ab.
 
-Kapitel 2 und 3 sind fertig, alle acht beziehungsweise neun Aufgaben. In Kapitel 4 sind der Start der VM, das Durchreichen des USB-Sticks und der Shared Folder geschrieben; offen sind dort zwei Bilder, die Fehlermeldung und das Terminal mit `echo` und `sync`.
+Kapitel 2 und 3 sind fertig, alle acht beziehungsweise neun Aufgaben. In Kapitel 4 sind der Start der VM, das Durchreichen des USB-Sticks, der Shared Folder und die Snapshots geschrieben; offen sind dort zwei Bilder, die Fehlermeldung und das Terminal mit `echo` und `sync`.
 
 Ohne VM schreibbar sind Kapitel 6 und die Theorieteile von 5, 7 bis 9 und 10. Eine laufende VM brauchen Kapitel 4, die Versuche in 5 und 10 sowie die Installationen in 7 bis 9.
 
