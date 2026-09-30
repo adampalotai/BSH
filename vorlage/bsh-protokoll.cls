@@ -93,7 +93,7 @@
   captionpos=b,
   % Baumzeichen aus lsblk und tree, Umlaute aus deutschsprachigen Ausgaben
   literate={├}{{\textSFviii}}1 {└}{{\textSFii}}1 {─}{{\textSFx}}1
-    {ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1,
+    {ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1 {»}{{\guillemetright}}1 {«}{{\guillemetleft}}1,
 }
 \lstset{style=bsh}
 \renewcommand{\lstlistingname}{Listing}

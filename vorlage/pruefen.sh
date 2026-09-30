@@ -17,7 +17,22 @@ for f in kapitel/*.tex; do
       if (s in u) print f":"NR": URL im Block doppelt: "s
       u[s]=1
     }
+    q && /\\item/ {
+      # Zitate von Titeln getrennt über die Länge, Titel haben selten sechs Wörter
+      z=0; r=$0
+      while (match(r, /\\enquote\{[^}]*\}/)) {
+        if (split(substr(r, RSTART+8, RLENGTH-9), w, " ") >= 6) z++
+        r=substr(r, RSTART+RLENGTH)
+      }
+      if (z > 6) print f":"NR": "z" Zitate in einem Eintrag"
+    }
     q && /\\kiquelle/ {q=0}
+    !q && f !~ /9[789]-/ && /Handbuch/ {print f":"NR": Quellenerzählung im Fließtext"}
+    /^\\paragraph\{Rohdaten\}/ && gsub(/(Listing|Tabelle|Abbildung)~\\ref/, "&") >= 2 {print f":"NR": Rohdaten zählen Listings auf"}
+    /^\\bild/ && match($0, /\}\{[^}]*\}\{.*\}[ ]*$/) {
+      c=substr($0, RSTART, RLENGTH); sub(/^\}\{[^}]*\}\{/, "", c)
+      if (split(c, w, " ") > 30) print f":"NR": Bildunterschrift über 30 Wörter"
+    }
     {t=$0; gsub(/\\enquote\{[^}]*\}/, "", t)}
     t ~ /(Host-System|Guest-System|Wirtsystem|Update|Speicherabbild|gemeinsamer Ordner)/ && t !~ /Angabe|genannt/ {print f":"NR": Festlegung: "t}
     t ~ /[0-9] ?(GB|MB|KB|GHz|MHz|Byte)/ && t !~ /\\,/ {print f":"NR": Einheit ohne Schmalraum: "t}
