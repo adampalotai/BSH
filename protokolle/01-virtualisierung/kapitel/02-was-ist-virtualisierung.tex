@@ -55,14 +55,14 @@ Das VirtualBox Platform Package steht unter der GNU General Public License Versi
 
 VirtualBox läuft unter Windows, macOS, Linux und Oracle Solaris und liest überall dieselben Dateiformate. Eine VM aus der Schule lässt sich deshalb zu Hause weiterverwenden, auch unter einem anderen Wirtsbetriebssystem. Beim Anlegen einer VM führt ein Assistent durch die Einstellungen und erkennt das Betriebssystem aus dem angegebenen Installationsabbild selbst, sodass der Unterricht beim Betriebssystem beginnen kann statt beim Hypervisor.
 
-VMware Workstation ist seit November 2024 kostenlos, ausdrücklich auch für Unternehmen; der Lizenzvorsprung von VirtualBox ist damit kleiner geworden. Hyper-V bezeichnet Microsoft als Typ-1-Hypervisor, der unmittelbar auf der Hardware läuft und dadurch eine Leistung nahe der des echten Rechners erreicht. Enthalten ist er in Windows~11 Pro, Enterprise und Education und setzt damit Windows als Wirtssystem voraus. Unter Linux steckt der Kernbestandteil der Kernel-based Virtual Machine (KVM) seit Version~2.6.20 im Kernel selbst; die Schicht, die VirtualBox als Anwendung auf dem Wirtsbetriebssystem bildet, entfällt dort.
+VMware Workstation ist seit November 2024 kostenlos, ausdrücklich auch für Unternehmen; der Lizenzvorsprung von VirtualBox ist damit kleiner geworden. Hyper-V bezeichnet Microsoft als Typ-1-Hypervisor, der unmittelbar auf der Hardware läuft und dadurch eine Leistung nahe der des echten Rechners erreicht. Enthalten ist er in Windows~11 Pro, Enterprise und Education und setzt damit Windows als Wirtssystem voraus. Unter Linux steckt der Kernteil der Kernel-based Virtual Machine (KVM) seit Version~2.6.20 im Linux-Kern selbst, dem Teil des Betriebssystems, der Prozessor und Hardware steuert; die Schicht, die VirtualBox als Anwendung auf dem Wirtsbetriebssystem bildet, entfällt dort.
 
 \paragraph{Quellen}
 \begin{itemize}[quellen]
   \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
   \begin{itemize}[nosep]
     \item Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Components} und \enquote{Oracle VirtualBox Features}, Punkt \enquote{Portability}: \enquote{The VirtualBox Platform Package consists of all open source components and is licensed under the GNU General Public License V3.} sowie \enquote{the same file and image formats are used on each}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
-    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{Choosing an Installation Package}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
+    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{Choosing an Installation Package} und \enquote{The Oracle VirtualBox Kernel Modules}: \enquote{The kernel is the part of the operating system which controls your processor and physical hardware.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
     \item Kap. 4 \enquote{Creating a New Virtual Machine}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
   \end{itemize}
   \item Oracle: \emph{Changelog for VirtualBox 7.0}, Abschn. \enquote{VirtualBox 7.0.0 (released October 10 2022)}: \enquote{The EHCI and XHCI USB controller devices are now part of the open source base package}. \url{https://www.virtualbox.org/wiki/Changelog-7.0}
@@ -71,7 +71,7 @@ VMware Workstation ist seit November 2024 kostenlos, ausdrücklich auch für Unt
   \item Microsoft: \enquote{Hyper-V virtualization in Windows Server and Windows}: \enquote{As a type-1 hypervisor, Hyper-V runs directly on computing hardware, delivering near-native performance} sowie \enquote{For Windows 11, Hyper-V is included in the Pro, Enterprise, and Education editions}. \url{https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview}
   \item Broadcom: \enquote{VMware Fusion and Workstation are Now Free for All Users}. VMware Cloud Foundation Blog, 11.\,11.\,2024. \url{https://blogs.vmware.com/cloud-foundation/2024/11/11/vmware-fusion-and-workstation-are-now-free-for-all-users/}
 \end{itemize}
-\kiquelle[28.\,09.\,2026]{Opus 5 und Opus 5.5}
+\kiquelle[02.\,10.\,2026]{Opus 5 und Opus 5.5}
 
 \begin{aufgabe}[Kann jeder Computer das?]
 Nicht jeder Computer kann einfach so mehrere Betriebssysteme auf einmal laufen lassen. Finde heraus, welche Voraussetzungen dein Computer erfüllen muss, damit VirtualBox reibungslos funktioniert.

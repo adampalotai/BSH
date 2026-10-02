@@ -34,8 +34,9 @@ for f in kapitel/*.tex; do
       if (split(c, w, " ") > 30) print f":"NR": Bildunterschrift über 30 Wörter"
     }
     {t=$0; gsub(/\\enquote\{[^}]*\}/, "", t)}
-    t ~ /(Host-System|Guest-System|Wirtsystem|Update|Speicherabbild|gemeinsamer Ordner)/ && t !~ /Angabe|genannt/ {print f":"NR": Festlegung: "t}
+    t ~ /(Host-System|Guest-System|Wirtsystem|Update|Speicherabbild|gemeinsamer Ordner|Kernel[^-])/ && t !~ /Angabe|genannt|\\url\{/ {print f":"NR": Festlegung: "t}
     t ~ /[0-9] ?(GB|MB|KB|GHz|MHz|Byte)/ && t !~ /\\,/ {print f":"NR": Einheit ohne Schmalraum: "t}
+    t ~ /[0-9](\\,| |~)Bytes?([^a-zA-Z]|$)/ {print f":"NR": Einheitenzeichen B statt Byte: "t}
     t ~ /[0-9] %/ {print f":"NR": Prozentzeichen ohne Schmalraum: "t}
     END {if (q) print f": Quellenblock ab Zeile "n" ohne \\kiquelle"}
   ' "$f"

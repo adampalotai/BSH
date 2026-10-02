@@ -47,6 +47,9 @@ Netzwerkmodus, der ausschließlich die virtuellen Maschinen desselben internen N
 \begriff[sec:virtualisierung]{Isolation}
 Abschottung einer virtuellen Maschine gegen das Wirtssystem und gegen andere virtuelle Maschinen. Beruht darauf, dass der Gast nur auf zugeteilte Betriebsmittel zugreifen kann; ein Absturz des Gastes bleibt deshalb ohne Wirkung auf das Wirtssystem. Eine Zusicherung der Software, keine physische Trennung.
 
+\begriff[sec:virtualbox]{Kern}
+Teil des Betriebssystems, der Prozessor und Hardware steuert. Englisch \emph{kernel}. Nicht zu verwechseln mit dem Prozessorkern.
+
 \begriff[sec:voraussetzungen]{Kernisolierung}
 Sicherheitsfunktion neuerer Windows-Fassungen. Ihre Aktivierung zieht ebenso wie die der Speicherintegrität Hyper-V nach sich, auch wenn dieses zuvor abgeschaltet wurde, und beeinträchtigt dadurch die Geschwindigkeit von VirtualBox.
 
@@ -81,7 +84,7 @@ Streaming SIMD Extensions~2, eine Befehlssatzerweiterung der x86-Prozessoren. Vi
 Einteilung nach Goldberg (1973). Ein Typ-1-Hypervisor (bare-metal) läuft unmittelbar auf der Hardware und verwaltet deren Betriebsmittel selbst; ein Typ-2-Hypervisor (hosted) läuft als Anwendung auf einem Wirtsbetriebssystem, das die Verwaltung übernimmt. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.
 
 \begriff[sec:usb]{USB-Controller}
-Hardware, über die ein Rechner mit seinen USB-Geräten verkehrt. VirtualBox bildet OHCI für USB~1.1, EHCI für USB~2.0 und xHCI für alle Geschwindigkeiten bis USB~3.0 nach; ein USB-3-Stick mit SuperSpeed ließ sich im Versuch nur an xHCI anschließen.
+Hardware, über die ein Rechner mit seinen USB-Geräten verkehrt. VirtualBox bildet OHCI für USB~1.1, EHCI für USB~2.0 und xHCI für alle Geschwindigkeiten bis USB~3.0 nach; ein USB-3-Stick ließ sich im Versuch nur an xHCI anschließen.
 
 \begriff[sec:festplatte]{VDI}
 Virtual Disk Image, das eigene Format von VirtualBox für virtuelle Festplatten. Daneben werden VMDK (VMware) und VHD (Microsoft) unterstützt, die zu wählen sind, wenn die VM auf einem anderen Produkt laufen soll.

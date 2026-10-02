@@ -10,11 +10,11 @@ Das Protokoll soll Gaisberger überzeugen und ist zugleich Adams Lern- und Prüf
 
 ## Sprache und Begriffe
 
-Jeder Fachbegriff wird bei seiner ersten Nennung im Protokoll im Fließtext definiert, nicht in einer Fußnote, und danach nicht erneut; wiederfinden lässt er sich über das Glossar.
+Jeder Fachbegriff wird bei seiner ersten Nennung im Protokoll im Fließtext definiert, nicht in einer Fußnote, und danach nicht erneut; wiederfinden lässt er sich über das Glossar. Fällt ein Begriff erstmals im Kernsatz einer Aufgabe, folgt die Definition im Theorieteil derselben Aufgabe, vor dem ersten Versuch.
 
 Deutsche Fachsprache, wie sie an einer HTL gesprochen wird. Wo Angabe oder Werkzeug den englischen Begriff verwenden, bleibt er englisch, etwa Drag and Drop oder Guest Additions, sofern die Festlegungen nichts anderes bestimmen. Keine englische Übersetzung in Klammern, außer bei einem Begriff, den man nur unter dem englischen Namen in Handbuch oder Oberfläche wiederfindet, und dann einmal.
 
-Festgelegt über alle Protokolle, außer in Angabentext und Zitaten: Wirtssystem, Wirtsbetriebssystem und Gast statt Host und Guest, Snapshot statt Speicherabbild, Shared Folder statt gemeinsamer Ordner, Aktualisierung statt Update, Prozessorstrang für thread. Zahlen mit Einheit als Ziffer mit schmalem Abstand und Einheitenzeichen, auch im Fließtext: `8\,GB`, `100\,\%`. Eine neue Festlegung kommt in diese Liste, bevor der Begriff ein zweites Mal verwendet wird.
+Festgelegt über alle Protokolle, außer in Angabentext und Zitaten: Wirtssystem, Wirtsbetriebssystem und Gast statt Host und Guest, Snapshot statt Speicherabbild, Shared Folder statt gemeinsamer Ordner, Aktualisierung statt Update, Prozessorstrang für thread, Kern für kernel. Zahlen mit Einheit als Ziffer mit schmalem Abstand und Einheitenzeichen, auch im Fließtext: `8\,GB`, `100\,\%`, `512\,B` statt Byte. Eine neue Festlegung kommt in diese Liste, bevor der Begriff ein zweites Mal verwendet wird.
 
 Abkürzungen bei Erstnennung ausgeschrieben, Kurzform in Klammern: virtuelle Maschine (VM).
 

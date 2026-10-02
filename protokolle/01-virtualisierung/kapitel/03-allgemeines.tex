@@ -46,21 +46,21 @@ Seit Goldberg 1973 unterscheidet man zwei Typen. Ein Typ-1-Hypervisor, auch Bare
 \label{abb:hypervisortypen}
 \end{figure}
 
-VirtualBox ist ein Typ-2-Hypervisor; Oracle selbst bezeichnet es als hosted hypervisor. Jede laufende VM ist ein eigener Prozess des Wirtsbetriebssystems, der den Hypervisor lädt und Prozessorzeit und Arbeitsspeicher zugeteilt bekommt wie jedes andere Programm. Das Kernmodul \cmd{vboxdrv}, das VirtualBox unter Linux braucht, ändert daran nichts: Es wird vom Wirtsbetriebssystem geladen und läuft unter dessen Verwaltung, nicht auf der bloßen Hardware.
+VirtualBox ist ein Typ-2-Hypervisor; Oracle selbst bezeichnet es als hosted hypervisor. Jede laufende VM ist ein eigener Prozess des Wirtsbetriebssystems, der den Hypervisor lädt und Prozessorzeit und Arbeitsspeicher zugeteilt bekommt wie jedes andere Programm. Das Kernmodul \cmd{vboxdrv}, ein Treiber, den VirtualBox unter Linux in den Kern des Wirtsbetriebssystems einsetzt, ändert daran nichts: Es wird vom Wirtsbetriebssystem geladen und läuft unter dessen Verwaltung, nicht auf der bloßen Hardware.
 
 \paragraph{Quellen}
 \begin{itemize}[quellen]
   \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
   \begin{itemize}[nosep]
     \item Kap. 1 \enquote{About Oracle VirtualBox}, Abschn. \enquote{Oracle VirtualBox Features}, Punkt \enquote{Portability}: \enquote{Oracle VirtualBox is a so-called hosted hypervisor, sometimes referred to as a type 2 hypervisor.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html}
-    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{The Oracle VirtualBox Kernel Modules}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
+    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{The Oracle VirtualBox Kernel Modules}: \enquote{it installs a driver module called vboxdrv into the system kernel}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
     \item Kap. \enquote{Technical Background}, Abschn. \enquote{Oracle VirtualBox Executables and Components}: \enquote{VMM (Virtual Machine Monitor): The heart of the hypervisor.} \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
   \end{itemize}
   \item Microsoft: \enquote{Hyper-V virtualization in Windows Server and Windows}: \enquote{As a type-1 hypervisor, Hyper-V runs directly on computing hardware}. \url{https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview}
   \item Goldberg, Robert~P.: \emph{Architectural Principles for Virtual Computer Systems}, S.~22--24: \enquote{Type I -- The VMM runs on a bare machine. Type II -- The VMM runs on an extended host, under the host operating system.} \url{https://web.archive.org/web/20240427004054/https://apps.dtic.mil/sti/pdfs/AD0772809.pdf}
   \item Popek, Gerald~J.; Goldberg, Robert~P.: \enquote{Formal Requirements for Virtualizable Third Generation Architectures}, S.~412\,f. \url{https://www.cs.cornell.edu/courses/cs6411/2018sp/papers/popek-goldberg.pdf}
 \end{itemize}
-\kiquelle[28.\,09.\,2026]{Opus 5.5}
+\kiquelle[02.\,10.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Was ist das Host-System und was das Guest-System?]
 Wenn du VirtualBox nutzt, arbeitest du sowohl mit deinem normalen Betriebssystem (Host-System) als auch mit einem \enquote{virtuellen} Betriebssystem (Guest-System). Erkläre den Unterschied zwischen dem Host- und dem Guest-System und wie sie miteinander interagieren.
