@@ -32,6 +32,7 @@ for f in kapitel/*.tex; do
     /^\\bild/ && match($0, /\}\{[^}]*\}\{.*\}[ ]*$/) {
       c=substr($0, RSTART, RLENGTH); sub(/^\}\{[^}]*\}\{/, "", c)
       if (split(c, w, " ") > 30) print f":"NR": Bildunterschrift über 30 Wörter"
+      if (c ~ /Listing~\\ref/) print f":"NR": Screenshot wiederholt ein Listing"
     }
     {t=$0; gsub(/\\enquote\{[^}]*\}/, "", t)}
     t ~ /(Host-System|Guest-System|Wirtsystem|Update|Speicherabbild|gemeinsamer Ordner|Kernel[^-])/ && t !~ /Angabe|genannt|\\url\{/ {print f":"NR": Festlegung: "t}
