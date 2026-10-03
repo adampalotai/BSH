@@ -30,9 +30,9 @@ Jeder Versuch steht in einer `messung`-Umgebung mit fünf Teilen in dieser Reihe
 
 **Aufbau.** Konfiguration mit Werten: Wirtssystem, Gast, VirtualBox-Version, Netzwerkmodus, Adressen; genug zum Wiederholen. Dass der Versuch am Heimrechner lief, steht hier. Werte, Zustände und Zeitpunkte kommen aus `VBoxManage showvminfo --machinereadable` und `VBox.log`, nicht aus dem Gesprächsverlauf.
 
-**Durchführung.** Der ausgeführte Befehl wörtlich in Monospace; ein eigenes Listing nur, wenn die Rohdaten die Befehle nicht samt Prompt zeigen.
+**Durchführung.** Der ausgeführte Befehl wörtlich in Monospace.
 
-**Rohdaten.** Die Ausgabe als `lstlisting`, ungekürzt oder mit gekennzeichneter Kürzung, dazu der Screenshot als Beleg. Mehrere gleichartige Ausgaben, etwa Dateilisten an mehreren Messpunkten, fasst eine Tabelle zusammen; die Screenshots belegen ihre Spalten. Der Absatz unter der Überschrift nennt nur, was die Beschriftungen nicht sagen: Herkunft und Umrechnung der Werte, etwa Laufzeit in `VBox.log` zu Ortszeit.
+**Rohdaten.** Eine Terminalausgabe belegt der Screenshot allein, ein Listing wiederholt ihn nicht; die Werte, auf die sich die Deutung stützt, nennt die Beobachtung. Als `lstlisting` steht nur eine Ausgabe ohne Screenshot, etwa ein Auszug aus `VBox.log`, mit gekennzeichneter Kürzung. Mehrere gleichartige Ausgaben, etwa Dateilisten an mehreren Messpunkten, fasst eine Tabelle zusammen; die Screenshots belegen ihre Spalten. Der Absatz unter der Überschrift nennt nur, was die Beschriftungen nicht sagen: Herkunft und Umrechnung der Werte, etwa Laufzeit in `VBox.log` zu Ortszeit.
 
 **Beobachtung.** Was zu sehen ist, ohne Deutung: Veränderungen und Auffälligkeiten.
 

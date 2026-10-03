@@ -28,7 +28,7 @@ Befehle und Code in Monospace, auch wo ein Screenshot sie belegt: inline `\cmd{i
 
 Zugelassen sind der Screenshot als Beleg einer eigenen Messung und das Schema, das eine räumliche oder zeitliche Beziehung zeigt, die Fließtext nur umständlich wiedergibt; Schemata in TikZ mit den Formen der Klasse. Je Sachverhalt ein Screenshot, auf die belegende Stelle zugeschnitten und bei dem Text platziert, den er belegt.
 
-Eingebunden mit `\bild[Kurzfassung]{Dateiname}{Breite}{Beschriftung}`, Label `abb:Dateiname`; der Dateiname ist sprechend und beginnt mit der Kapitelnummer: `05-nat-ipconfig-gast.png`. Die Breite ist so klein, wie der Beleg lesbar bleibt: Terminal- und Dateilisten, deren Werte ein Listing oder eine Tabelle wiedergibt, 0.8; Menüs, Dialoge und kurze Ausgaben 0.4 bis 0.5. Die Bildunterschrift begründet die Wahl des Bildes in einem Satz, damit sie bei der mündlichen Besprechung ablesbar ist.
+Eingebunden mit `\bild[Kurzfassung]{Dateiname}{Breite}{Beschriftung}`, Label `abb:Dateiname`; der Dateiname ist sprechend und beginnt mit der Kapitelnummer: `05-nat-ipconfig-gast.png`. Die Breite ist so klein, wie der Beleg lesbar bleibt: Terminalaufnahmen Pixelbreite durch 900, höchstens 1, dann erscheint die Terminalschrift so groß wie die eines Listings; Dateilisten, deren Werte eine Tabelle wiedergibt, 0.8; Menüs und Dialoge 0.4 bis 0.5. Die Bildunterschrift begründet die Wahl des Bildes in einem Satz, damit sie bei der mündlichen Besprechung ablesbar ist.
 
 ## LaTeX-Konventionen
 

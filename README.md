@@ -57,7 +57,7 @@ Wo die Angabe eine Tabelle mit Ja und Nein verlangt, wird jede Zelle gemessen. J
 
 1. **Aufbau**: Wirt, Gast, VirtualBox-Version, Netzwerkmodus und Adressen
 2. **Durchführung**: der ausgeführte Befehl im Wortlaut
-3. **Rohdaten**: die Ausgabe als Listing, der Screenshot als Beleg
+3. **Rohdaten**: der Screenshot als Beleg, Protokolldateien ohne Screenshot als Listing
 4. **Beobachtung**: was zu sehen ist, ohne Deutung
 5. **Deutung**: warum es so ausging; eine Abweichung von der Erwartung wird erklärt
 

@@ -42,7 +42,7 @@ Länge um der Länge willen. Die Angabe warnt vor Text, der vom Wesentlichen abl
 
 ## Prüfungstauglichkeit
 
-Werte, Befehle und Schrittfolgen stehen in Listings und Tabellen, wo sie beim Durchblättern auffindbar sind.
+Werte und Schrittfolgen stehen in Tabellen und Listen, Befehle in Monospace, wo sie beim Durchblättern auffindbar sind.
 
 Der Kernsatz einer Aufgabe steht vorn im Absatz, vollständig und ohne Rückverweis, sodass er allein eine Prüfungsfrage beantwortet. So löst das Protokoll die Forderung der Angabe ein, Prüfungsrelevantes hervorzuheben.
 
