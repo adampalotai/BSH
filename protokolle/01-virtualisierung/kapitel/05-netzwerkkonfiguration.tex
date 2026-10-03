@@ -10,37 +10,258 @@ Führe einen Ping vom Guest-PC zu deinem Host-PC aus und umgekehrt. Erstelle jew
 
 Versuch einen Zugriff auf eine Seite im Internet. Erstelle einen Screenshot und füge ihn ein. Hat der Zugriff funktioniert? Begründe warum er funktioniert hat bzw. nicht funktioniert hat.
 \end{aufgabe}
+\label{sec:nat-konfig}
 
-% TODO MESSUNG: NAT, ipconfig Host und Gast, Ping beide Richtungen, HTTP-Zugriff
+Im NAT-Modus erreicht der Gast das Wirtssystem und das Internet, das Wirtssystem den Gast dagegen nicht. Zwischen VM und Wirtssystem steht die NAT-Engine, ein Router, den VirtualBox in Software nachbildet. Sie nimmt die Pakete des Gastes an, entnimmt ihnen die TCP/IP-Daten und sendet diese über das Wirtsbetriebssystem neu, unter einer Adresse des Wirtssystems. Antworten verpackt sie wieder und reicht sie an den Gast weiter. Der Gast selbst liegt in einem privaten Netz, das nur innerhalb von VirtualBox besteht und für das Wirtssystem unsichtbar ist.
+
+\enquote{Automatisch beziehen} bedeutet, dass der Gast seine Netzwerkkonfiguration über das Dynamic Host Configuration Protocol (DHCP) erhält, ein Protokoll, mit dem ein Server einem Rechner seine Adresse und weitere Einstellungen übergibt. Im NAT-Modus ist dieser Server in VirtualBox eingebaut.
+
+Eine IPv4-Adresse ist eine 32\,Bit lange Nummer, die eine Netzwerkschnittstelle im Internet Protocol (IP) kennzeichnet; sie besteht aus einem Netzanteil und einem Rechneranteil. Die Angabe hinter dem Schrägstrich, etwa \cmd{/24}, nennt, wie viele der vorderen Bits den Netzanteil bilden. In der Voreinstellung erhält der Gast die Adresse 10.0.2.15 im Netz 10.0.2.0/24 und schickt Pakete in fremde Netze an 10.0.2.2. Ist die Einstellung \cmd{--nat-localhostreachable} eingeschaltet, leitet die NAT-Engine Verkehr an 10.0.2.2 außerdem an die Loopback-Schnittstelle des Wirtssystems weiter, die virtuelle Schnittstelle 127.0.0.1, über die ein Rechner sich selbst erreicht.
+
+\cmd{ping} schickt eine Echoanforderung des Internet Control Message Protocol (ICMP) an einen Rechner und wartet auf dessen Echoantwort. Kommt die Antwort an, ist der Rechner auf Hin- und Rückweg erreichbar.
+
+\begin{messung}[Erreichbarkeit im NAT-Modus]
+\paragraph{Aufbau} Heimrechner mit Windows 11 Pro, Build 26300, VirtualBox 7.2.20 r175154, im WLAN mit der Adresse 192.168.254.65/24. VM \cmd{Mint22\_BSHLab\_2410}, Gast Linux Mint~22. Adapter~1 der VM an NAT (Abbildung~\ref{abb:05-nat-vm-einstellungen}), laut \cmd{VBox.log} mit \cmd{LocalhostReachable} eingeschaltet. Im Gast ist IPv4 auf \enquote{Automatisch (DHCP)} gestellt (Abbildung~\ref{abb:05-nat-os-einstellungen}).
+
+\bild[Netzwerkeinstellungen der VM]{05-nat-vm-einstellungen}{0.5}{Belegt den Netzwerkmodus, den die Aufgabe verlangt.}
+
+\bild[IPv4-Einstellungen im Gast]{05-nat-os-einstellungen}{0.45}{Belegt die Einstellung, die die Angabe \enquote{Automatisch beziehen} nennt.}
+
+\paragraph{Durchführung} Im Gast \cmd{ip -4 addr} und \cmd{ip route}, auf dem Wirtssystem \cmd{ipconfig}. Danach im Gast \cmd{ping -c 4 10.0.2.2} und \cmd{ping -c 4 192.168.254.65}, auf dem Wirtssystem \cmd{ping 10.0.2.15}. Zuletzt im Gast in Firefox die Webseite der HTBLA Traun aufgerufen.
+
+\paragraph{Rohdaten} Tabelle~\ref{tab:nat-ping} fasst die Ausgaben der drei Pings und den Seitenaufruf zusammen.
+
+\begin{table}[H]
+\centering
+\caption{Pings und Seitenaufruf im NAT-Modus}
+\label{tab:nat-ping}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+\textbf{Von} & \textbf{An} & \textbf{Ergebnis} \\
+\midrule
+Gast & 10.0.2.2 & 4 von 4 Antworten \\
+Gast & 192.168.254.65, Wirtssystem & 4 von 4 Antworten \\
+Wirtssystem & 10.0.2.15, Gast & 0 von 4 Antworten, Zeitüberschreitung \\
+Gast & \nolinkurl{www.htltraun.at} & Seite angezeigt \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\bild[Adresse und Routen des Gastes]{05-nat-ip-gast}{0.93}{Adresse und Weg in fremde Netze in einem Ausschnitt, \cmd{proto dhcp} zeigt die Herkunft.}
+
+\bild[Adressen des Wirtssystems]{05-nat-ip-host}{0.68}{Alle Adapter des Wirtssystems, keiner im Netz 10.0.2.0/24. Die verbindungslokalen IPv6-Adressen sind geschwärzt.}
+
+\bild[Ping vom Gast an 10.0.2.2]{05-nat-ping-gast-host-loopback}{0.56}{Beleg zur ersten Zeile von Tabelle~\ref{tab:nat-ping}.}
+
+\bild[Ping vom Gast an die WLAN-Adresse des Wirtssystems]{05-nat-ping-gast-host-lan}{0.56}{Beleg zur zweiten Zeile.}
+
+\bild[Ping vom Wirtssystem an den Gast]{05-nat-ping-host-gast}{0.55}{Beleg zur dritten Zeile.}
+
+\bild[Webseite im Firefox des Gastes]{05-nat-internet}{0.7}{Ganzes VM-Fenster, weil erst dessen Titelleiste den Aufruf dem Gast zuordnet.}
+
+\paragraph{Beobachtung} Der Gast erhielt 10.0.2.15/24; den Weg in alle übrigen Netze führt \cmd{ip route} über 10.0.2.2, eingetragen von DHCP. Keine Schnittstelle des Wirtssystems liegt im Netz 10.0.2.0/24.
+
+\paragraph{Deutung} Die Adressen des Gastes entsprechen der Voreinstellung von VirtualBox und stammen vom eingebauten DHCP-Server. Der Ping an 10.0.2.2 erreichte wegen \cmd{LocalhostReachable} die Loopback-Schnittstelle des Wirtssystems. Auch die WLAN-Adresse des Wirtssystems war erreichbar, weil die NAT-Engine die Anfrage über das Wirtsbetriebssystem sendet und 192.168.254.65 dessen eigene Adresse ist. Der umgekehrte Ping scheiterte, weil das Wirtssystem im privaten Netz des Gastes keine Schnittstelle und damit keinen Weg zum Gast hat. Der Seitenaufruf gelang aus demselben Grund wie die Pings des Gastes; für den Webserver kam die Anfrage vom Wirtssystem. Weil die Seite über ihren Namen aufgerufen wurde, funktionierte auch die Namensauflösung.
+\end{messung}
+
+\paragraph{Quellen}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
+  \begin{itemize}[nosep]
+    \item Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Network Address Translation (NAT)} und \enquote{Configuring Port Forwarding with NAT}: \enquote{extracts the TCP/IP data and resends it using the host operating system}, \enquote{using an IP address belonging to the host}, \enquote{repacks and resends them to the guest machine on its private network}, \enquote{from a DHCP server integrated into Oracle VirtualBox} sowie \enquote{connected to a private network internal to Oracle VirtualBox and invisible to the host}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+    \item Kap. 11 \enquote{Advanced Topics}, Abschn. \enquote{Configuring the Address of a NAT Network Interface}: \enquote{the guest is assigned to the address 10.0.2.15} und \enquote{the gateway is set to 10.0.2.2}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/AdvancedTopics.html}
+    \item Kap. 15 \enquote{VBoxManage Command Reference}, Abschn. \enquote{NAT Networking Settings}, Option \cmd{--nat-localhostreachable}: \enquote{allows traffic from the guest directed to 10.0.2.2 to pass to the host's loopback interface, i.e. localhost or 127.0.0.1}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/vboxmanage.html}
+  \end{itemize}
+  \item iputils: \emph{ping(8)}: \enquote{ping uses the ICMP protocol's mandatory ECHO\_REQUEST datagram to elicit an ICMP ECHO\_RESPONSE from a host or gateway}. \url{https://man7.org/linux/man-pages/man8/ping.8.html}
+  \item Braden, Robert (Hrsg.): \emph{Requirements for Internet Hosts -- Communication Layers}, RFC~1122, Abschn. 3.2.1.3 \enquote{Addressing}, Punkt~(g), und 3.3.4.1 \enquote{Introduction}: \enquote{Internal host loopback address}, \enquote{A multihomed host has multiple IP addresses} und \enquote{These logical interfaces may be associated with one or more physical interfaces}. \url{https://www.rfc-editor.org/rfc/rfc1122.html}
+  \item Droms, Ralph: \emph{Dynamic Host Configuration Protocol}, RFC~2131, Abstract: \enquote{The Dynamic Host Configuration Protocol (DHCP) provides a framework for passing configuration information to hosts on a TCPIP network}. \url{https://www.rfc-editor.org/rfc/rfc2131.html}
+  \item Fuller, Vince; Li, Tony: \emph{Classless Inter-domain Routing (CIDR)}, RFC~4632, Abschn. 3.1 \enquote{Basic Concept and Prefix Notation}: \enquote{which bits in a 32-bit IPv4 address are interpreted as the network number (or prefix)} und \enquote{a decimal value between 0 and 32 that describes the number of significant bits}. \url{https://www.rfc-editor.org/rfc/rfc4632.html}
+  \item Postel, Jon: \emph{Internet Protocol}, RFC~791, Abschn. 2.3 \enquote{Function Description}, Absatz \enquote{Addressing}: \enquote{Addresses are fixed length of four octets (32 bits). An address begins with a network number, followed by local address}. \url{https://www.rfc-editor.org/rfc/rfc791.html}
+  \item Postel, Jon: \emph{Internet Control Message Protocol}, RFC~792, Einleitung: \enquote{the Internet Control Message Protocol (ICMP)}. \url{https://www.rfc-editor.org/rfc/rfc792.html}
+  \item Angabe \emph{Virtualisierung}, Aufgabe \enquote{NAT-Konfiguration}.
+  \item Eigene Messung, Versuch \enquote{Erreichbarkeit im NAT-Modus}.
+\end{itemize}
+\kiquelle[03.\,10.\,2026]{Opus 5.5 und Sonnet 5.5}
 
 \begin{aufgabe}[Netzwerkmodi NAT, Bridged und Host only]
 Erkläre die drei Netzwerkeinstellungen \enquote{NAT}, \enquote{Bridged} und \enquote{Host only} aus dem Handbuch Kap.~6.2ff.
 
 Beschreibe jeden Begriff kurz, und gib an, welche Verbindungen zwischen \textbf{Guest, Host und Internet} funktionieren werden. Erstelle weiters zu jeder Konfiguration eine Skizze mit Internet, Host und Guest auf der die Netzwerktopologie ersichtlich ist.
 \end{aufgabe}
+\label{sec:netzwerkmodi}
 
-% Handbuchnummern der Angabe (6.2ff) stammen aus einer aelteren Fassung.
-% Aktuell: Kap. 9 "Virtual Networking", Uebersicht in Tabelle 9-1.
-% https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html
+Der Netzwerkmodus legt fest, an welches Netz VirtualBox eine virtuelle Netzwerkkarte der VM anschließt, und damit, wen der Gast erreicht und wer ihn erreicht.
 
 \subsection{NAT}
-% TODO Erklaerung, Beleg Handbuch Kap. 9, Abschn. "Network Address Translation (NAT)"
+\label{sec:modus-nat}
 
-% TODO Tabelle: VM->Host, VM->VM, VM->Internet, Internet->VM, je Ja/Nein + Messbeleg
-% TODO Skizze
+Im NAT-Modus, benannt nach Network Address Translation, arbeitet VirtualBox als Router zwischen Gast und Wirtssystem. Dieser Router, die NAT-Engine, verschickt die Pakete des Gastes über das Wirtsbetriebssystem unter dessen Adresse und reicht die Antworten an den Gast zurück. Ins Internet und zum Wirtssystem gelangt der Gast deshalb ohne weiteres. Weil dafür in der Regel weder im Gast noch auf dem Wirtssystem etwas einzurichten ist, ist NAT der voreingestellte Modus.
+
+VirtualBox stellt jeder VM eine eigene NAT-Engine voran. Jeder Gast steht deshalb allein in seinem eigenen privaten Netz und erhält dort in der Voreinstellung die Adresse 10.0.2.15. Zwei VMs im NAT-Modus tragen folglich dieselbe Adresse und erreichen einander nicht, weil zwischen ihren Netzen keine Verbindung besteht (Abbildung~\ref{abb:modus-nat}).
+
+Von außen ist der Gast unerreichbar, weil sein privates Netz außerhalb von VirtualBox unsichtbar ist, auch für das Wirtssystem. Einen Weg hinein öffnet nur eine Portweiterleitung, bei der VirtualBox an einem Port des Wirtssystems lauscht und alles, was dort eintrifft, an den Gast weiterreicht (Tabelle~\ref{tab:modus-nat}).
+
+\begin{table}[H]
+\centering
+\caption{Verbindungen im NAT-Modus}
+\label{tab:modus-nat}
+\begin{tabularx}{\textwidth}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
+\toprule
+\textbf{Kommunikation} & \textbf{VM $\to$ Wirtssystem} & \textbf{VM $\to$ VM} & \textbf{VM $\to$ Internet} & \textbf{Internet $\to$ VM} \\
+\midrule
+Möglich & Ja & Nein & Ja & nur mit Portweiterleitung \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[leitung/.style={draw=akzent, line width=0.5pt}, netz/.style={draw=akzent, line width=1.4pt}]
+  \node[schicht, minimum width=2.4cm] (router) at (0,0) {Router};
+  \node[schicht, minimum width=2.4cm] (inet) at (4,0) {Internet};
+  \draw[leitung] (router) -- (inet);
+  \draw[netz] (-5,-1.2) -- (5,-1.2);
+  \node[beschriftung, anchor=south east] at (5,-1.2) {lokales Netz};
+  \draw[leitung] (router) -- (0,-1.2);
+  \node[schicht, minimum width=6.6cm] (os) at (0,-2.6) {Wirtsbetriebssystem};
+  \draw[leitung] (0,-1.2) -- (os);
+  \node[schichthervor, minimum width=3cm] (nat1) at (-1.8,-4.1) {NAT-Engine\\\footnotesize Router 10.0.2.2};
+  \node[schichthervor, minimum width=3cm] (nat2) at (1.8,-4.1) {NAT-Engine\\\footnotesize Router 10.0.2.2};
+  \node[gast, minimum width=3.2cm, minimum height=11mm] (g1) at (-1.8,-5.9) {Gast 1\\\footnotesize 10.0.2.15};
+  \node[gast, minimum width=3.2cm, minimum height=11mm] (g2) at (1.8,-5.9) {Gast 2\\\footnotesize 10.0.2.15};
+  \draw[leitung] (nat1) -- (nat1|-os.south);
+  \draw[leitung] (nat2) -- (nat2|-os.south);
+  \draw[leitung] (nat1) -- node[beschriftung, left] (p1) {privates Netz} (g1);
+  \draw[leitung] (nat2) -- node[beschriftung, right] (p2) {privates Netz} (g2);
+  \begin{scope}[on background layer]
+    \node[fit=(os)(g1)(g2)(p1)(p2), draw=rahmengrau, dashed, inner sep=3mm] (wirt) {};
+  \end{scope}
+  \node[beschriftung, anchor=south west] at (wirt.north west) {Wirtssystem};
+\end{tikzpicture}
+\caption[Topologie im NAT-Modus]{Gezeichnet sind zwei Gäste, weil erst der Vergleich sichtbar macht, dass jede VM hinter ihrem eigenen Router in einem eigenen Netz steht.}
+\label{abb:modus-nat}
+\end{figure}
+
+\paragraph{Quellen}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
+  \begin{itemize}[nosep]
+    \item Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Introduction to Networking Modes} mit Tabelle 9-1, \enquote{Network Address Translation (NAT)} und \enquote{Configuring Port Forwarding with NAT}: \enquote{it does not require any configuration on the host network and guest system. For this reason, it is the default networking mode}, \enquote{this router is placed between each virtual machine and the host}, \enquote{by default virtual machines cannot talk to each other}, \enquote{using an IP address belonging to the host}, \enquote{connected to a private network internal to Oracle VirtualBox and invisible to the host, network services on the guest are not accessible to the host machine or to other computers on the same network} sowie \enquote{listens to certain ports on the host and resends all packets which arrive there to the guest}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+    \item Kap. 11 \enquote{Advanced Topics}, Abschn. \enquote{Configuring the Address of a NAT Network Interface}: \enquote{the guest is assigned to the address 10.0.2.15} und \enquote{the gateway is set to 10.0.2.2}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/AdvancedTopics.html}
+  \end{itemize}
+\end{itemize}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}
 
 \subsection{Bridged oder Netzwerkbrücke}
-% TODO Erklaerung, Beleg Handbuch Kap. 9, Abschn. "Bridged Networking"
+\label{sec:modus-bridged}
 
-% TODO Tabelle vier Zellen
-% TODO Skizze
+Im Bridged-Modus schließt VirtualBox den Gast unmittelbar an das lokale Netz an, in dem das Wirtssystem hängt. Dazu setzt es auf dem Wirtssystem einen Netzfiltertreiber ein, einen Treiber, der den Datenverkehr einer physischen Netzwerkkarte filtert. Über ihn holt VirtualBox die Pakete für den Gast aus dem Netz und speist dessen Pakete ein, ohne dass das Wirtsbetriebssystem sie verarbeitet. Daraus folgt, dass der Gast im lokalen Netz als eigener Rechner mit eigener Adresse auftritt, die er wie jeder andere Rechner dort bezieht (Abbildung~\ref{abb:modus-bridged}). Gedacht ist der Modus für Server im Gast und für Netzwerksimulationen.
+
+Damit kommen alle Verbindungen zustande (Tabelle~\ref{tab:modus-bridged}), aus dem Internet allerdings nur so weit wie zu jedem anderen Rechner im lokalen Netz. Steht dieses Netz hinter einem Router mit NAT, braucht eine Verbindung aus dem Internet eine Portweiterleitung an diesem Router, nicht in VirtualBox.
+
+\begin{table}[H]
+\centering
+\caption{Verbindungen im Bridged-Modus}
+\label{tab:modus-bridged}
+\begin{tabularx}{\textwidth}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
+\toprule
+\textbf{Kommunikation} & \textbf{VM $\to$ Wirtssystem} & \textbf{VM $\to$ VM} & \textbf{VM $\to$ Internet} & \textbf{Internet $\to$ VM} \\
+\midrule
+Möglich & Ja & Ja & Ja & Ja \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[leitung/.style={draw=akzent, line width=0.5pt}, netz/.style={draw=akzent, line width=1.4pt}]
+  \node[schicht, minimum width=2.4cm] (router) at (0,0) {Router};
+  \node[schicht, minimum width=2.4cm] (inet) at (4,0) {Internet};
+  \draw[leitung] (router) -- (inet);
+  \draw[netz] (-6,-1.2) -- (6,-1.2);
+  \node[beschriftung, anchor=south east] at (6,-1.2) {lokales Netz};
+  \draw[leitung] (router) -- (0,-1.2);
+  \node[schichthervor, minimum width=11.6cm] (nic) at (0,-2.6) {Physische Netzwerkkarte mit Netzfiltertreiber};
+  \draw[leitung] (0,-1.2) -- (nic);
+  \node[schicht, minimum width=3.2cm, minimum height=11mm] (os) at (-4.1,-4.3) {Wirtsbetriebssystem};
+  \node[gast, minimum width=3.2cm, minimum height=11mm] (g1) at (0,-4.3) {Gast 1\\\footnotesize Adresse im lokalen Netz};
+  \node[gast, minimum width=3.2cm, minimum height=11mm] (g2) at (4.1,-4.3) {Gast 2\\\footnotesize Adresse im lokalen Netz};
+  \foreach \n in {os, g1, g2} \draw[leitung] (\n) -- (\n|-nic.south);
+  \begin{scope}[on background layer]
+    \node[fit=(nic)(os)(g2), draw=rahmengrau, dashed, inner sep=3mm] (wirt) {};
+  \end{scope}
+  \node[beschriftung, anchor=south west] at (wirt.north west) {Wirtssystem};
+\end{tikzpicture}
+\caption[Topologie im Bridged-Modus]{Gäste und Wirtsbetriebssystem stehen nebeneinander, weil sie im lokalen Netz gleichrangig sind.}
+\label{abb:modus-bridged}
+\end{figure}
+
+\paragraph{Quellen}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
+  \begin{itemize}[nosep]
+    \item Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Introduction to Networking Modes} mit Tabelle 9-1, \enquote{Network Address Translation (NAT)} und \enquote{Bridged Networking}: \enquote{such as network simulations and running servers in a guest}, \enquote{circumventing your host operating system's network stack}, \enquote{much like a private network behind a router, the virtual machine is invisible and unreachable from the outside internet}, \enquote{a device driver on your host system that filters data from your physical network adapter} sowie \enquote{a destination IP address that belongs to one of the virtual machine adapters}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+  \end{itemize}
+\end{itemize}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}
 
 \subsection{Host only Netzwerk}
-% TODO Erklaerung, Beleg Handbuch Kap. 9, Abschn. "Host-Only Networking"
-% Achtung: laut Tabelle 9-1 ist VM<->Host in diesem Modus moeglich, VM->Internet nicht.
+\label{sec:modus-hostonly}
 
-% TODO Tabelle vier Zellen
-% TODO Skizze
+Im Host-only-Modus verbindet VirtualBox die Gäste untereinander und mit dem Wirtssystem, aber mit keinem weiteren Netz. Dazu legt es auf dem Wirtssystem den Host-only-Adapter an, eine zusätzliche Netzwerkschnittstelle, die nur in Software besteht und neben den echten Netzwerkkarten erscheint. Gäste und Wirtssystem verkehren darüber, als hingen sie an einem gemeinsamen Switch. Weil dieser Adapter an keine physische Netzwerkkarte angebunden ist, bleibt das Netz in beide Richtungen vom lokalen Netz und vom Internet getrennt (Tabelle~\ref{tab:modus-hostonly}). Die Adressen vergibt in der Voreinstellung ein DHCP-Server von VirtualBox.
+
+Nützlich ist der Modus für VMs, die zusammenarbeiten, etwa einen Webserver und seine Datenbank. Jede VM kann bis zu acht virtuelle Netzwerkkarten mit je eigenem Modus haben. Der Webserver bekommt deshalb für den Weg nach außen eine zweite Karte im Bridged-Modus, und die Datenbank bleibt von außen unerreichbar.
+
+\begin{table}[H]
+\centering
+\caption{Verbindungen im Host-only-Modus}
+\label{tab:modus-hostonly}
+\begin{tabularx}{\textwidth}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
+\toprule
+\textbf{Kommunikation} & \textbf{VM $\to$ Wirtssystem} & \textbf{VM $\to$ VM} & \textbf{VM $\to$ Internet} & \textbf{Internet $\to$ VM} \\
+\midrule
+Möglich & Ja & Ja & Nein & Nein \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[leitung/.style={draw=akzent, line width=0.5pt}, netz/.style={draw=akzent, line width=1.4pt}]
+  \node[schicht, minimum width=2.4cm] (router) at (0,0) {Router};
+  \node[schicht, minimum width=2.4cm] (inet) at (4,0) {Internet};
+  \draw[leitung] (router) -- (inet);
+  \draw[netz] (-5,-1.2) -- (5,-1.2);
+  \node[beschriftung, anchor=south east] at (5,-1.2) {lokales Netz};
+  \draw[leitung] (router) -- (0,-1.2);
+  \node[schicht, minimum width=6.6cm] (os) at (0,-2.6) {Wirtsbetriebssystem};
+  \draw[leitung] (0,-1.2) -- (os);
+  \node[schichthervor, minimum width=3.4cm] (ho) at (0,-4.1) {Host-only-Adapter\\\footnotesize nur in Software};
+  \draw[leitung] (os) -- (ho);
+  \draw[netz] (-3.3,-5.4) -- (3.3,-5.4);
+  \node[beschriftung, anchor=south east] at (3.3,-5.4) {Host-only-Netz};
+  \draw[leitung] (ho) -- (0,-5.4);
+  \node[gast, minimum width=3.2cm, minimum height=11mm] (g1) at (-1.8,-6.5) {Gast 1\\\footnotesize Adresse per DHCP};
+  \node[gast, minimum width=3.2cm, minimum height=11mm] (g2) at (1.8,-6.5) {Gast 2\\\footnotesize Adresse per DHCP};
+  \draw[leitung] (g1) -- (-1.8,-5.4);
+  \draw[leitung] (g2) -- (1.8,-5.4);
+  \begin{scope}[on background layer]
+    \node[fit=(os)(g1)(g2), draw=rahmengrau, dashed, inner sep=3mm] (wirt) {};
+  \end{scope}
+  \node[beschriftung, anchor=south west] at (wirt.north west) {Wirtssystem};
+\end{tikzpicture}
+\caption[Topologie im Host-only-Modus]{Das Host-only-Netz ist als eigene Leitung gezeichnet, weil es am Wirtssystem endet und keine Verbindung zum lokalen Netz hat.}
+\label{abb:modus-hostonly}
+\end{figure}
+
+\paragraph{Quellen}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
+  \begin{itemize}[nosep]
+    \item Kap. 9 \enquote{Virtual Networking}, Einleitung sowie Abschn. \enquote{Introduction to Networking Modes} mit Tabelle 9-1 und \enquote{Host-Only Networking}: \enquote{up to eight virtual PCI Ethernet cards for each virtual machine}, \enquote{creates a new software interface on the host which then appears next to your existing network interfaces}, \enquote{as if they were connected through a physical Ethernet switch}, \enquote{cannot talk to the world outside the host since they are not connected to a physical networking interface} sowie \enquote{This is enabled by default and manages the IP addresses in the host-only network}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+  \end{itemize}
+\end{itemize}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Bridged-Konfiguration]
 Stelle die Netzwerkverbindung der VM auf \enquote{Bridged} und verbinde dich mit dem Netzwerk.
@@ -53,5 +274,72 @@ Führe einen Ping vom Guest-PC zu deinem Host-PC aus und umgekehrt. Erstelle jew
 
 Versuch aus dem Guest einen Zugriff auf eine Seite im Internet. Erstelle einen Screenshot und füge ihn ein. Hat der Zugriff funktioniert? Begründe warum er funktioniert hat bzw. nicht funktioniert hat.
 \end{aufgabe}
+\label{sec:bridged-konfig}
 
-% TODO MESSUNG: Bridged mit statischer Adresse, Ping beide Richtungen, Firewall-Verhalten beachten; Heimrechner, Regel Host plus 50 auf das Heimnetz uebertragen
+Im Bridged-Modus steht der Gast als eigener Rechner im lokalen Netz des Wirtssystems, so als wäre er mit einem Kabel an dessen Netzwerkkarte angeschlossen. Daraus folgt, dass Gast und Wirtssystem einander erreichen wie zwei beliebige Rechner dieses Netzes und der Gast über dessen Router ins Internet gelangt. Eine Anfrage des Gastes an das Wirtssystem durchläuft deshalb dort die Firewall wie jede andere Anfrage aus dem lokalen Netz.
+
+Eine Firewall ist eine Software, die den ein- und ausgehenden Datenverkehr eines Rechners nach Regeln filtert. Die Firewall von Windows sperrt eingehenden Verkehr in der Voreinstellung und lässt ihn nur durch, wenn eine Regel ihn ausdrücklich erlaubt.
+
+Die Angabe verlangt eine feste Adresse, die im Gast von Hand eingetragen wird, statt sie per DHCP zu beziehen. Mit ihr sind drei weitere Werte anzugeben. Die Netzmaske ist ein 32\,Bit langer Wert, dessen vordere Bits auf 1 stehen und den Netzanteil der Adresse markieren; 255.255.255.0 hat 24 solche Bits und bedeutet dasselbe wie \cmd{/24}. Das Standardgateway ist der Router, an den ein Rechner jedes Paket schickt, dessen Ziel in keinem der Netze liegt, an die er selbst angeschlossen ist. Ein Ziel im eigenen Netz erhält das Paket unmittelbar. Der DNS-Server beantwortet Anfragen des Domain Name System (DNS), das Rechnernamen in Adressen übersetzt.
+
+\begin{messung}[Erreichbarkeit im Bridged-Modus]
+\paragraph{Aufbau} Heimrechner mit Windows 11 Pro, Build 26300, VirtualBox 7.2.20 r175154, im WLAN mit der Adresse 192.168.254.65/24 hinter dem Router 192.168.254.1. VM \cmd{Mint22\_BSHLab\_2410}, Gast Linux Mint~22. Adapter~1 der VM als Netzwerkbrücke an den WLAN-Adapter des Wirtssystems gebunden (Abbildung~\ref{abb:05-bridged-vm-einstellungen}). Die Adressen der Angabe gehören zum Labornetz. Auf das Heimnetz übertragen erhält der Gast die Adresse des Wirtssystems plus 50, also 192.168.254.115/24, und als Standardgateway und DNS-Server den Router (Abbildung~\ref{abb:05-bridged-os-einstellungen}).
+
+\bild[Netzwerkeinstellungen der VM]{05-bridged-vm-einstellungen}{0.5}{Belegt den Netzwerkmodus und den Adapter des Wirtssystems, an den die Brücke gebunden ist.}
+
+\bild[IPv4-Einstellungen im Gast]{05-bridged-os-einstellungen}{0.45}{Belegt die feste Adresse mit Gateway und DNS-Server, die automatische Zuweisung ist für beide ausgeschaltet.}
+
+\paragraph{Durchführung} Im Gast IPv4 auf \enquote{Manuell} gestellt, die automatische DNS-Zuweisung ausgeschaltet und die Werte eingetragen. NetworkManager, der die Verbindungen des Gastes verwaltet, wendet die Konfiguration eines Verbindungsprofils an, wenn er es aktiviert. Das geänderte Profil wurde deshalb mit \cmd{nmcli connection up "Kabelgebundene Verbindung 1"} neu aktiviert. Danach im Gast \cmd{ip -4 addr} und \cmd{ip route}, auf dem Wirtssystem \cmd{ipconfig}. Dann auf dem Wirtssystem \cmd{ping 192.168.254.115} und im Gast \cmd{ping -c 4 192.168.254.65}. Anschließend auf dem Wirtssystem in einer PowerShell mit Administratorrechten die vordefinierte Regel für eingehende Echoanforderungen eingeschaltet und den Ping des Gastes wiederholt:
+\begin{lstlisting}
+Enable-NetFirewallRule -DisplayName "Datei- und Druckerfreigabe (Echoanforderung - ICMPv4 eingehend)"
+\end{lstlisting}
+Zuletzt im Gast in Firefox die Webseite der HTBLA Traun aufgerufen.
+
+\paragraph{Rohdaten} Tabelle~\ref{tab:bridged-ping} fasst die Ausgaben der Pings und den Seitenaufruf zusammen.
+
+\begin{table}[H]
+\centering
+\caption{Pings und Seitenaufruf im Bridged-Modus}
+\label{tab:bridged-ping}
+\begin{tabularx}{\textwidth}{@{}llX@{}}
+\toprule
+\textbf{Von} & \textbf{An} & \textbf{Ergebnis} \\
+\midrule
+Wirtssystem & 192.168.254.115, Gast & 4 von 4 Antworten \\
+Gast & 192.168.254.65, Wirtssystem & 0 von 4 Antworten \\
+Gast, Regel eingeschaltet & 192.168.254.65, Wirtssystem & 4 von 4 Antworten \\
+Gast & \nolinkurl{www.htltraun.at} & Seite angezeigt \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\bild[Adressen von Wirtssystem und Gast]{05-bridged-ip}{1}{Beide Seiten in einem Bild, wie die Angabe verlangt. Die verbindungslokalen IPv6-Adressen sind geschwärzt.}
+
+\bild[Ping vom Wirtssystem an den Gast]{05-bridged-ping-host-gast}{0.61}{Beleg zur ersten Zeile von Tabelle~\ref{tab:bridged-ping}.}
+
+\bild[Ping vom Gast an das Wirtssystem]{05-bridged-ping-gast-host}{0.58}{Beleg zur zweiten Zeile.}
+
+\bild[Firewallregeln für ICMPv4 auf dem Wirtssystem]{05-bridged-firewall-regeln}{1}{Belegt, dass die Regel für eingehende Echoanforderungen nach dem Einschalten in allen Profilen gilt.}
+
+\bild[Ping vom Gast an das Wirtssystem mit eingeschalteter Regel]{05-bridged-ping-gast-host-regel}{0.56}{Beleg zur dritten Zeile.}
+
+\bild[Webseite im Firefox des Gastes]{05-bridged-internet}{0.7}{Im Gast aufgenommen, die Leiste von Linux Mint am unteren Rand ordnet den Aufruf dem Gast zu.}
+
+\paragraph{Beobachtung} Der Gast trägt 192.168.254.115/24 mit der Gültigkeit \cmd{forever}, und \cmd{ip route} führt den Weg in fremde Netze über 192.168.254.1 mit \cmd{proto static}. Gast und WLAN-Adapter des Wirtssystems liegen damit im selben Netz 192.168.254.0/24.
+
+\paragraph{Deutung} Die eingetragene Konfiguration ist aktiv, und weil beide Rechner im selben Netz liegen, erreichen ihre Pakete einander unmittelbar, ohne Router. Der Gast beantwortete die Echoanforderungen des Wirtssystems, in dieser Konfiguration sperrt in ihm also nichts eingehende Pings. Der Ping des Gastes scheiterte zunächst an der Firewall des Wirtssystems. Dass sie die Ursache war, folgt daraus, dass sich zwischen beiden Versuchen nur die Regel geändert hat. Den Seitenaufruf schickte der Gast über sein Standardgateway ins Internet. Weil die Seite über ihren Namen aufgerufen wurde, funktionierte auch die Namensauflösung.
+\end{messung}
+
+\paragraph{Quellen}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}, Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Bridged Networking}: \enquote{it looks to the host system as though the guest were physically connected to the interface using a network cable} und \enquote{The host can send data to the guest through that interface and receive data from it}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+  \item Microsoft: \enquote{Windows Firewall Overview}, Einleitung: \enquote{filtering network traffic that enters and exits your device}. \url{https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/}
+  \item Microsoft: \enquote{Windows Firewall Rules}, Abschn. \enquote{Rule precedence for inbound and outbound rules}: \enquote{Explicitly defined allow rules take precedence over the default block setting}. \url{https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules}
+  \item NetworkManager: \emph{nm-settings-nmcli(5)}, Abschn. \enquote{Description}: \enquote{When NetworkManager activates a connection profile on a network device the configuration will be applied}. \url{https://networkmanager.dev/docs/api/latest/nm-settings-nmcli.html}
+  \item Braden, Robert (Hrsg.): \emph{Requirements for Internet Hosts -- Communication Layers}, RFC~1122, Abschn. 3.3.1 \enquote{Routing Outbound Datagrams} und 3.3.1.2 \enquote{Gateway Selection}: \enquote{If the destination is on a connected network, the datagram is sent directly to the destination host; otherwise, it has to be routed to a gateway on a connected network} und \enquote{A host generally needs to know at least one default gateway}. \url{https://www.rfc-editor.org/rfc/rfc1122.html}
+  \item Fuller, Vince; Li, Tony: \emph{Classless Inter-domain Routing (CIDR)}, RFC~4632, Abschn. 3.1 \enquote{Basic Concept and Prefix Notation}: \enquote{the mask to extract the network portion of the prefix is a 32-bit value where the most significant 16 bits are ones}. \url{https://www.rfc-editor.org/rfc/rfc4632.html}
+  \item Mockapetris, Paul: \emph{Domain Names -- Concepts and Facilities}, RFC~1034, Abschn. 1 \enquote{STATUS OF THIS MEMO} und 2.2 \enquote{DNS design goals}: \enquote{Domain Name System (DNS)} und \enquote{use names to retrieve host addresses}. \url{https://www.rfc-editor.org/rfc/rfc1034.html}
+  \item Angabe \emph{Virtualisierung}, Aufgabe \enquote{Bridged-Konfiguration}.
+  \item Eigene Messung, Versuch \enquote{Erreichbarkeit im Bridged-Modus}.
+\end{itemize}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}

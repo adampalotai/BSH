@@ -11,8 +11,17 @@ Einstellung, die festlegt, welchen Anteil eines physischen Prozessorkerns ein vi
 \begriff[sec:sf-einrichten]{Benutzergruppe}
 Benannte Menge von Benutzern unter Linux, festgehalten in \cmd{/etc/group}. Jede Datei hat neben dem Eigentümer eine Gruppe, der eigene Rechte zustehen. Eine neue Mitgliedschaft wirkt erst nach einer neuen Anmeldung. Den Zugriff auf Shared Folders im Linux-Gast regelt die Gruppe \cmd{vboxsf}.
 
+\begriff[sec:modus-bridged]{Bridged}
+Netzwerkmodus, in dem VirtualBox den Gast über die physische Netzwerkkarte des Wirtssystems unmittelbar an dessen lokales Netz anschließt. Der Gast tritt dort als eigener Rechner mit eigener Adresse auf und ist so erreichbar wie jeder andere Rechner in diesem Netz. In der Angabe auch Netzwerkbrücke.
+
 \begriff[sec:festplatte]{Differenzabbild}
 Abbilddatei, die nur die Sektoren enthält, die sich gegenüber ihrem Elternabbild geändert haben. Nimmt alle Schreibzugriffe auf, das Elternabbild wird nur noch gelesen. Grundlage von Snapshots und des Schreibmodus immutable.
+
+\begriff[sec:bridged-konfig]{Domain Name System (DNS)}
+System, das Rechnernamen in Adressen übersetzt. Ein Rechner richtet seine Anfragen an den eingetragenen DNS-Server.
+
+\begriff[sec:nat-konfig]{Dynamic Host Configuration Protocol (DHCP)}
+Protokoll, mit dem ein Server einem Rechner seine Adresse und weitere Netzwerkeinstellungen übergibt. Im NAT-Modus ist der DHCP-Server in VirtualBox eingebaut.
 
 \begriff[sec:festplatte]{Dynamische Zuweisung}
 Belegungsart einer virtuellen Festplatte, bei der die Datei klein beginnt und bis zur eingestellten Obergrenze mitwächst. Gegenstück ist die feste Größe, die den Platz sofort vollständig belegt.
@@ -23,6 +32,9 @@ Verknüpfen des Dateisystems eines Datenträgers mit einem Verzeichnis im Verzei
 \begriff[sec:virtualbox]{Extension Pack}
 Getrennt lizenziertes Zusatzpaket zu VirtualBox, das etwa den Fernzugriff auf VMs und die Verschlüsselung der Plattenabbilder nachrüstet. Steht nicht unter der freien Lizenz des Grundpakets, sondern unter der PUEL, die die unentgeltliche Nutzung nur privat und im Unterricht erlaubt. Für USB 2.0 und 3.0 ist es seit Version 7.0 nicht mehr nötig.
 
+\begriff[sec:bridged-konfig]{Firewall}
+Software, die den ein- und ausgehenden Datenverkehr eines Rechners nach Regeln filtert. Die Firewall von Windows sperrt eingehenden Verkehr, solange keine Regel ihn erlaubt.
+
 \begriff[sec:hostgast]{Gast}
 Betriebssystem, das innerhalb einer virtuellen Maschine läuft. Englisch \emph{guest}, in der Angabe Guest-System. Behandelt die nachgebildete Hardware wie echte und bemerkt die Virtualisierung im Regelfall nicht.
 
@@ -32,8 +44,8 @@ Paket aus Gerätetreibern und Systemprogrammen, das nach dem Gastbetriebssystem 
 \begriff[sec:voraussetzungen]{Hardware-Virtualisierungserweiterung}
 Erweiterung des Prozessors, die dem Hypervisor erlaubt, Gastbefehle unmittelbar auf dem Prozessor auszuführen, statt sie in Software nachzubilden. Bei Intel VT-x, bei AMD AMD-V. Zwingend für 64-Bit-Gäste und für Gäste mit mehreren virtuellen Prozessorkernen. Auf vielen Geräten erst in der Firmware freizugeben.
 
-\begriff[sec:desktop]{Host-only}
-Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtssystem verbindet, nicht aber mit dem Internet oder dem übrigen Netz. Zum Abschotten verdächtiger Software ungeeignet, weil der Weg zum Wirtssystem offen bleibt.
+\begriff[sec:modus-hostonly]{Host-only}
+Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtssystem verbindet, nicht aber mit dem Internet oder dem übrigen Netz. Das Wirtssystem erhält dafür eine Netzwerkschnittstelle, die nur in Software besteht. Zum Abschotten verdächtiger Software ungeeignet, weil der Weg zum Wirtssystem offen bleibt.
 
 \begriff[sec:hosttaste]{Host-Taste}
 Taste, die VirtualBox für sich reserviert, standardmäßig die rechte Strg-Taste. Allein gedrückt holt sie Tastatur und Maus aus dem Gast zurück, mit einer zweiten Taste löst sie einen Befehl aus, etwa Host+Entf für Strg+Alt+Entf im Gast oder Host+F für den Vollbildmodus.
@@ -44,6 +56,9 @@ Software, die virtuelle Maschinen erzeugt und die Zugriffe der Gäste auf die ec
 \begriff[sec:desktop]{Internes Netzwerk}
 Netzwerkmodus, der ausschließlich die virtuellen Maschinen desselben internen Netzes untereinander verbindet. Weder das Wirtssystem noch das Internet sind erreichbar.
 
+\begriff[sec:nat-konfig]{IP-Adresse}
+32\,Bit lange Nummer, die unter IPv4 eine Netzwerkschnittstelle kennzeichnet, aufgeteilt in Netzanteil und Rechneranteil. Die Angabe hinter dem Schrägstrich, etwa \cmd{/24}, nennt, wie viele der vorderen Bits den Netzanteil bilden.
+
 \begriff[sec:virtualisierung]{Isolation}
 Abschottung einer virtuellen Maschine gegen das Wirtssystem und gegen andere virtuelle Maschinen. Beruht darauf, dass der Gast nur auf zugeteilte Betriebsmittel zugreifen kann; ein Absturz des Gastes bleibt deshalb ohne Wirkung auf das Wirtssystem. Eine Zusicherung der Software, keine physische Trennung.
 
@@ -53,14 +68,29 @@ Teil des Betriebssystems, der Prozessor und Hardware steuert. Englisch \emph{ker
 \begriff[sec:sf-einrichten]{Kernmodul}
 Treiber, der in den Kern des Betriebssystems geladen wird. Die Guest Additions für Linux übersetzen ihre Kernmodule bei der Installation im Gast, passend zum laufenden Kern; dafür braucht der Gast \cmd{gcc}, \cmd{make} und die Header-Dateien dieses Kerns.
 
-\begriff[sec:eigene-vm]{Network Address Translation (NAT)}
-Voreingestellter Netzwerkmodus, in dem VirtualBox als Router zwischen VM und Wirtssystem arbeitet. Jede VM erhält einen eigenen Router, die VMs erreichen einander deshalb nicht.
+\begriff[sec:nat-konfig]{Loopback-Schnittstelle}
+Virtuelle Netzwerkschnittstelle, über die ein Rechner sich selbst erreicht, unter IPv4 127.0.0.1. Im NAT-Modus erreicht der Gast die des Wirtssystems unter 10.0.2.2.
+
+\begriff[sec:modus-nat]{Network Address Translation (NAT)}
+Voreingestellter Netzwerkmodus, in dem VirtualBox als Router zwischen VM und Wirtssystem arbeitet. Jede VM erhält einen eigenen Router, die VMs erreichen einander deshalb nicht. Von außen ist der Gast nur über eine Portweiterleitung erreichbar.
+
+\begriff[sec:modus-bridged]{Netzfiltertreiber}
+Treiber, den VirtualBox im Bridged-Modus auf dem Wirtssystem einsetzt, um den Datenverkehr einer physischen Netzwerkkarte zu filtern. Über ihn holt VirtualBox die Pakete für den Gast aus dem Netz und speist dessen Pakete ein. Englisch \emph{net filter driver}.
+
+\begriff[sec:bridged-konfig]{Netzmaske}
+32\,Bit langer Wert, dessen vordere Bits auf 1 stehen und den Netzanteil einer IP-Adresse markieren. 255.255.255.0 bedeutet dasselbe wie \cmd{/24}.
 
 \begriff[sec:desktop]{Nicht angeschlossen}
 Netzwerkmodus, in dem VirtualBox dem Gast eine Netzwerkkarte meldet, aber keine Verbindung, so als wäre kein Kabel gesteckt. Englisch \emph{not attached}.
 
 \begriff[sec:export]{Open Virtualization Format (OVF)}
 Plattformübergreifender Standard, in dem VirtualBox VMs exportiert und importiert. Eine virtuelle Appliance besteht aus einer Beschreibungsdatei \cmd{.ovf} mit den Einstellungen und komprimierten Plattenabbildern im Format VMDK; eine OVA-Datei fasst sie in einem TAR-Archiv zusammen. Snapshots kann OVF nicht beschreiben, exportiert wird nur der aktuelle Zustand.
+
+\begriff[sec:nat-konfig]{Ping}
+Programm, das eine ICMP-Echoanforderung an einen Rechner schickt und auf dessen Echoantwort wartet. Kommt sie an, ist der Rechner auf Hin- und Rückweg erreichbar.
+
+\begriff[sec:modus-nat]{Portweiterleitung}
+Funktion des NAT-Modus, bei der VirtualBox Verbindungen an einem Port des Wirtssystems annimmt und an den Gast weiterleitet.
 
 \begriff[sec:eigene-vm]{Prozessorstrang}
 Einer von mehreren Befehlsströmen, die ein Prozessorkern gleichzeitig abarbeiten kann. Englisch \emph{thread}. Die Unterscheidung zählt bei der Kernzuweisung: Die Obergrenze bemisst sich nach den echten Kernen, während Oracle für das Anlegen einer VM höchstens die Hälfte aller Stränge empfiehlt.
@@ -76,6 +106,9 @@ Ordner des Wirtssystems, den VirtualBox einer oder allen VMs freigibt. Die Datei
 
 \begriff[sec:snapshots]{Snapshot}
 Festgehaltener Zustand einer virtuellen Maschine, zu dem sie später zurückkehren kann. Umfasst die Einstellungen, die virtuellen Festplatten in Form von Differenzabbildern und, wenn die VM lief, den Arbeitsspeicher. Lässt sich auch im laufenden Betrieb anlegen. Keine Datensicherung, weil er von der ursprünglichen Abbilddatei abhängt. In der deutschen Oberfläche Sicherungspunkt.
+
+\begriff[sec:bridged-konfig]{Standardgateway}
+Router, an den ein Rechner jedes Paket schickt, dessen Ziel nicht in einem seiner angeschlossenen Netze liegt. Pakete an das eigene Netz gehen unmittelbar an das Ziel.
 
 \begriff[sec:hypervisor]{Typ-1- und Typ-2-Hypervisor}
 Einteilung nach Goldberg (1973). Ein Typ-1-Hypervisor (bare-metal) läuft unmittelbar auf der Hardware und verwaltet deren Betriebsmittel selbst; ein Typ-2-Hypervisor (hosted) läuft als Anwendung auf einem Wirtsbetriebssystem, das die Verwaltung übernimmt. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.

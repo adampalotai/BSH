@@ -17,9 +17,9 @@ Vollständige Liste der herangezogenen Quellen. Welche Aussage aus welcher Quell
     \item Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{Running a Virtual Machine}, \enquote{Virtual Machine Status Bar}, \enquote{Capturing and Releasing Keyboard and Mouse}, \enquote{Typing Special Characters}, \enquote{Resetting a VM}, \enquote{Closing or Saving a VM}, \enquote{Snapshots}, \enquote{Taking, Restoring, and Deleting Snapshots}, \enquote{Snapshot Contents}, \enquote{Cloning a Virtual Machine}, \enquote{About the OVF Format}, \enquote{Importing an Appliance in OVF Format}, \enquote{Exporting an Appliance in OVF Format}, \enquote{Features Tab}, \enquote{System Settings}, \enquote{Processor Tab}, \enquote{USB Settings} und \enquote{Shared Folders}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
     \item Kap. 7 \enquote{Guest Additions}, Einleitung sowie Abschn. \enquote{Introduction to Guest Additions}, \enquote{Installing Guest Additions}, \enquote{Installing Code Signing Certificates}, \enquote{Installing the Linux Guest Additions}, \enquote{Updating the Linux Guest Additions}, \enquote{Shared Folders}, \enquote{Manual Mounting}, \enquote{Automatic Mounting}, \enquote{Clipboard}, \enquote{Drag and Drop}, \enquote{Seamless Windows} und \enquote{Guest Properties}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
     \item Kap. 8 \enquote{Virtual Storage}, Einleitung sowie Abschn. \enquote{Hard Disk Controllers}, \enquote{Disk Image Files (VDI, VMDK, VHD, HDD)}, \enquote{Special Image Write Modes}, \enquote{Differencing Images} und \enquote{iSCSI Servers}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/storage.html}
-    \item Kap. 9 \enquote{Virtual Networking}, Abschn. \enquote{Introduction to Networking Modes} mit Punkt \enquote{Not attached} und Tabelle 9-1 sowie Abschn. \enquote{Network Address Translation (NAT)}, \enquote{Internal Networking} und \enquote{Host-Only Networking}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
-    \item Kap. 11 \enquote{Advanced Topics}, Abschn. \enquote{Host Key Customization}, Tabelle 11-1. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/AdvancedTopics.html}
-    \item Kap. 15 \enquote{VBoxManage Command Reference}, Abschn. \enquote{VBoxManage adoptstate}, \enquote{VBoxManage export},\enquote{VBoxManage sharedfolder} und \enquote{VBoxManage snapshot}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/vboxmanage.html}
+    \item Kap. 9 \enquote{Virtual Networking}, Einleitung sowie Abschn. \enquote{Introduction to Networking Modes} mit Punkt \enquote{Not attached} und Tabelle 9-1 sowie Abschn. \enquote{Network Address Translation (NAT)}, \enquote{Configuring Port Forwarding with NAT}, \enquote{Bridged Networking}, \enquote{Internal Networking} und \enquote{Host-Only Networking}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/networkingdetails.html}
+    \item Kap. 11 \enquote{Advanced Topics}, Abschn. \enquote{Host Key Customization}, Tabelle 11-1, und \enquote{Configuring the Address of a NAT Network Interface}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/AdvancedTopics.html}
+    \item Kap. 15 \enquote{VBoxManage Command Reference}, Abschn. \enquote{VBoxManage adoptstate}, \enquote{VBoxManage export},\enquote{VBoxManage sharedfolder}, \enquote{VBoxManage snapshot} und \enquote{NAT Networking Settings}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/vboxmanage.html}
     \item Kap. 16 \enquote{Reference}, Abschn. \enquote{Windows on Arm Hosts}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/reference.html}
     \item Kap. \enquote{Technical Background}, Abschn. \enquote{Oracle VirtualBox Executables and Components} und \enquote{Hardware Virtualization}. \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
     \item Kap. \enquote{Known Limitations}, Abschn. \enquote{Known Issues}. \url{https://www.virtualbox.org/manual/topics/KnownIssues.html}
@@ -29,6 +29,7 @@ Vollständige Liste der herangezogenen Quellen. Welche Aussage aus welcher Quell
   \item Oracle: \emph{Oracle VirtualBox Extension Pack Personal Use and Educational License}, Fassung 12 vom 22.\,07.\,2024. \url{https://www.virtualbox.org/wiki/VirtualBox_PUEL}
   \item GNU coreutils: \emph{sync(1)}, Linux manual page, Fassung 9.11. \url{https://man7.org/linux/man-pages/man1/sync.1.html}
   \item Intel: \enquote{Does My Processor Support Intel Virtualization Technology?} \url{https://www.intel.com/content/www/us/en/support/articles/000005486/processors.html}
+  \item iputils: \emph{ping(8)}, Linux manual page, Entwicklungsstand vom 16.\,07.\,2026. \url{https://man7.org/linux/man-pages/man8/ping.8.html}
   \item KVM-Projekt: \enquote{Main Page}. \url{https://linux-kvm.org/page/Main_Page}
   \item Linux-Kern: \enquote{Documentation for /proc/sys/vm/}, The Linux Kernel documentation. \url{https://docs.kernel.org/admin-guide/sysctl/vm.html}
   \item Linux man-pages: \emph{capabilities(7)} und \emph{inode(7)}, Linux manual pages, Fassung 6.19. \url{https://man7.org/linux/man-pages/man7/capabilities.7.html}, \url{https://man7.org/linux/man-pages/man7/inode.7.html}
@@ -36,6 +37,9 @@ Vollständige Liste der herangezogenen Quellen. Welche Aussage aus welcher Quell
   \item Microsoft: \enquote{Hyper-V virtualization in Windows Server and Windows}. \url{https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview}
   \item Microsoft: \enquote{Manage Virtual Hard Disks (VHD)}. \url{https://learn.microsoft.com/en-us/windows-server/storage/disk-management/manage-virtual-hard-disks}
   \item Microsoft: \enquote{Windows 11 requirements}, Abschn. \enquote{Hardware requirements} und \enquote{Virtual machine support}. \url{https://learn.microsoft.com/en-us/windows/whats-new/windows-11-requirements}
+  \item Microsoft: \enquote{Windows Firewall Overview}. \url{https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/}
+  \item Microsoft: \enquote{Windows Firewall Rules}, Abschn. \enquote{Rule precedence for inbound and outbound rules}. \url{https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules}
+  \item NetworkManager: \emph{nm-settings-nmcli(5)}, \emph{NetworkManager Reference Manual}, Fassung latest. \url{https://networkmanager.dev/docs/api/latest/nm-settings-nmcli.html}
   \item shadow-utils: \emph{usermod(8)}, Linux manual page, Fassung 4.19.0. \url{https://man7.org/linux/man-pages/man8/usermod.8.html}
   \item Ubuntu: Paket \enquote{build-essential}, Distribution noble, Version 12.10ubuntu1. \url{https://packages.ubuntu.com/noble/build-essential}
   \item udisks: \enquote{udisksctl}, \emph{UDisks Reference Manual}. \url{https://storaged.org/doc/udisks2-api/latest/udisksctl.1.html}
@@ -45,8 +49,14 @@ Vollständige Liste der herangezogenen Quellen. Welche Aussage aus welcher Quell
 \section*{Normen und Spezifikationen}
 
 \begin{itemize}[nosep]
-  \item IEEE: \emph{IEEE Standard for SystemVerilog -- Unified Hardware Design, Specification, and Verification Language}, IEEE~1800-2023, veröffentlicht 2024. \url{https://standards.ieee.org/ieee/1800/7743/}
-  \item RISC-V International: \emph{The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture}, Abschn. 3.1 \enquote{RV64I Base Integer Instruction Set, Version 2.1}. \url{https://docs.riscv.org/reference/isa/v20260120/unpriv/rv64.html}
+  \item Braden, Robert (Hrsg.): \emph{Requirements for Internet Hosts -- Communication Layers}. RFC~1122, IETF, Oktober 1989. \url{https://www.rfc-editor.org/rfc/rfc1122.html}
+  \item Droms, Ralph: \emph{Dynamic Host Configuration Protocol}. RFC~2131, IETF, März 1997. \url{https://www.rfc-editor.org/rfc/rfc2131.html}
+  \item Fuller, Vince; Li, Tony: \emph{Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan}. RFC~4632, IETF, August 2006. \url{https://www.rfc-editor.org/rfc/rfc4632.html}
+  \item IEEE:\emph{IEEE Standard for SystemVerilog -- Unified Hardware Design, Specification, and Verification Language}, IEEE~1800-2023, veröffentlicht 2024. \url{https://standards.ieee.org/ieee/1800/7743/}
+  \item Mockapetris, Paul: \emph{Domain Names -- Concepts and Facilities}. RFC~1034, IETF, November 1987. \url{https://www.rfc-editor.org/rfc/rfc1034.html}
+  \item Postel, Jon: \emph{Internet Protocol}. RFC~791, IETF, September 1981. \url{https://www.rfc-editor.org/rfc/rfc791.html}
+  \item Postel, Jon: \emph{Internet Control Message Protocol}. RFC~792, IETF, September 1981. \url{https://www.rfc-editor.org/rfc/rfc792.html}
+  \item RISC-V International:\emph{The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture}, Abschn. 3.1 \enquote{RV64I Base Integer Instruction Set, Version 2.1}. \url{https://docs.riscv.org/reference/isa/v20260120/unpriv/rv64.html}
 \end{itemize}
 
 \section*{Fachliteratur}
@@ -84,6 +94,6 @@ Bereitgestellt über Moodle, HTBLA Traun, Betriebssysteme 3AHIT.
 
 Die im Protokoll dokumentierten Versuche sind eigenständig durchgeführt und im jeweiligen Messblock mit Aufbau, Durchführung, Rohdaten und Deutung festgehalten.
 
-Die Ausstattung des Laborrechners \cmd{1221-pc09} wurde dort am 25.\,09.\,2026 festgestellt. Die Einstellungen der ausgegebenen Gäste stammen aus den OVF-Deskriptoren der Exportdateien \nolinkurl{W11_23H2_BSHLab_2410.ova} und \nolinkurl{Mint22_BSHLab_2410.ova}, die Größe der darin enthaltenen Plattenabbilder aus deren Inhaltsverzeichnis. Die Gruppe der exportierten VM stammt aus dem OVF-Deskriptor von \nolinkurl{Mint22_Export.ova}. Die Zeitpunkte der Versuche in Kapitel~\ref{kap:arbeiten} stammen aus den Protokolldateien \cmd{VBox.log} der VMs am Heimrechner.
+Die Ausstattung des Laborrechners \cmd{1221-pc09} wurde dort am 25.\,09.\,2026 festgestellt. Die Einstellungen der ausgegebenen Gäste stammen aus den OVF-Deskriptoren der Exportdateien \nolinkurl{W11_23H2_BSHLab_2410.ova} und \nolinkurl{Mint22_BSHLab_2410.ova}, die Größe der darin enthaltenen Plattenabbilder aus deren Inhaltsverzeichnis. Die Gruppe der exportierten VM stammt aus dem OVF-Deskriptor von \nolinkurl{Mint22_Export.ova}. Die Zeitpunkte der Versuche in Kapitel~\ref{kap:arbeiten} und die Einstellungen der NAT-Engine in Kapitel~\ref{kap:netzwerk} stammen aus den Protokolldateien \cmd{VBox.log} der VMs am Heimrechner.
 
 Die Angaben zum RISC-V-Prozessorkern in Abschnitt~\ref{sec:desktop} stammen aus einem eigenen Vorhaben außerhalb des Unterrichts.
