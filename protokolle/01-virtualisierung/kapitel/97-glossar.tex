@@ -1,18 +1,15 @@
 \chapter{Glossar}
 \label{kap:glossar}
 
-Die Begriffe stehen hier in Kurzfassung, damit sie beim Wiederholen ohne Suche im Haupttext auffindbar sind. Die ausführliche Erklärung samt Herleitung steht jeweils an der angegebenen Stelle.
+Die Begriffe stehen hier in Kurzfassung; erklärt sind sie an der angegebenen Stelle.
 
 \begin{glossar}
-
-\begriff[sec:voraussetzungen]{AMD-V}
-Hardware-Virtualisierungserweiterung der AMD-Prozessoren, Gegenstück zu Intels VT-x. Erlaubt dem Hypervisor, Gastbefehle unmittelbar auf dem Prozessor auszuführen, statt sie nachzubilden.
 
 \begriff[sec:eigene-vm]{Ausführungsbegrenzung}
 Einstellung, die festlegt, welchen Anteil eines physischen Prozessorkerns ein virtueller höchstens beanspruchen darf. Englisch \emph{processing cap}. Voreinstellung 100\,\%, also keine Begrenzung.
 
 \begriff[sec:sf-einrichten]{Benutzergruppe}
-Benannte Menge von Benutzern unter Linux, festgehalten in \cmd{/etc/group}. Jede Datei hat neben dem Eigentümer eine Gruppe, der eigene Rechte zustehen. Ein Prozess erbt seine Gruppen vom Elternprozess, eine neue Mitgliedschaft wirkt deshalb erst nach einer neuen Anmeldung. Den Zugriff auf Shared Folders im Linux-Gast regelt die Gruppe \cmd{vboxsf}.
+Benannte Menge von Benutzern unter Linux, festgehalten in \cmd{/etc/group}. Jede Datei hat neben dem Eigentümer eine Gruppe, der eigene Rechte zustehen. Eine neue Mitgliedschaft wirkt erst nach einer neuen Anmeldung. Den Zugriff auf Shared Folders im Linux-Gast regelt die Gruppe \cmd{vboxsf}.
 
 \begriff[sec:festplatte]{Differenzabbild}
 Abbilddatei, die nur die Sektoren enthält, die sich gegenüber ihrem Elternabbild geändert haben. Nimmt alle Schreibzugriffe auf, das Elternabbild wird nur noch gelesen. Grundlage von Snapshots und des Schreibmodus immutable.
@@ -21,16 +18,19 @@ Abbilddatei, die nur die Sektoren enthält, die sich gegenüber ihrem Elternabbi
 Belegungsart einer virtuellen Festplatte, bei der die Datei klein beginnt und bis zur eingestellten Obergrenze mitwächst. Gegenstück ist die feste Größe, die den Platz sofort vollständig belegt.
 
 \begriff[sec:usb]{Einhängen}
-Verknüpfen des Dateisystems eines Datenträgers mit einem Verzeichnis im Verzeichnisbaum von Linux, dem Einhängepunkt. Das Gegenstück, das Aushängen, gelingt nur, solange keine Datei darauf geöffnet ist, und ist unter Linux die Voraussetzung für das sichere Entfernen eines USB-Sticks.
+Verknüpfen des Dateisystems eines Datenträgers mit einem Verzeichnis im Verzeichnisbaum von Linux, dem Einhängepunkt. Das Gegenstück, das Aushängen, ist unter Linux die Voraussetzung für das sichere Entfernen eines USB-Sticks.
 
 \begriff[sec:virtualbox]{Extension Pack}
-Getrennt lizenziertes Zusatzpaket zu VirtualBox, das etwa den Fernzugriff auf VMs und die Verschlüsselung der Plattenabbilder nachrüstet. Steht unter der PUEL und nicht unter der freien Lizenz des Grundpakets. Für USB 2.0 und 3.0 ist es seit Version 7.0 nicht mehr nötig.
+Getrennt lizenziertes Zusatzpaket zu VirtualBox, das etwa den Fernzugriff auf VMs und die Verschlüsselung der Plattenabbilder nachrüstet. Steht nicht unter der freien Lizenz des Grundpakets, sondern unter der PUEL, die die unentgeltliche Nutzung nur privat und im Unterricht erlaubt. Für USB 2.0 und 3.0 ist es seit Version 7.0 nicht mehr nötig.
 
 \begriff[sec:hostgast]{Gast}
 Betriebssystem, das innerhalb einer virtuellen Maschine läuft. Englisch \emph{guest}, in der Angabe Guest-System. Behandelt die nachgebildete Hardware wie echte und bemerkt die Virtualisierung im Regelfall nicht.
 
 \begriff[sec:guestadditions]{Guest Additions}
 Paket aus Gerätetreibern und Systemprogrammen, das nach dem Gastbetriebssystem in der VM installiert wird und mit VirtualBox auf dem Wirtssystem zusammenarbeitet. Ausgeliefert als CD-Abbild \cmd{VBoxGuestAdditions.iso}. Funktionen: Mauszeigerintegration, Shared Folders, bessere Grafik, nahtlose Fenster, Zeitabgleich, gemeinsame Zwischenablage, Drag and Drop.
+
+\begriff[sec:voraussetzungen]{Hardware-Virtualisierungserweiterung}
+Erweiterung des Prozessors, die dem Hypervisor erlaubt, Gastbefehle unmittelbar auf dem Prozessor auszuführen, statt sie in Software nachzubilden. Bei Intel VT-x, bei AMD AMD-V. Zwingend für 64-Bit-Gäste und für Gäste mit mehreren virtuellen Prozessorkernen. Auf vielen Geräten erst in der Firmware freizugeben.
 
 \begriff[sec:desktop]{Host-only}
 Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtssystem verbindet, nicht aber mit dem Internet oder dem übrigen Netz. Zum Abschotten verdächtiger Software ungeeignet, weil der Weg zum Wirtssystem offen bleibt.
@@ -39,7 +39,7 @@ Netzwerkmodus, der die virtuellen Maschinen untereinander und mit dem Wirtssyste
 Taste, die VirtualBox für sich reserviert, standardmäßig die rechte Strg-Taste. Allein gedrückt holt sie Tastatur und Maus aus dem Gast zurück, mit einer zweiten Taste löst sie einen Befehl aus, etwa Host+Entf für Strg+Alt+Entf im Gast oder Host+F für den Vollbildmodus.
 
 \begriff[sec:hypervisor]{Hypervisor}
-Software, die virtuelle Maschinen erzeugt und die Zugriffe der Gäste auf die echte Hardware vermittelt. In der Fachliteratur auch Virtual Machine Monitor (VMM). Nach seiner Lage zur Hardware eingeteilt in Typ~1 und Typ~2; VirtualBox ist ein Typ-2-Hypervisor.
+Software, die virtuelle Maschinen erzeugt und die Zugriffe der Gäste auf die echte Hardware vermittelt. In der Fachliteratur auch Virtual Machine Monitor (VMM).
 
 \begriff[sec:desktop]{Internes Netzwerk}
 Netzwerkmodus, der ausschließlich die virtuellen Maschinen desselben internen Netzes untereinander verbindet. Weder das Wirtssystem noch das Internet sind erreichbar.
@@ -50,20 +50,20 @@ Abschottung einer virtuellen Maschine gegen das Wirtssystem und gegen andere vir
 \begriff[sec:virtualbox]{Kern}
 Teil des Betriebssystems, der Prozessor und Hardware steuert. Englisch \emph{kernel}. Nicht zu verwechseln mit dem Prozessorkern.
 
-\begriff[sec:voraussetzungen]{Kernisolierung}
-Sicherheitsfunktion neuerer Windows-Fassungen. Ihre Aktivierung zieht ebenso wie die der Speicherintegrität Hyper-V nach sich, auch wenn dieses zuvor abgeschaltet wurde, und beeinträchtigt dadurch die Geschwindigkeit von VirtualBox.
-
 \begriff[sec:sf-einrichten]{Kernmodul}
 Treiber, der in den Kern des Betriebssystems geladen wird. Die Guest Additions für Linux übersetzen ihre Kernmodule bei der Installation im Gast, passend zum laufenden Kern; dafür braucht der Gast \cmd{gcc}, \cmd{make} und die Header-Dateien dieses Kerns.
+
+\begriff[sec:eigene-vm]{Network Address Translation (NAT)}
+Voreingestellter Netzwerkmodus, in dem VirtualBox als Router zwischen VM und Wirtssystem arbeitet. Jede VM erhält einen eigenen Router, die VMs erreichen einander deshalb nicht.
 
 \begriff[sec:desktop]{Nicht angeschlossen}
 Netzwerkmodus, in dem VirtualBox dem Gast eine Netzwerkkarte meldet, aber keine Verbindung, so als wäre kein Kabel gesteckt. Englisch \emph{not attached}.
 
+\begriff[sec:export]{Open Virtualization Format (OVF)}
+Plattformübergreifender Standard, in dem VirtualBox VMs exportiert und importiert. Eine virtuelle Appliance besteht aus einer Beschreibungsdatei \cmd{.ovf} mit den Einstellungen und komprimierten Plattenabbildern im Format VMDK; eine OVA-Datei fasst sie in einem TAR-Archiv zusammen. Snapshots kann OVF nicht beschreiben, exportiert wird nur der aktuelle Zustand.
+
 \begriff[sec:eigene-vm]{Prozessorstrang}
 Einer von mehreren Befehlsströmen, die ein Prozessorkern gleichzeitig abarbeiten kann. Englisch \emph{thread}. Die Unterscheidung zählt bei der Kernzuweisung: Die Obergrenze bemisst sich nach den echten Kernen, während Oracle für das Anlegen einer VM höchstens die Hälfte aller Stränge empfiehlt.
-
-\begriff[sec:virtualbox]{PUEL}
-Personal Use and Educational License, die Lizenz des Extension Pack. Gestattet die unentgeltliche Nutzung zu persönlichen Zwecken und im Unterricht, nicht jedoch den gewerblichen Einsatz.
 
 \begriff[sec:festplatte]{Schreibmodus}
 Eigenschaft einer Abbilddatei, die ihr Verhalten gegenüber Schreibzugriffen und Snapshots festlegt: normal, write-through, shareable, immutable, multiattach oder read-only. Unabhängig von Format und Belegung.
@@ -77,14 +77,11 @@ Ordner des Wirtssystems, den VirtualBox einer oder allen VMs freigibt. Die Datei
 \begriff[sec:snapshots]{Snapshot}
 Festgehaltener Zustand einer virtuellen Maschine, zu dem sie später zurückkehren kann. Umfasst die Einstellungen, die virtuellen Festplatten in Form von Differenzabbildern und, wenn die VM lief, den Arbeitsspeicher. Lässt sich auch im laufenden Betrieb anlegen. Keine Datensicherung, weil er von der ursprünglichen Abbilddatei abhängt. In der deutschen Oberfläche Sicherungspunkt.
 
-\begriff[sec:voraussetzungen]{SSE2}
-Streaming SIMD Extensions~2, eine Befehlssatzerweiterung der x86-Prozessoren. VirtualBox setzt sie auf Intel-Wirtssystemen zwingend voraus.
-
 \begriff[sec:hypervisor]{Typ-1- und Typ-2-Hypervisor}
 Einteilung nach Goldberg (1973). Ein Typ-1-Hypervisor (bare-metal) läuft unmittelbar auf der Hardware und verwaltet deren Betriebsmittel selbst; ein Typ-2-Hypervisor (hosted) läuft als Anwendung auf einem Wirtsbetriebssystem, das die Verwaltung übernimmt. VirtualBox gehört zur zweiten Art, Hyper-V zur ersten.
 
 \begriff[sec:usb]{USB-Controller}
-Hardware, über die ein Rechner mit seinen USB-Geräten verkehrt. VirtualBox bildet OHCI für USB~1.1, EHCI für USB~2.0 und xHCI für alle Geschwindigkeiten bis USB~3.0 nach; ein USB-3-Stick ließ sich im Versuch nur an xHCI anschließen.
+Hardware, über die ein Rechner mit seinen USB-Geräten verkehrt. VirtualBox bildet OHCI für USB~1.1, EHCI für USB~2.0 und xHCI für alle Geschwindigkeiten bis USB~3.0 nach.
 
 \begriff[sec:festplatte]{VDI}
 Virtual Disk Image, das eigene Format von VirtualBox für virtuelle Festplatten. Daneben werden VMDK (VMware) und VHD (Microsoft) unterstützt, die zu wählen sind, wenn die VM auf einem anderen Produkt laufen soll.
@@ -95,11 +92,11 @@ Nachbildung eines vollständigen Rechners durch Software. Ein Programm stellt ei
 \begriff[sec:hypervisor]{Virtualisierungsanforderungen nach Popek und Goldberg}
 Drei Eigenschaften, die einen Hypervisor ausmachen: Äquivalenz, also weitgehend gleiches Verhalten eines Programms wie auf dem echten Rechner; Effizienz, also unmittelbare Ausführung der meisten Gastbefehle auf dem Prozessor; Ressourcenkontrolle, also kein Zugriff des Gastes auf nicht zugeteilte Betriebsmittel.
 
+\begriff[sec:festplatte]{Virtuelle Festplatte}
+Speicher, den VirtualBox dem Gast über einen nachgebildeten Festplattencontroller als eingebaute Festplatte vorführt. Dahinter steht meist eine Abbilddatei auf dem Wirtssystem, die sich in Dateiformat, Belegung und Schreibmodus unterscheiden kann.
+
 \begriff[sec:virtualisierung]{Virtuelle Maschine (VM)}
 Nachgebildete Umgebung, in der der Gast läuft. Liegt als Datei auf der Festplatte des Wirtssystems und lässt sich deshalb kopieren, sichern und auf einen anderen Rechner übertragen.
-
-\begriff[sec:voraussetzungen]{VT-x}
-Intel Virtualization Technology, die Hardware-Virtualisierungserweiterung der Intel-Prozessoren. Zwingend für 64-Bit-Gäste und für Gäste mit mehreren virtuellen Prozessorkernen. Auf vielen Geräten ab Werk im BIOS oder UEFI abgeschaltet.
 
 \begriff[sec:hostgast]{Wirtssystem}
 Physischer Rechner, auf dem der Hypervisor läuft. Englisch \emph{host}, in der Angabe Host-System. Das darauf installierte Betriebssystem heißt Wirtsbetriebssystem.

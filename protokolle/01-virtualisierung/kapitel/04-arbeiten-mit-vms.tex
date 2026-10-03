@@ -35,10 +35,10 @@ Beim Durchreichen weist VirtualBox ein USB-Gerät des Wirtssystems einer VM zu: 
 
 Der USB-Controller ist die Hardware, über die ein Rechner mit seinen USB-Geräten verkehrt. VirtualBox bildet drei Bauarten nach: OHCI für USB~1.1, EHCI für USB~2.0, das OHCI mit einschaltet, und xHCI für alle Geschwindigkeiten bis USB~3.0. Oracle empfiehlt xHCI und rät zu OHCI oder EHCI nur bei Gästen, die xHCI nicht beherrschen. Den Controller wählt man bei ausgeschalteter VM in deren Einstellungen unter \enquote{USB}, das Gerät weist man bei laufender VM über \enquote{Geräte} $\rightarrow$ \enquote{USB} zu. Sobald der Gast das Gerät verwendet, trennt VirtualBox es ohne geordnetes Abmelden vom Wirtssystem; dabei können Daten verloren gehen.
 
-Unter Linux hängen alle Dateien in einem einzigen Verzeichnisbaum, der bei \cmd{/} beginnt. Einhängen verknüpft das Dateisystem eines Datenträgers mit einem Verzeichnis dieses Baums, dem Einhängepunkt; Aushängen löst die Verknüpfung und gelingt nur, solange kein Prozess dort eine Datei offen hält. Geschriebene Daten hält der Linux-Kern zunächst im Arbeitsspeicher und schreibt sie in regelmäßigen Abständen auf den Datenträger; \cmd{sync} erzwingt das sofort. Wird der Stick getrennt, bevor die Daten geschrieben sind, fehlen sie auf ihm. Das Entfernen, das die Angabe nach Schreibzugriffen verlangt, ist deshalb das Aushängen vor dem Trennen.
+Einhängen verknüpft das Dateisystem eines Datenträgers mit einem Verzeichnis im Verzeichnisbaum von Linux, dem Einhängepunkt; Aushängen löst die Verknüpfung wieder. Geschriebene Daten hält der Linux-Kern zunächst im Arbeitsspeicher und schreibt sie in regelmäßigen Abständen auf den Datenträger; \cmd{sync} erzwingt das sofort. Wird der Stick getrennt, bevor die Daten geschrieben sind, fehlen sie auf ihm. Das Entfernen, das die Angabe nach Schreibzugriffen verlangt, ist deshalb das Aushängen vor dem Trennen.
 
 \begin{messung}[Zuweisung des USB-Sticks an Controllern verschiedener Bauart]
-\paragraph{Aufbau} Heimrechner mit Windows 11 Pro, Build 26200, VirtualBox 7.2.20 r175154, kein Extension Pack. VM \cmd{Mint22\_BSHLab\_2410}, Gast Linux Mint~22, mit OHCI und EHCI, wie in der Beschreibungsdatei der Exportdatei festgelegt, die im Open Virtualization Format (OVF) vorliegt. USB-Stick Wilk USB DISK~3.0, Hersteller- und Produktkennung \cmd{13fe:6300}, eine NTFS-Partition mit 57,8\,GiB und der Datenträgerbezeichnung \cmd{CCCOMA\_X86FRE\_HU-HU\_DV9}.
+\paragraph{Aufbau} Heimrechner mit Windows 11 Pro, Build 26200, VirtualBox 7.2.20 r175154, kein Extension Pack. VM \cmd{Mint22\_BSHLab\_2410}, Gast Linux Mint~22, mit OHCI und EHCI, wie in der Beschreibungsdatei der Exportdatei festgelegt. USB-Stick Wilk USB DISK~3.0, Hersteller- und Produktkennung \cmd{13fe:6300}, eine NTFS-Partition mit 57,8\,GiB und der Datenträgerbezeichnung \cmd{CCCOMA\_X86FRE\_HU-HU\_DV9}.
 
 \paragraph{Durchführung} Bei laufender VM \enquote{Geräte} $\rightarrow$ \enquote{USB} $\rightarrow$ \enquote{Wilk USB DISK 3.0 [0100]} (Abbildung~\ref{abb:04-usb-menue-auswahl}). Zwischen den Durchläufen wurde bei ausgeschalteter VM der Controller geändert, vor dem letzten zusätzlich das Extension Pack 7.2.20 installiert (Abbildung~\ref{abb:04-usb-einstellungen-xhci}).
 
@@ -94,40 +94,9 @@ Product:            USB DISK 3.0
 \begin{messung}[Schreiben auf den Stick und sicheres Entfernen]
 \paragraph{Aufbau} Wie im vorigen Versuch, mit xHCI und Extension Pack 7.2.20, der Stick der VM zugewiesen.
 
-\paragraph{Durchführung} Zwei Durchgänge. Im ersten wurde eine Testdatei geschrieben und die Zuweisung danach in VirtualBox aufgehoben, ohne den Stick im Gast auszuhängen. Im zweiten wurde der Stick erneut zugewiesen, im Gast mit \cmd{udisksctl unmount} ausgehängt und erst dann in VirtualBox abgetrennt. Zum Schluss wurde der Stick im Explorer des Wirtssystems geöffnet.
+\paragraph{Durchführung} Zwei Durchgänge. Im ersten wurde im Gast mit \cmd{lsblk} und \cmd{mount | grep media} der Einhängepunkt geprüft, mit \cmd{echo test >} \nolinkurl{/media/labor/CCCOMA_X86FRE_HU-HU_DV9/test.txt} \cmd{\&\& sync} eine Testdatei geschrieben und die Zuweisung danach in VirtualBox aufgehoben, ohne den Stick im Gast auszuhängen. Im zweiten wurde der Stick erneut zugewiesen, im Gast mit \cmd{udisksctl unmount -b /dev/sdb1} ausgehängt, mit \cmd{lsblk} geprüft und erst dann in VirtualBox abgetrennt. Zum Schluss wurde der Stick im Explorer des Wirtssystems geöffnet.
 
 \paragraph{Rohdaten} Die Zeitpunkte in Tabelle~\ref{tab:usb-trennung} stammen aus den Zeilen \cmd{VUSB: Attached} und \cmd{VUSB: Detached} in \cmd{VBox.log}.
-
-\begin{lstlisting}[caption={Stick im Gast eingehängt, Testdatei geschrieben},label={lst:usb-eingehaengt}]
-labor@labor-VirtualBox:~$ lsblk
-NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
-sda      8:0    0 19,6G  0 disk
-├─sda1   8:1    0    1M  0 part
-├─sda2   8:2    0  513M  0 part /boot/efi
-└─sda3   8:3    0 19,1G  0 part /
-sdb      8:16   1 57,8G  0 disk
-└─sdb1   8:17   1 57,8G  0 part /media/labor/CCCOMA_X86FRE_HU-HU_DV9
-sr0     11:0    1 50,7M  0 rom  /media/labor/VBox_GAs_7.2.20
-labor@labor-VirtualBox:~$ mount | grep media
-/dev/sr0 on /media/labor/VBox_GAs_7.2.20 type iso9660 (ro,nosuid,nodev,relatime,nojoliet,check=s,map=n,blocksize=2048,uid=1000,gid=1000,dmode=500,fmode=400,iocharset=utf8,uhelper=udisks2)
-/dev/sdb1 on /media/labor/CCCOMA_X86FRE_HU-HU_DV9 type ntfs3 (rw,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,uhelper=udisks2)
-labor@labor-VirtualBox:~$ echo test > /media/labor/CCCOMA_X86FRE_HU-HU_DV9/test.txt && sync
-labor@labor-VirtualBox:~$
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Aushängen im zweiten Durchgang},label={lst:usb-ausgehaengt}]
-labor@labor-VirtualBox:~$ udisksctl unmount -b /dev/sdb1
-Unmounted /dev/sdb1.
-labor@labor-VirtualBox:~$ lsblk
-NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
-sda      8:0    0 19,6G  0 disk
-├─sda1   8:1    0    1M  0 part
-├─sda2   8:2    0  513M  0 part /boot/efi
-└─sda3   8:3    0 19,1G  0 part /
-sdb      8:16   1 57,8G  0 disk
-└─sdb1   8:17   1 57,8G  0 part
-sr0     11:0    1 50,7M  0 rom  /media/labor/VBox_GAs_7.2.20
-\end{lstlisting}
 
 \begin{table}[H]
 \centering
@@ -147,11 +116,11 @@ sr0     11:0    1 50,7M  0 rom  /media/labor/VBox_GAs_7.2.20
 
 % TODO BILD: Terminal mit echo und sync (um 21:00) als 04-usb-echo-sync.png ablegen und hier einbinden
 
-\bild[Ausgabe von \texttt{lsblk} und \texttt{mount} im Gast]{04-usb-lsblk-mount}{1}{\cmd{sdb1} ist als \cmd{ntfs3} mit Schreibrecht \cmd{rw} eingehängt; Beleg zu Listing~\ref{lst:usb-eingehaengt}.}
+\bild[Ausgabe von \texttt{lsblk} und \texttt{mount} im Gast]{04-usb-lsblk-mount}{1}{\cmd{lsblk} zeigt den Einhängepunkt von \cmd{sdb1}, \cmd{mount} das Dateisystem \cmd{ntfs3} und das Schreibrecht \cmd{rw}.}
 
 \bild[Testdatei im Gast, erster Durchgang]{04-usb-testdatei-gast}{0.9}{Die Uhrzeit 21:03 in der Leiste ordnet die Trennung um 21:03:32 dem Zustand zu, in dem \cmd{test.txt} auf dem noch eingehängten Stick liegt.}
 
-\bild[Aushängen mit \texttt{udisksctl}, zweiter Durchgang]{04-usb-udisksctl-unmount}{0.75}{Befehl und Wirkung in einem Bild, \cmd{sdb1} vorher mit und nachher ohne Einhängepunkt.}
+\bild[Aushängen mit \texttt{udisksctl}, zweiter Durchgang]{04-usb-udisksctl-unmount}{1}{Befehl und Wirkung in einem Bild, \cmd{sdb1} vorher mit und nachher ohne Einhängepunkt.}
 
 \bild[Zuweisung aufgehoben, zweiter Durchgang]{04-usb-menue-abgetrennt}{0.75}{Belegt die Reihenfolge: Um 21:19 steht der Stick ohne Haken im Menü, dahinter das schon ausgeführte Aushängen.}
 
@@ -164,17 +133,16 @@ sr0     11:0    1 50,7M  0 rom  /media/labor/VBox_GAs_7.2.20
 
 \paragraph{Quellen}
 \begin{itemize}[quellen]
-  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{USB Settings} und \enquote{Importing and Exporting Virtual Machines}: \enquote{it will be disconnected from the host without a proper shutdown. This may cause data loss.}, \enquote{In most cases this will be xHCI. Only use OHCI or EHCI if your guest OS does not support xHCI.}, \enquote{OHCI supports USB 1.1}, \enquote{EHCI supports USB 2.0. This also enables OHCI.}, \enquote{xHCI supports all USB speeds up to USB 3.0} sowie \enquote{Open Virtualization Format (OVF). This is the industry-standard format.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}, Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{USB Settings}: \enquote{it will be disconnected from the host without a proper shutdown. This may cause data loss.}, \enquote{In most cases this will be xHCI. Only use OHCI or EHCI if your guest OS does not support xHCI.}, \enquote{OHCI supports USB 1.1}, \enquote{EHCI supports USB 2.0. This also enables OHCI.} sowie \enquote{xHCI supports all USB speeds up to USB 3.0}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
   \item Oracle: \emph{Changelog for VirtualBox 7.0}, Abschn. \enquote{VirtualBox 7.0.0 (released October 10 2022)}: \enquote{The EHCI and XHCI USB controller devices are now part of the open source base package}. \url{https://www.virtualbox.org/wiki/Changelog-7.0}
   \item GNU coreutils: \emph{sync(1)}: \enquote{Synchronize cached writes to persistent storage}. \url{https://man7.org/linux/man-pages/man1/sync.1.html}
   \item Linux-Kern: \enquote{Documentation for /proc/sys/vm/}, Abschn. \enquote{dirty\_writeback\_centisecs}: \enquote{The kernel flusher threads will periodically wake up and write old data out to disk.} \url{https://docs.kernel.org/admin-guide/sysctl/vm.html}
   \item udisks: \enquote{udisksctl}, Befehl \enquote{unmount}. \url{https://storaged.org/doc/udisks2-api/latest/udisksctl.1.html}
-  \item util-linux: \emph{mount(8)}: \enquote{arranged in one big tree, the file hierarchy, rooted at /}. \url{https://man7.org/linux/man-pages/man8/mount.8.html}
-  \item util-linux: \emph{umount(8)}: \enquote{a filesystem cannot be unmounted when it is 'busy' - for example, when there are open files on it}. \url{https://man7.org/linux/man-pages/man8/umount.8.html}
+  \item util-linux: \emph{mount(8)}: \enquote{attach the filesystem found on some device to the big file tree} und \enquote{the umount(8) command will detach it again}. \url{https://man7.org/linux/man-pages/man8/mount.8.html}
   \item Angabe \emph{Virtualisierung}, Aufgabe \enquote{Durchreichen eines USB-Geräts}.
   \item Eigene Messungen, Versuche dieser Aufgabe; OVF-Deskriptor von \nolinkurl{Mint22_BSHLab_2410.ova}.
 \end{itemize}
-\kiquelle[02.\,10.\,2026]{Opus 5.5}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Einrichten eines Shared Folders]
 Um Dateien leicht zwischen den VMs und dem Wirt austauschen zu können gibt es die \enquote{Shared Folders} (Kap.~4.3). Unsere VMs verwenden den Folder \enquote{vmshare} am Desktop des Rechners. Wie diese in der Windows- und Linux-VM einzubinden sind, findet man im Kap.~4.3.1.
@@ -204,7 +172,7 @@ Zugriff & \cmd{/media/sf\_vmshare} & Laufwerk Z:, \cmd{\textbackslash\textbacksl
 
 Die Guest Additions für Linux enthalten Kernmodule, also Treiber, die in den Kern des Gastes geladen werden. Weil Linux getrennt vom Kern verteilte Treibermodule schlecht unterstützt, übersetzt das Installationsprogramm sie im Gast selbst. Dafür braucht der Gast den Compiler \cmd{gcc}, das Werkzeug \cmd{make} und die Header-Dateien des laufenden Kerns; die ersten beiden zieht das Paket \cmd{build-essential} nach.
 
-Eine Benutzergruppe ist unter Linux eine benannte Menge von Benutzern, festgehalten in \cmd{/etc/group}. Jede Datei hat einen Eigentümer und eine Gruppe, und Lesen, Schreiben und Ausführen werden getrennt für Eigentümer, Gruppe und alle anderen erlaubt. In oktaler Schreibweise steht je eine Ziffer für diese drei, 7 für alle Rechte, 0 für keines. Der Benutzer mit der Kennung~0 ist \cmd{root}. Die Gruppenliste eines Prozesses wird aus \cmd{/etc/group} gebildet, und jeder Kindprozess erbt sie von seinem Elternprozess. Eine neue Mitgliedschaft wirkt deshalb erst nach einer neuen Anmeldung, die die Liste neu bildet; die Prozesse der laufenden Sitzung behalten die Gruppen, die bei der Anmeldung galten.
+Eine Benutzergruppe ist unter Linux eine benannte Menge von Benutzern, festgehalten in \cmd{/etc/group}. Jede Datei hat einen Eigentümer und eine Gruppe, und Lesen, Schreiben und Ausführen werden getrennt für Eigentümer, Gruppe und alle anderen erlaubt. In oktaler Schreibweise steht je eine Ziffer für diese drei, 7 für alle Rechte, 0 für keines. Der Benutzer mit der Kennung~0 ist \cmd{root}. Eine neue Mitgliedschaft wirkt erst nach einer neuen Anmeldung.
 
 \begin{messung}[Shared Folder im Linux-Gast]
 \paragraph{Aufbau} Heimrechner mit Windows 11 Pro, Build 26200, VirtualBox 7.2.20 r175154. VM \cmd{Mint22\_BSHLab\_2410}, Gast Linux Mint~22 mit dem Kern 6.8.0-38-generic, Benutzer \cmd{labor}, ohne Guest Additions; deren CD-Abbild 7.2.20 lag im virtuellen Laufwerk. Auf dem Wirtssystem der Ordner \cmd{C:\textbackslash Users\textbackslash Adam\textbackslash Desktop\textbackslash vmshare} mit der Testdatei \cmd{vom-wirt.txt}, Inhalt \enquote{Test} (Abbildung~\ref{abb:04-sf-wirt-ordner}). Die Angabe setzt diesen Ordner als eingerichtet voraus, die ausgegebenen Exportdateien enthalten aber keine Freigabe; sie wurde deshalb in beiden Gästen neu angelegt.
@@ -217,52 +185,6 @@ Eine Benutzergruppe ist unter Linux eine benannte Menge von Benutzern, festgehal
 
 \paragraph{Rohdaten} Die Meldungen des Gastes in \cmd{VBox.log} tragen dessen Uhrzeit in Weltzeit, zwei Stunden hinter der Ortszeit; die Ortszeiten im Text sind aus der Laufzeit der VM umgerechnet.
 
-\begin{lstlisting}[caption={Installation der Guest Additions im Linux-Gast, gekürzt},label={lst:sf-mint-install}]
-labor@labor-VirtualBox:~$ sudo apt install build-essential dkms linux-headers-$(uname -r)
-[...]
-build-essential ist schon die neueste Version (12.10ubuntu1).
-dkms ist schon die neueste Version (3.0.11-1ubuntu13).
-linux-headers-6.8.0-38-generic ist schon die neueste Version (6.8.0-38.38).
-0 aktualisiert, 0 neu installiert, 0 zu entfernen und 691 nicht aktualisiert.
-labor@labor-VirtualBox:~$ sudo sh /media/labor/VBox_GAs_7.2.20/VBoxLinuxAdditions.run
-Verifying archive integrity...  100%   MD5 checksums are OK. All good.
-[...]
-VirtualBox Guest Additions: Building the Guest Additions 7.2.20 modules for
-kernel 6.8.0-38-generic.
-VirtualBox Guest Additions: Building the main module.
-VirtualBox Guest Additions: Building the shared folder support module.
-VirtualBox Guest Additions: Building the graphics driver module.
-[...]
-VirtualBox Guest Additions: Running kernel modules will not be replaced until
-the system is restarted or 'rcvboxadd reload' triggered
-[...]
-VirtualBox Guest Additions: kernel modules and services 7.2.20 r175154 reloaded
-[...]
-[Neustart der VM]
-labor@labor-VirtualBox:~$ sudo rcvboxadd status-kernel
-[sudo] Passwort für labor:
-VirtualBox Guest Additions: kernel modules 7.2.20 r175154 are loaded
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Zugriff auf die Freigabe im Linux-Gast},label={lst:sf-mint-zugriff}]
-labor@labor-VirtualBox:~$ ls /media/sf_vmshare/
-ls: Öffnen von Verzeichnis '/media/sf_vmshare/' nicht möglich: Keine Berechtigung
-labor@labor-VirtualBox:~$ id
-uid=1000(labor) gid=1000(labor) Gruppen=1000(labor),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),105(lpadmin),125(sambashare)
-labor@labor-VirtualBox:~$ sudo usermod -aG vboxsf $USER
-[Abmelden, Anmelden, Neustart des Gastes]
-labor@labor-VirtualBox:~$ id
-uid=1000(labor) gid=1000(labor) Gruppen=1000(labor),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),105(lpadmin),125(sambashare),986(vboxsf)
-labor@labor-VirtualBox:~$ ls /media/sf_vmshare/
-vom-wirt.txt
-labor@labor-VirtualBox:~$ mount | grep vboxsf
-vmshare on /media/sf_vmshare type vboxsf (rw,nodev,relatime,iocharset=utf8,uid=0,gid=986,dmode=0770,fmode=0770,tag=VBoxAutomounter)
-labor@labor-VirtualBox:~$
-labor@labor-VirtualBox:~$ cat /media/sf_vmshare/vom-wirt.txt
-Testlabor@labor-VirtualBox:~$ echo vom Mint > /media/sf_vmshare/vom-mint.txt
-labor@labor-VirtualBox:~$
-\end{lstlisting}
-
 \begin{lstlisting}[caption={Zeilen zur Freigabe aus \texttt{VBox.log} der Linux-VM, Start 22:20:20},label={lst:sf-mint-log}]
 00:04:23.899196 SharedFolders host service: Adding host mapping
 00:04:23.899209     Host path 'C:\Users\Adam\Desktop\vmshare', map name 'vmshare', writable, automount=true, automntpnt=, create_symlinks=false, missing=false
@@ -273,67 +195,29 @@ labor@labor-VirtualBox:~$
 00:11:10.017948 VMMDev: Guest Log: 20:31:28.987538 automount vbsvcAutomounterMountIt: Successfully mounted 'vmshare' on '/media/sf_vmshare'
 \end{lstlisting}
 
-\bild[Installation der Guest Additions im Linux-Gast]{04-sf-mint-gainstall}{0.85}{Ungekürzte Ausgabe von \cmd{apt} und Installationsprogramm, Beleg zu Listing~\ref{lst:sf-mint-install}.}
+\bild[Installation der Guest Additions im Linux-Gast]{04-sf-mint-gainstall}{1}{Ungekürzte Ausgabe von \cmd{apt} und Installationsprogramm, darin die Paketversionen und die übersetzten Module.}
 
-\bild[Kernmodule nach dem Neustart geladen]{04-sf-mint-status-kernel}{0.55}{Beleg zur letzten Zeile von Listing~\ref{lst:sf-mint-install}.}
+\bild[Kernmodule nach dem Neustart geladen]{04-sf-mint-status-kernel}{0.6}{Belegt, dass die Module nach dem Neustart tatsächlich laufen.}
 
-\bild[Zugriff vor der Aufnahme in \texttt{vboxsf}]{04-sf-mint-keine-berechtigung}{1}{Fehler und Ursache in einem Ausschnitt, Beleg zum ersten Teil von Listing~\ref{lst:sf-mint-zugriff}.}
+\bild[Zugriff vor der Aufnahme in \texttt{vboxsf}]{04-sf-mint-keine-berechtigung}{1}{Fehler und Ursache in einem Ausschnitt.}
 
-\bild[Zugriff nach der Aufnahme in \texttt{vboxsf}]{04-sf-mint-zugriff}{1}{Beleg zum zweiten Teil von Listing~\ref{lst:sf-mint-zugriff}.}
+\bild[Zugriff nach der Aufnahme in \texttt{vboxsf}]{04-sf-mint-zugriff}{1}{Gruppen, Zugriff und Einhängeoptionen nach der neuen Anmeldung in einem Ausschnitt.}
 
 \bild[Datei des Linux-Gastes auf dem Wirtssystem]{04-sf-wirt-vom-mint}{0.65}{Gegenprobe auf der Seite des Wirtssystems, Datei und Inhalt in einem Ausschnitt.}
 
-\paragraph{Beobachtung} \cmd{apt} installierte nichts, alle Pakete waren schon vorhanden. Das Installationsprogramm übersetzte die Module der Guest Additions für den laufenden Kern, darunter eigens eines für Shared Folders, und nach dem Neustart waren sie geladen. Eine Sekunde nach dem Anlegen meldete der Gast die Freigabe als unter \cmd{/media/sf\_vmshare} eingehängt (Listing~\ref{lst:sf-mint-log}). \cmd{ls} scheiterte dennoch mit \enquote{Keine Berechtigung}, und unter den Gruppen von \cmd{labor} fehlte \cmd{vboxsf}. Nach \cmd{usermod} und neuer Anmeldung reagierte die Sitzung nicht mehr; nach einem Neustart des Gastes war die Freigabe wieder eingehängt. Nun führte \cmd{id} die Gruppe \cmd{vboxsf}, und Lesen wie Schreiben gelangen. \cmd{vom-mint.txt} lag um 22:33 mit dem Inhalt \enquote{vom Mint} im Ordner des Wirtssystems.
+\paragraph{Beobachtung} Das Installationsprogramm übersetzte die Module der Guest Additions für den laufenden Kern, darunter eigens eines für Shared Folders, und nach dem Neustart waren sie geladen. Eine Sekunde nach dem Anlegen meldete der Gast die Freigabe als unter \cmd{/media/sf\_vmshare} eingehängt (Listing~\ref{lst:sf-mint-log}). \cmd{ls} scheiterte dennoch mit \enquote{Keine Berechtigung}, und unter den Gruppen von \cmd{labor} fehlte \cmd{vboxsf}. Nach \cmd{usermod} und neuer Anmeldung reagierte die Sitzung nicht mehr; nach einem Neustart des Gastes war die Freigabe wieder eingehängt. Nun führte \cmd{id} die Gruppe \cmd{vboxsf}, und Lesen wie Schreiben gelangen. \cmd{vom-mint.txt} lag um 22:33 mit dem Inhalt \enquote{vom Mint} im Ordner des Wirtssystems.
 
-\paragraph{Deutung} Eingehängt hat die Freigabe der Dienst der Guest Additions, erkennbar an \cmd{tag=VBoxAutomounter} und an der Meldung in \cmd{VBox.log}, ohne dass der Gast dafür neu starten musste. Zugänglich war sie damit noch nicht: Nach den Einhängeoptionen gehört sie \cmd{root} (\cmd{uid=0}) und der Gruppe 986, die \cmd{id} als \cmd{vboxsf} ausweist, und \cmd{0770} erlaubt Eigentümer und Gruppe alles, allen anderen nichts. \cmd{labor} zählte zu den anderen. \cmd{usermod -aG} nimmt den Benutzer in die Gruppe auf, ohne ihn aus seinen übrigen Gruppen zu entfernen, was \cmd{-G} allein täte. Wirksam wurde das erst mit der neuen Anmeldung, die hier mit einem Neustart zusammenfiel, weil die Sitzung hing; die Ursache des Hängens wurde nicht untersucht. Dass \cmd{vom-mint.txt} ohne weiteren Schritt im Ordner des Wirtssystems lag, zeigt, dass ein Shared Folder keine Kopie anlegt: Gast und Wirtssystem arbeiten mit derselben Datei.
+\paragraph{Deutung} Eingehängt hat die Freigabe der Dienst der Guest Additions, erkennbar an \cmd{tag=VBoxAutomounter} und an der Meldung in \cmd{VBox.log}, ohne dass der Gast dafür neu starten musste. Zugänglich war sie damit noch nicht: Nach den Einhängeoptionen in Abbildung~\ref{abb:04-sf-mint-zugriff} gehört sie \cmd{root} (\cmd{uid=0}) und der Gruppe 986, die \cmd{id} als \cmd{vboxsf} ausweist, und \cmd{0770} erlaubt Eigentümer und Gruppe alles, allen anderen nichts. \cmd{labor} zählte zu den anderen. \cmd{usermod -aG} nimmt den Benutzer in die Gruppe auf, ohne ihn aus seinen übrigen Gruppen zu entfernen, was \cmd{-G} allein täte. Wirksam wurde das erst mit der neuen Anmeldung, die hier mit einem Neustart zusammenfiel, weil die Sitzung hing; die Ursache des Hängens wurde nicht untersucht. Dass \cmd{vom-mint.txt} ohne weiteren Schritt im Ordner des Wirtssystems lag, zeigt, dass ein Shared Folder keine Kopie anlegt: Gast und Wirtssystem arbeiten mit derselben Datei.
 \end{messung}
 
 \begin{messung}[Shared Folder im Windows-Gast]
 \paragraph{Aufbau} Heimrechner wie im vorigen Versuch. VM \cmd{W11\_23H2\_BSHLab\_2410}, Gast Windows~11, Version 10.0.22631.2861, lokales Konto \cmd{admin}, vier Prozessoren statt der zwei aus der Exportdatei, mit denen der Start in der Firmware stehen blieb. Im Ordner \cmd{vmshare} lagen aus dem vorigen Versuch \cmd{vom-wirt.txt} und \cmd{vom-mint.txt}.
 
-\paragraph{Durchführung} Über das Menü \enquote{Geräte} das CD-Abbild der Guest Additions eingelegt, \cmd{VBoxWindowsAdditions.exe} vom Laufwerk D: ausgeführt und den Gast neu gestartet. Die Freigabe wurde wie im Linux-Gast angelegt (Abbildung~\ref{abb:04-sf-win-dialog}). Danach im Explorer \enquote{Dieser PC} geöffnet, in der Eingabeaufforderung \cmd{net use} und \cmd{dir Z:\textbackslash}, dann \cmd{echo vom Windows > Z:\textbackslash vom-windows.txt} und erneut \cmd{dir Z:\textbackslash}. Zuletzt auf dem Wirtssystem den Ordner geöffnet und \cmd{Get-Volume -DriveLetter C} abgefragt.
+\paragraph{Durchführung} Über das Menü \enquote{Geräte} das CD-Abbild der Guest Additions eingelegt, \cmd{VBoxWindowsAdditions.exe} vom Laufwerk D: ausgeführt und den Gast neu gestartet. Die Freigabe wurde wie im Linux-Gast angelegt (Abbildung~\ref{abb:04-sf-win-dialog}). Danach im Explorer \enquote{Dieser PC} geöffnet, in der Eingabeaufforderung \cmd{net use} und \cmd{dir Z:\textbackslash}, dann \cmd{echo vom Windows > Z:\textbackslash vom-windows.txt} und erneut \cmd{dir Z:\textbackslash}. Zuletzt auf dem Wirtssystem den Ordner geöffnet.
 
 \bild[Freigabe im Windows-Gast]{04-sf-win-dialog}{0.95}{Abgebildet wegen der Liste dahinter, die den Pfad ungekürzt zeigt; der Dialog wurde dafür erneut geöffnet.}
 
 \paragraph{Rohdaten} Die Ortszeiten sind wie im vorigen Versuch aus der Laufzeit der VM umgerechnet.
-
-\begin{lstlisting}[caption={Eingabeaufforderung im Windows-Gast, Leerzeilen und Trennlinie gekürzt},label={lst:sf-win-cmd}]
-Microsoft Windows [Version 10.0.22631.2861]
-(c) Microsoft Corporation. Alle Rechte vorbehalten.
-
-C:\Users\admin>net use
-Neue Verbindungen werden gespeichert.
-
-Status       Lokal     Remote                    Netzwerk
-------------------------------------------------------------------------
-             Z:        \\VBoxSvr\vmshare         VirtualBox Shared Folders
-Der Befehl wurde erfolgreich ausgeführt.
-
-C:\Users\admin>dir Z:\
- Datenträger in Laufwerk Z: ist VBOX_vmshare
- Volumeseriennummer: 202F-D305
-
- Verzeichnis von Z:\
-
-29.09.2026  22:33    <DIR>          .
-29.09.2026  22:17    <DIR>          ..
-29.09.2026  22:33                 9 vom-mint.txt
-29.09.2026  22:07                 4 vom-wirt.txt
-               2 Datei(en),             13 Bytes
-               2 Verzeichnis(se), 1 577 781 436 416 Bytes frei
-[...]
-C:\Users\admin>echo vom Windows > Z:\vom-windows.txt
-
-C:\Users\admin>dir Z:\
-[...]
-29.09.2026  22:56    <DIR>          .
-29.09.2026  22:17    <DIR>          ..
-29.09.2026  22:33                 9 vom-mint.txt
-29.09.2026  22:56                14 vom-windows.txt
-29.09.2026  22:07                 4 vom-wirt.txt
-               3 Datei(en),             27 Bytes
-               2 Verzeichnis(se), 1 577 779 875 840 Bytes frei
-\end{lstlisting}
 
 \begin{lstlisting}[caption={Zeilen zur Freigabe aus \texttt{VBox.log} der Windows-VM, Start 22:48:52},label={lst:sf-win-log}]
 00:02:53.212469 SharedFolders host service: Adding host mapping
@@ -341,27 +225,18 @@ C:\Users\admin>dir Z:\
 00:02:54.216621 VMMDev: Guest Log: 20:51:31.775387 automount vbsvcAutomounterMountIt: Successfully mounted 'vmshare' on 'Z:'
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Datenträger C: des Wirtssystems, abgefragt kurz nach dem Versuch},label={lst:sf-wirt-volume}]
-Get-Volume -DriveLetter C | Select Size,SizeRemaining
-
-         Size SizeRemaining
-         ---- -------------
-1999447781376 1577498288128
-\end{lstlisting}
-
 \bild[Guest Additions im Windows-Gast installiert]{04-sf-win-gainstall}{0.65}{Belegt die Installation, weil es vom Assistenten selbst keine Aufnahme gibt.}
 
 \bild[Freigabe als Netzlaufwerk im Windows-Gast]{04-sf-win-laufwerk}{0.65}{Abgebildet wegen des Größenvergleichs zwischen Z: und der Platte C: des Gastes.}
 
-\bild[\texttt{net use} und \texttt{dir} vor dem Schreiben]{04-sf-win-net-use}{0.75}{Beleg zum ersten Teil von Listing~\ref{lst:sf-win-cmd}.}
+\bild[\texttt{net use} und \texttt{dir} vor dem Schreiben]{04-sf-win-net-use}{1}{Ziel von Z: und Inhalt der Freigabe vor dem Schreiben in einem Ausschnitt.}
 
-\bild[Schreiben auf die Freigabe im Windows-Gast]{04-sf-win-schreiben}{0.75}{Beleg zum zweiten Teil von Listing~\ref{lst:sf-win-cmd}.}
+\bild[Schreiben auf die Freigabe im Windows-Gast]{04-sf-win-schreiben}{1}{Befehl und Ergebnis in einem Ausschnitt, dahinter der Explorer mit denselben drei Dateien.}
 
 \bild[Ordner \texttt{vmshare} auf dem Wirtssystem nach dem Versuch]{04-sf-wirt-drei-dateien}{0.6}{Endzustand beider Versuche, die Dateien aus Wirtssystem, Linux- und Windows-Gast in einem Ordner.}
 
 \paragraph{Beobachtung} Die Einstellungen des Gastes führen die Guest Additions 7.2.20.175154 als installiert. Eine Sekunde nach dem Anlegen meldete der Gast die Freigabe als Laufwerk Z: eingebunden (Listing~\ref{lst:sf-win-log}). Der Explorer zeigt Z: unter \enquote{Netzwerkadressen} mit \enquote{1,43\,TB frei von 1,81\,TB}, die Platte C: des Gastes mit \enquote{8,68\,GB frei von 29,2\,GB}. \cmd{net use} führt Z: mit dem Ziel \cmd{\textbackslash\textbackslash VBoxSvr\textbackslash vmshare}. Ohne weiteren Schritt schrieb \cmd{echo} die Datei \cmd{vom-windows.txt}, die um 22:56 auch im Ordner des Wirtssystems liegt.
-
-\paragraph{Deutung} Im Windows-Gast bilden die Guest Additions die Freigabe als Netzwerkfreigabe nach, deshalb erscheint sie als Netzlaufwerk unter dem festen Servernamen \cmd{VBoxSvr}. Z: vergab der Dienst der Guest Additions, der ab Z: nach einem freien Laufwerksbuchstaben sucht. Einen Schritt für die Berechtigung braucht Windows nicht, weil eine automatisch eingebundene Freigabe dort jedem Benutzer offensteht. Wo die Dateien liegen, zeigt der freie Platz: Z: meldet bis auf 0,02\,\% denselben Wert wie C: des Wirtssystems (Listings~\ref{lst:sf-win-cmd} und~\ref{lst:sf-wirt-volume}) und weit mehr, als die ganze Platte des Gastes fasst. Weil \cmd{dir} auch \cmd{vom-mint.txt} aus dem Linux-Gast auflistet, können über den Ordner zwei VMs Dateien austauschen.
+\paragraph{Deutung} Im Windows-Gast bilden die Guest Additions die Freigabe als Netzwerkfreigabe nach, deshalb erscheint sie als Netzlaufwerk unter dem festen Servernamen \cmd{VBoxSvr}. Z: vergab der Dienst der Guest Additions, der ab Z: nach einem freien Laufwerksbuchstaben sucht. Einen Schritt für die Berechtigung braucht Windows nicht, weil eine automatisch eingebundene Freigabe dort jedem Benutzer offensteht. Dass die Dateien nicht auf der Platte des Gastes liegen, zeigt der Platz: Z: meldet 1,81\,TB und damit weit mehr, als die ganze Platte des Gastes fasst. Weil \cmd{dir} auch \cmd{vom-mint.txt} aus dem Linux-Gast auflistet, können über den Ordner zwei VMs Dateien austauschen.
 \end{messung}
 
 \paragraph{Quellen}
@@ -372,16 +247,14 @@ Get-Volume -DriveLetter C | Select Size,SizeRemaining
     \item Kap. 7 \enquote{Guest Additions}, Abschn. \enquote{Installing Guest Additions}, \enquote{Installing the Linux Guest Additions}, \enquote{Shared Folders}, \enquote{Manual Mounting} und \enquote{Automatic Mounting}: \enquote{Follow the steps in The Oracle VirtualBox Kernel Modules, on your Linux VM instead of on a Linux host system.}, \enquote{For Windows guests, shared folders are implemented as a pseudo-network redirector.}, \enquote{While vboxsvr is a fixed name}, \enquote{Search for a free drive letter, starting at Z:.} sowie \enquote{Access to an automatically mounted shared folder is granted to everyone in a Windows guest, including the guest user. For Linux and Oracle Solaris guests, access is restricted to members of the group vboxsf and the root user.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/guestadditions.html}
   \end{itemize}
   \item Linux man-pages: \emph{capabilities(7)}: \enquote{whose effective user ID is 0, referred to as superuser or root}. \url{https://man7.org/linux/man-pages/man7/capabilities.7.html}
-  \item Linux man-pages: \emph{credentials(7)}: \enquote{A child process created by fork(2) inherits copies of its parent's user and groups IDs.} \url{https://man7.org/linux/man-pages/man7/credentials.7.html}
-  \item Linux man-pages: \emph{initgroups(3)}: \enquote{initializes the group access list by reading the group database /etc/group}. \url{https://man7.org/linux/man-pages/man3/initgroups.3.html}
   \item Linux man-pages: \emph{inode(7)}, Felder \enquote{User ID} und \enquote{Group ID}, Abschn. \enquote{The file type and mode}: \enquote{S\_IRWXG 00070 group has read, write, and execute permission}. \url{https://man7.org/linux/man-pages/man7/inode.7.html}
   \item shadow-utils: \emph{usermod(8)}, Optionen \cmd{-a, --append} und \cmd{-G, --groups}: \enquote{If the user is currently a member of a group which is not listed, the user will be removed from the group. This behaviour can be changed via the -a option, which appends the user to the current supplementary group list.} \url{https://man7.org/linux/man-pages/man8/usermod.8.html}
   \item Ubuntu: Paket \enquote{build-essential}, Distribution noble, Abhängigkeiten \cmd{gcc} und \cmd{make}. \url{https://packages.ubuntu.com/noble/build-essential}
-  \item ArchWiki: \enquote{Users and groups}, Abschn. \enquote{Group management}: \enquote{If the user is currently logged in, they must log out and in again for changes to take effect.} \url{https://wiki.archlinux.org/title/Users_and_groups}
+  \item ArchWiki: \enquote{Users and groups}, Abschn. \enquote{Group management}: \enquote{/etc/group is the file that defines the groups on the system} und \enquote{If the user is currently logged in, they must log out and in again for changes to take effect.} \url{https://wiki.archlinux.org/title/Users_and_groups}
   \item Angabe \emph{Virtualisierung}, Aufgabe \enquote{Einrichten eines Shared Folders}.
   \item Eigene Messungen, Versuche dieser Aufgabe; OVF-Deskriptoren von \nolinkurl{Mint22_BSHLab_2410.ova} und \nolinkurl{W11_23H2_BSHLab_2410.ova}.
 \end{itemize}
-\kiquelle[02.\,10.\,2026]{Opus 5.5}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Snapshots vor und nach einer Installation]
 Sicherungspunkte erlauben die Rückkehr zu einem definierten Zustand der VM, falls mal ein Experiment daneben geht.
@@ -438,26 +311,19 @@ Differenzabbild nach der Rückkehr & & & & & 2 \\
 
 \bild[Ordner der VM, Messpunkt~4]{04-snap-dateien-4}{0.8}{Beleg zu Spalte~4.}
 
-\bild[Beginn der Installation von GIMP]{04-snap-apt-gimp}{0.45}{Beleg der Installation zwischen den beiden Snapshots.}
+\bild[Beginn der Installation von GIMP]{04-snap-apt-gimp}{0.48}{Beleg der Installation zwischen den beiden Snapshots.}
 
-\begin{lstlisting}[caption={Prüfung im Gast nach der Rückkehr},label={lst:snap-gimp}]
-labor@labor-VirtualBox:~$ which gimp
-labor@labor-VirtualBox:~$ dpkg -s gimp
-dpkg-query: Paket »gimp« ist nicht installiert und es ist keine Information verfügbar
-Verwenden Sie dpkg --info (= dpkg-deb --info) zum Untersuchen von Archiven.
-\end{lstlisting}
-
-\bild[GIMP nach der Rückkehr nicht installiert]{04-snap-gimp-entfernt}{0.4}{Die Titelleiste nennt \cmd{Vor-der-Installation}. Beleg zu Listing~\ref{lst:snap-gimp}.}
+\bild[GIMP nach der Rückkehr nicht installiert]{04-snap-gimp-entfernt}{1}{Prüfung und Snapshot in einem Bild, die Titelleiste nennt \cmd{Vor-der-Installation}.}
 
 \bild[Snapshot-Verlauf im VirtualBox Manager]{04-snap-verlauf}{0.8}{Die graphische Dokumentation des Verlaufs, die die Angabe verlangt.}
 
-\paragraph{Beobachtung} Jeder Snapshot legte eine \cmd{.sav}-Datei und ein neues Differenzabbild von 2\,MiB an. Nach der Installation führte die Auflistung das Differenzabbild ab \cmd{Vor-der-Installation} noch mit 2\,MiB, erst bei Messpunkt~3 mit 411\,MiB. Die Rückkehr ersetzte das Differenzabbild ab \cmd{Nach-der-Installation} durch ein neues, alle übrigen Dateien blieben. GIMP war danach im Gast nicht installiert. Im Verlauf steht \cmd{Nach-der-Installation} unter \cmd{Vor-der-Installation} und der aktuelle Zustand als zweiter Zweig daneben. \cmd{VBox.log} erscheint in allen Auflistungen mit 0\,B.
+\paragraph{Beobachtung} Jeder Snapshot legte eine \cmd{.sav}-Datei und ein neues Differenzabbild von 2\,MiB an. Nach der Installation führte die Auflistung das Differenzabbild ab \cmd{Vor-der-Installation} noch mit 2\,MiB, erst bei Messpunkt~3 mit 411\,MiB. Die Rückkehr ersetzte das Differenzabbild ab \cmd{Nach-der-Installation} durch ein neues, alle übrigen Dateien blieben. Danach fand \cmd{which} kein \cmd{gimp}, und \cmd{dpkg} meldete das Paket als nicht installiert. Im Verlauf steht \cmd{Nach-der-Installation} unter \cmd{Vor-der-Installation} und der aktuelle Zustand als zweiter Zweig daneben.
 
 \paragraph{Deutung} Die Rückkehr ist gelungen. Ein Snapshot legt ein neues Differenzabbild an, das von da an die Änderungen an der Platte aufnimmt; die Installation landete deshalb im Differenzabbild ab \cmd{Vor-der-Installation}. Die Rückkehr wirft das aktive Differenzabbild weg und legt ein neues an. Das Differenzabbild der Installation bleibt, weil der Snapshot \cmd{Nach-der-Installation} darauf aufbaut; der Zustand nach der Installation ist deshalb weiterhin erreichbar.
 
 Die \cmd{.sav}-Dateien halten den Arbeitsspeicher fest, weil die VM beim Anlegen lief. Mit 1,5\,GiB machen sie den größeren Teil der rund 1,9\,GiB aus, die beide Snapshots belegen.
 
-Die Werte von Messpunkt~0 für die Abbilddatei und von Messpunkt~2 für das Differenzabbild sind nicht verlässlich, weil die laufende VM beide Dateien zum Schreiben offen hielt. Eine Verzeichnisauflistung meldet unter NTFS die Größe aus dem Verzeichniseintrag, und den aktualisiert NTFS erst, wenn die Datei geschlossen wird. Dasselbe zeigt \cmd{VBox.log}: Nach dem nächsten Start liegt es als \cmd{VBox.log.1} mit 272\,011\,B vor.
+Die Werte von Messpunkt~0 für die Abbilddatei und von Messpunkt~2 für das Differenzabbild sind nicht verlässlich, weil die laufende VM beide Dateien zum Schreiben offen hielt. Eine Verzeichnisauflistung meldet unter NTFS die Größe aus dem Verzeichniseintrag, und den aktualisiert NTFS erst, wenn die Datei geschlossen wird.
 \end{messung}
 
 \paragraph{Quellen}
@@ -471,12 +337,105 @@ Die Werte von Messpunkt~0 für die Abbilddatei und von Messpunkt~2 für das Diff
   \item Angabe \emph{Virtualisierung}, Aufgabe \enquote{Snapshots vor und nach einer Installation}.
   \item Eigene Messung, Versuch \enquote{Snapshots vor und nach der Installation von GIMP}.
 \end{itemize}
-\kiquelle[02.\,10.\,2026]{Opus 5.5}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}
 
 \begin{aufgabe}[Export und Import virtueller Maschinen]
 Die im Labor verwendeten virtuellen Linuxmaschinen können auch zu Hause verwendet werden. Dafür exportieren wir die virtuelle Maschine wie unter Kap.~1.14 beschrieben. Die exportierte Datei kann z.\,B. auf eine USB-Festplatte kopiert und zu Hause wieder in VirtualBox importiert werden.
 
 Dokumentiere mit Screenshots und Anmerkungen das Exportieren und Importieren virtueller Maschinen.
 \end{aufgabe}
+\label{sec:export}
 
-% TODO MESSUNG: Import der ausgegebenen OVAs am Heimrechner mitschneiden, danach Export und Reimport, Dateigroessen
+Beim Export schreibt VirtualBox eine VM samt ihren Plattenabbildern in eine Datei, aus der ein Import auf einem anderen Rechner wieder eine VM anlegt. Das Format dafür ist das Open Virtualization Format (OVF), ein plattformübergreifender Standard. Eine virtuelle Appliance, so heißt die Zusammenstellung aus Plattenabbildern und Einstellungen, besteht aus einer Beschreibungsdatei \cmd{.ovf} mit den Einstellungen der VM und aus den Plattenabbildern, die VirtualBox beim Export in komprimierte VMDK-Dateien umwandelt. Eine OVA-Datei fasst beides in einem TAR-Archiv zusammen. Exportiert wird über \enquote{Datei} $\rightarrow$ \enquote{Appliance exportieren}, importiert mit dem Assistenten \enquote{Appliance importieren} oder einem Doppelklick auf die OVA-Datei. Beim Import entpackt und kopiert VirtualBox die Plattenabbilder und legt nach der Beschreibung eine neue VM an.
+
+Snapshots kann OVF nicht beschreiben; von einer VM mit Snapshots wird nur der aktuelle Zustand exportiert. Die Einstellungen der Assistenten, die im Versuch eine Rolle spielen, stehen in Tabelle~\ref{tab:ei-einstellungen}.
+
+\begin{table}[H]
+\centering
+\caption{Einstellungen der Assistenten für Export und Import}
+\label{tab:ei-einstellungen}
+\begin{tabularx}{\textwidth}{@{}ll>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Assistent} & \textbf{Einstellung} & \textbf{Wirkung} \\
+\midrule
+Export & Format & Fassung des OVF: 0.9, 1.0 oder 2.0 \\
+Export & Manifest-Datei & zusätzliche Datei im Archiv, an der der Import eine beschädigte Appliance erkennt \\
+Import & Basisordner & Ordner auf dem Wirtssystem, in dem die neue VM angelegt wird \\
+Import & Festplatten als VDI & legt die Plattenabbilder als VDI statt als VMDK an \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{messung}[Import, Export und Reimport der Mint-VM]
+\paragraph{Aufbau} Heimrechner mit Windows 11 Pro, Build 26200, VirtualBox 7.2.20 r175154. Ausgangspunkt war die ausgegebene Exportdatei \nolinkurl{Mint22_BSHLab_2410.ova} mit Linux Mint~22. Die daraus früher importierte VM \cmd{Mint22\_BSHLab\_2410} blieb unberührt, die neuen VMs erhielten eigene Namen. Export und Import liefen am selben Rechner; die Übertragung auf einen anderen Rechner, für die die Angabe eine USB-Festplatte vorschlägt, entfiel.
+
+\paragraph{Durchführung} Die Ordner der VMs wurden jeweils bei ausgeschalteter VM mit \cmd{Get-ChildItem <Ordner> -Recurse -File | Select FullName,Length} aufgelistet, die OVA-Dateien mit \cmd{Get-Item <Datei> | Select Name,Length} und \cmd{tar -tvf <Datei>}.
+\begin{enumerate}[nosep, label=\arabic*.]
+  \item Import der Schuldatei unter dem Namen \cmd{Mint22\_Import}, sonst mit den Vorschlägen des Dialogs.
+  \item \cmd{Mint22\_Import} gestartet, im Gast \cmd{echo export-text > \textasciitilde/export-test.txt}, heruntergefahren, dann über \enquote{Datei} $\rightarrow$ \enquote{Appliance exportieren} als \nolinkurl{Mint22_Export.ova} exportiert.
+  \item Import von \nolinkurl{Mint22_Export.ova} unter dem Namen \cmd{Mint22\_Reimport}, gestartet, im Gast \cmd{cat \textasciitilde/export-test.txt}, heruntergefahren.
+\end{enumerate}
+Nachträglich wurden mit \cmd{tar -xOf} die Manifest-Datei der exportierten OVA und mit \cmd{VBoxManage showmediuminfo} die Belegungsart der Plattenabbilder ausgelesen.
+
+\paragraph{Rohdaten} Die Kapazität in Tabelle~\ref{tab:ei-dateien} stammt aus der Beschreibungsdatei.
+
+\begin{table}[H]
+\centering
+\caption{Plattenabbilder und OVA-Dateien je Messpunkt, in MiB gerundet}
+\label{tab:ei-dateien}
+\begin{tabularx}{\textwidth}{@{}lXr@{}}
+\toprule
+\textbf{Messpunkt} & \textbf{Datei} & \textbf{Größe} \\
+\midrule
+1 & OVA-Datei der Schule & 3\,819 \\
+1 & Plattenabbild nach dem Import, VDI & 9\,984 \\
+2 & Plattenabbild nach Start und Herunterfahren & 9\,998 \\
+2 & exportierte OVA-Datei & 3\,820 \\
+3 & Plattenabbild nach Reimport, Start und Herunterfahren & 10\,008 \\
+ & Kapazität der virtuellen Platte & 20\,105 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{lstlisting}[caption={Manifest-Datei der exportierten OVA, nachträglich ausgelesen},label={lst:ei-manifest}]
+> tar -xOf Mint22_Export.ova Mint22_Export.mf
+SHA1 (Mint22_Export.ovf) = 75f9c215a60222b01b0dffe0795d10615d0839d2
+SHA1 (Mint22_Import-disk001.vmdk) = a40f54843a7b4fbca7d6a306bf208866e5859864
+\end{lstlisting}
+
+\bild[Größe und Inhalt der OVA-Datei der Schule]{04-ei-import-ausgangszustand}{0.8}{Beleg zu Messpunkt~1, zugleich der Inhalt des Archivs.}
+
+\bild[Importdialog]{04-ei-import-dialog}{0.8}{Die Vorschläge des Imports, geändert ist nur der Name.}
+
+\bild[Ordner der VM nach dem Import]{04-ei-import-ordner}{0.8}{Beleg zum Plattenabbild in Messpunkt~1, vor dem ersten Start.}
+
+\bild[Testdatei vor dem Export]{04-ei-testdatei}{0.73}{Der Zustand, an dem der Reimport gemessen wird.}
+
+\bild[Ordner der VM vor dem Export]{04-ei-import-ordner-nach-start}{0.8}{Beleg zum Plattenabbild in Messpunkt~2.}
+
+\bild[Einstellungen des Exports]{04-ei-export-format}{0.9}{Format, Zieldatei und Manifest-Datei auf einer Seite des Assistenten.}
+
+\bild[Größe und Inhalt der exportierten OVA-Datei]{04-ei-export-zustandsueberpruefung}{0.8}{Beleg zu Messpunkt~2, zugleich der Inhalt des Archivs.}
+
+\bild[Einstellungen der reimportierten VM]{04-ei-reimport-manager}{0.75}{Gruppe \cmd{BSH-Labor} und Plattenabbild der reimportierten VM.}
+
+\bild[Testdatei nach dem Reimport]{04-ei-reimport-testdatei}{0.72}{Gegenprobe zur Testdatei vor dem Export.}
+
+\bild[Ordner der VM nach dem Reimport]{04-ei-reimport-ordner}{0.8}{Beleg zum Plattenabbild in Messpunkt~3.}
+
+\paragraph{Beobachtung} Der Importdialog schlug den Basisordner \cmd{C:\textbackslash Users\textbackslash Adam\textbackslash VirtualBox VMs} vor, angelegt wurde die VM aber im Unterordner \cmd{BSH-Labor}. Nach dem Import belegte das Plattenabbild rund das 2,6-Fache seiner Größe im Archiv und knapp die Hälfte der Kapazität; \cmd{showmediuminfo} führt beide VDI-Dateien als dynamisch wachsend. Nach dem Reimport gab \cmd{cat} im Gast \enquote{export-text} aus.
+
+\paragraph{Deutung} Das Plattenabbild liegt im Archiv komprimiert vor und wird erst beim Import entpackt; unter der Kapazität bleibt es, weil es als VDI-Datei dynamisch mitwächst. Der Export nimmt den Inhalt der Platte mit, denn die Testdatei lag nach dem Reimport unverändert im Gast. Die Gruppe \cmd{BSH-Labor} steht in der Beschreibungsdatei und wird beim Import übernommen; nach ihr richtete sich im Versuch auch der Unterordner. An den Prüfsummen der Manifest-Datei erkennt ein Import beschädigte Dateien, was nach dem Kopieren über einen USB-Datenträger zählt.
+\end{messung}
+
+\paragraph{Quellen}
+\begin{itemize}[quellen]
+  \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
+  \begin{itemize}[nosep]
+    \item Kap. 5 \enquote{Working with Virtual Machines}, Abschn. \enquote{About the OVF Format}, \enquote{Importing an Appliance in OVF Format} und \enquote{Exporting an Appliance in OVF Format}: \enquote{cross-platform standard}, \enquote{disk images, together with configuration settings}, \enquote{TAR archive format}, \enquote{only the current state of the machine will be exported}, \enquote{membership of VM groups is preserved on import} sowie \enquote{first unpacked and copied}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/working-with-vms.html}
+    \item Kap. 15 \enquote{VBoxManage Command Reference}, Abschn. \enquote{VBoxManage export}: \enquote{copying the VM's virtual disk images to compressed VMDK} und \enquote{detects corrupted appliances on import}. \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/vboxmanage.html}
+  \end{itemize}
+  \item Angabe \emph{Virtualisierung}, Aufgabe \enquote{Export und Import virtueller Maschinen}.
+  \item Eigene Messung, Versuch \enquote{Import, Export und Reimport der Mint-VM}; OVF-Deskriptor von \nolinkurl{Mint22_Export.ova}.
+\end{itemize}
+\kiquelle[03.\,10.\,2026]{Opus 5.5}

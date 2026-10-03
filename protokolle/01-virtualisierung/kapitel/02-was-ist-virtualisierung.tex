@@ -92,7 +92,7 @@ Beim Arbeitsspeicher braucht ein Gast zum Installieren und Starten grob 1 bis 2\
 \begin{itemize}[quellen]
   \item Oracle: \emph{Oracle VirtualBox User Guide for Release 7.2}
   \begin{itemize}[nosep]
-    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{Intel Host CPU Requirements}, \enquote{Choosing an Installation Package} und \enquote{Arm Host Limitations}: \enquote{Virtual machines must use an Arm-based guest operating system.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
+    \item Kap. 2 \enquote{Installing VirtualBox}, Abschn. \enquote{Intel Host CPU Requirements}, \enquote{Choosing an Installation Package} und \enquote{Arm Host Limitations}: \enquote{Intel host CPUs must have SSE2 (Streaming SIMD Extensions 2).} sowie \enquote{Virtual machines must use an Arm-based guest operating system.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/installation.html}
     \item Kap. 4 \enquote{Creating a New Virtual Machine}: \enquote{A guest OS may require at least 1 or 2 GB of memory to install and boot up.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/create-vm.html}
     \item Kap. 16 \enquote{Reference}, Abschn. \enquote{Windows on Arm Hosts}: \enquote{This feature is experimental.} \url{https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/reference.html}
     \item Kap. \enquote{Technical Background}, Abschn. \enquote{Hardware Virtualization}: \enquote{Oracle VirtualBox's 64-bit guest and multiprocessing (SMP) support both require hardware virtualization to be enabled.} sowie \enquote{On many systems, the hardware virtualization features first need to be enabled in the BIOS before Oracle VirtualBox can use them.} \url{https://www.virtualbox.org/manual/topics/TechnicalBackground.html}
@@ -204,6 +204,7 @@ Laufen beide Gäste gleichzeitig, brauchen sie zusammen 8\,GB Arbeitsspeicher. M
   \end{itemize}
   \item Linux Mint: \enquote{Frequently Asked Questions}, Abschn. \enquote{What are the system requirements to run Linux Mint?}. \url{https://linuxmint.com/faq.php}
   \item Microsoft: \enquote{Windows 11 requirements}, Abschn. \enquote{Hardware requirements} und \enquote{Virtual machine support}: \enquote{Storage: 64 GB or greater disk space.} sowie \enquote{Processor: Two or more virtual processors.} \url{https://learn.microsoft.com/en-us/windows/whats-new/windows-11-requirements}
+  \item Eigene Feststellung: OVF-Deskriptoren von \nolinkurl{W11_23H2_BSHLab_2410.ova} und \nolinkurl{Mint22_BSHLab_2410.ova}; Ausstattung des Laborrechners \cmd{1221-pc09}, 25.\,09.\,2026.
 \end{itemize}
 \kiquelle[28.\,09.\,2026]{Opus 5 und Opus 5.5}
 
